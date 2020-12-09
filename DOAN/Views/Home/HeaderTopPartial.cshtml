@@ -72,8 +72,7 @@
                     <div class="sinlge-bar">
                         @if (Session["TaiKhoan"] != null && Session["TaiKhoan"].ToString() != "")
                         {
-                            <a href="#" class="single-icon" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-                            Session["TaiKhoan"] = null;
+                            <a href="@Url.Action("DangXuat","Home")" class="single-icon" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                         }
                         else
                         {

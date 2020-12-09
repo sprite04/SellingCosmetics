@@ -188,7 +188,6 @@
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SanPhamController.cs" />
-    <Compile Include="Controllers\ThuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -235,7 +234,6 @@
     <Content Include="Views\SanPham\BrandsPartial.cshtml" />
     <Content Include="Views\SanPham\SanPhamTheoLoai.cshtml" />
     <Content Include="Views\SanPham\TypePartial.cshtml" />
-    <Content Include="Views\Thu\Index.cshtml" />
     <Content Include="Views\Home\DangKy.cshtml" />
     <Content Include="Views\Home\DangNhap.cshtml" />
     <Content Include="Views\Home\HeaderTopPartial.cshtml" />

@@ -103,5 +103,11 @@ namespace DOAN.Controllers
             ViewBag.ThongBao = 1;
             return View();
         }
+
+        public ActionResult DangXuat()
+        {
+            Session["TaiKhoan"] = null;
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -199,6 +199,7 @@
     <Compile Include="Models\KHUYENMAI.cs" />
     <Compile Include="Models\LOAISANPHAM.cs" />
     <Compile Include="Models\LOAIUSER.cs" />
+    <Compile Include="Models\Metadata\GIOHANG.cs" />
     <Compile Include="Models\Metadata\LOAISANPHAM.cs" />
     <Compile Include="Models\Metadata\NGUOIDUNG.cs" />
     <Compile Include="Models\NGUOIDUNG.cs" />

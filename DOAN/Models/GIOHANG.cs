@@ -16,7 +16,7 @@ namespace DOAN.Models
 
         public int? IdSP { get; set; }
 
-        public int? SoLuong { get; set; }
+        public int SoLuong { get; set; }
 
         public bool? TinhTrang { get; set; }
 

@@ -46,7 +46,7 @@
                                         <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
                                     </div>
                                     <div class="product-action-2 pl-1">
-                                        <a title="Add to cart" href="#">Add to cart</a>
+                                        <a title="Add to cart" href="@Url.Action("ThemGioHang","GioHang", new {MaSP=item.IdSP,strURL=Request.Url.ToString() })">Add to cart</a>
                                     </div>
                                 </div>
                             </div>

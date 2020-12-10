@@ -79,7 +79,7 @@
                         <!--/ End Input Order -->
                     </div>
                     <div class="add-to-cart">
-                        <a href="#" class="btn">Add to cart</a>
+                        <a href="@Url.Action("ThemGioHang","GioHang", new {MaSP=Model.IdSP,strURL=Request.Url.ToString() })" class="btn">Add to cart</a>
                     </div>
                     <div class="default-social">
                         <h4 class="share-now">Share:</h4>

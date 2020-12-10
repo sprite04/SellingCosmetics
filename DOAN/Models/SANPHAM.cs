@@ -36,7 +36,7 @@ namespace DOAN.Models
 
         public int? TinhTrang { get; set; }
 
-        public int? GiaGoc { get; set; }
+        public int GiaGoc { get; set; }
 
         public float? LoiNhuan { get; set; }
 

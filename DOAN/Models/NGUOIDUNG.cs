@@ -22,9 +22,6 @@ namespace DOAN.Models
         [StringLength(50)]
         public string HoTen { get; set; }
 
-        [Column(TypeName = "image")]
-        public byte[] Avatar { get; set; }
-
         [Column(TypeName = "date")]
         public DateTime? NgaySinh { get; set; }
 
@@ -39,7 +36,7 @@ namespace DOAN.Models
         [StringLength(50)]
         public string Mail { get; set; }
 
-        [Required]
+
         [StringLength(50)]
         public string Username { get; set; }
 
@@ -53,6 +50,9 @@ namespace DOAN.Models
 
         [Column(TypeName = "date")]
         public DateTime? NgayTao { get; set; }
+
+        [StringLength(50)]
+        public string Password1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GIOHANG> GIOHANGs { get; set; }

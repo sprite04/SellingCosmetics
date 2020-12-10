@@ -40,7 +40,7 @@ namespace DOAN.Controllers
             return PartialView(listSP);
         }
 
-        [ChildActionOnly]
+     
         public ActionResult MenuPartial()
         {
             var listSP = db.SANPHAMs;
@@ -57,24 +57,34 @@ namespace DOAN.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult DangKy(NGUOIDUNG user)
         {
             ViewBag.ThongBao = 0;
             if (this.IsCaptchaValid("Captcha is not valid"))
             {
-                if (user.Mail.Trim() != "" && db.NGUOIDUNGs.SingleOrDefault(x => x.Username == user.Mail.Trim()) == null)
+                
+                user.Password = Encryptor.MD5Hash(user.Password);
+                user.Password1 = Encryptor.MD5Hash(user.Password1);
+                user.NgayTao = DateTime.Now;
+                user.TT_User = true;
+                user.IdLoaiUser = 1;
+                if (ModelState.IsValid)
                 {
-                    user.Username = user.Mail.Trim();
-                    user.Password = Encryptor.MD5Hash(user.Password);
-                    user.NgayTao = DateTime.Now;
-                    user.TT_User = true;
-                    user.IdLoaiUser = 1;
-                    db.NGUOIDUNGs.Add(user);
-                    db.SaveChanges();
-                    ViewBag.ThongBao = 1;
+                    if (db.NGUOIDUNGs.Where(x => x.Username == user.Mail.Trim()).Count()==0)
+                    {
+                        user.Username = user.Mail.Trim();
+                        db.NGUOIDUNGs.Add(user);
+                        db.SaveChanges();
+                        ViewBag.ThongBao = 1;
+                    }
+                    else
+                        ViewBag.ThongBao = 2;
                 }
                 else
-                    ViewBag.ThongBao = 2; 
+                {
+                    ViewBag.ThongBao = 4;
+                }
             }
             else
                 ViewBag.ThongBao = 3;

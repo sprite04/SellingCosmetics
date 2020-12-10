@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Title Tag  -->
-    <title>@Page.Title</title>
+    <title>hhihihhiihiihi</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="~/assets/client/images/favicon.png">
     <!-- Web Font -->
@@ -46,16 +46,21 @@
 
     <style>
         @RenderSection("style",required:false)
+        .field-validation-error
+        {
+            padding-top:5px;
+            color:deepskyblue;
+        }
     </style>
 
 </head>
 <body class="js">
 
-
     <!-- Header -->
     <header class="header shop">
         <!-- Topbar -->
         @Html.Partial("~/Views/Home/HeaderTopPartial.cshtml")
+
         <!-- Header Inner -->
         <div class="header-inner">
             <div class="container">
@@ -106,8 +111,7 @@
         <!--/ End Header Inner -->
     </header>
     <!--/ End Header -->
- 
-    
+
     @RenderBody()
     @Html.Partial("~/Views/Home/FooterPartial.cshtml")
 

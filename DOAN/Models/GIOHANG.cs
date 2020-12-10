@@ -10,14 +10,11 @@ namespace DOAN.Models
     public partial class GIOHANG
     {
         [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int IdKH { get; set; }
+        public int IdGH { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int IdSP { get; set; }
+        public int? IdKH { get; set; }
+
+        public int? IdSP { get; set; }
 
         public int? SoLuong { get; set; }
 

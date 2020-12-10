@@ -167,8 +167,8 @@ C:\Users\Thuy Tien\Desktop\TMDT\DOAN\bin\System.Net.Http.Formatting.xml
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\bin\System.Web.Http.xml
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\bin\System.Web.Http.WebHost.xml
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Thuy Tien\Desktop\TMDT\DOAN\obj\Debug\DOAN.csprojAssemblyReference.cache
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\obj\Debug\DOAN.csproj.CoreCompileInputs.cache
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\obj\Debug\DOAN.csproj.CopyComplete
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\obj\Debug\DOAN.dll
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\obj\Debug\DOAN.pdb
+C:\Users\Thuy Tien\Desktop\TMDT\DOAN\obj\Debug\DOAN.csprojAssemblyReference.cache

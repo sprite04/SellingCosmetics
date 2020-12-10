@@ -86,10 +86,13 @@ namespace DOAN.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<NGUOIDUNG>()
+                .Property(e => e.Password1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<NGUOIDUNG>()
                 .HasMany(e => e.GIOHANGs)
-                .WithRequired(e => e.NGUOIDUNG)
-                .HasForeignKey(e => e.IdKH)
-                .WillCascadeOnDelete(false);
+                .WithOptional(e => e.NGUOIDUNG)
+                .HasForeignKey(e => e.IdKH);
 
             modelBuilder.Entity<NGUOIDUNG>()
                 .HasMany(e => e.HOADONs)
@@ -106,11 +109,6 @@ namespace DOAN.Models
 
             modelBuilder.Entity<SANPHAM>()
                 .HasMany(e => e.CHITIETHDs)
-                .WithRequired(e => e.SANPHAM)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<SANPHAM>()
-                .HasMany(e => e.GIOHANGs)
                 .WithRequired(e => e.SANPHAM)
                 .WillCascadeOnDelete(false);
 

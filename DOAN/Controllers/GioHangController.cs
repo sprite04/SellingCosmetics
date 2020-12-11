@@ -31,7 +31,54 @@ namespace DOAN.Controllers
             return lstGioHang;
         }
 
+        public ActionResult GiamGioHang(int? MaSP, string strURL)
+        {
+            SANPHAM sp = db.SANPHAMs.SingleOrDefault(x => x.IdSP == MaSP);
+            if (sp == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            List<GIOHANG> lstGioHang = LayGioHang();
+            NGUOIDUNG user = Session["TaiKhoan"] as NGUOIDUNG;
+            GIOHANG spCheck = lstGioHang.SingleOrDefault(x => x.IdSP == MaSP);
+            if (spCheck != null)
+            {
+                if (sp.SoLuong < spCheck.SoLuong - 1)
+                {
+                    spCheck.TinhTrang = false;
+                }
+                else
+                {
+                    spCheck.TinhTrang = true;
+                    if (spCheck.SoLuong > 1)
+                        spCheck.SoLuong--;
+                }
 
+
+                if (user != null)
+                {
+                    var ds = db.GIOHANGs.Where(x => x.IdKH == user.IdUser);
+                    db.GIOHANGs.RemoveRange(ds);
+                    foreach (var i in lstGioHang)
+                    {
+                        GIOHANG gh = new GIOHANG()
+                        {
+                            IdKH = user.IdUser,
+                            IdSP = i.IdSP,
+                            SoLuong = i.SoLuong,
+                            TinhTrang = i.TinhTrang
+                        };
+                        db.GIOHANGs.Add(gh);
+                    }
+                    db.SaveChanges();
+                }
+                return Redirect(strURL);
+            }
+
+
+            return Redirect(strURL);
+        }
         public ActionResult ThemGioHang(int ?MaSP, string strURL)
         {
             SANPHAM sp = db.SANPHAMs.SingleOrDefault(x => x.IdSP == MaSP);
@@ -73,7 +120,6 @@ namespace DOAN.Controllers
                     }
                     db.SaveChanges();
                 }
-
                 return Redirect(strURL);
             }
 
@@ -100,6 +146,46 @@ namespace DOAN.Controllers
                 }
                 db.SaveChanges();
             }    
+            return Redirect(strURL);
+        }
+
+        public ActionResult XoaGioHang(int? MaSP, string strURL)
+        {
+            SANPHAM sp = db.SANPHAMs.SingleOrDefault(x => x.IdSP == MaSP);
+            if (sp == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            List<GIOHANG> lstGioHang = LayGioHang();
+            NGUOIDUNG user = Session["TaiKhoan"] as NGUOIDUNG;
+            GIOHANG spCheck = lstGioHang.SingleOrDefault(x => x.IdSP == MaSP);
+            if (spCheck != null)
+            {
+                lstGioHang.Remove(spCheck);
+
+
+                if (user != null)
+                {
+                    var ds = db.GIOHANGs.Where(x => x.IdKH == user.IdUser);
+                    db.GIOHANGs.RemoveRange(ds);
+                    foreach (var i in lstGioHang)
+                    {
+                        GIOHANG gh = new GIOHANG()
+                        {
+                            IdKH = user.IdUser,
+                            IdSP = i.IdSP,
+                            SoLuong = i.SoLuong,
+                            TinhTrang = i.TinhTrang
+                        };
+                        db.GIOHANGs.Add(gh);
+                    }
+                    db.SaveChanges();
+                }
+                return Redirect(strURL);
+            }
+
+
             return Redirect(strURL);
         }
 

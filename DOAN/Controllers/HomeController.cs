@@ -18,7 +18,7 @@ namespace DOAN.Controllers
         {
             var listSP = db.SANPHAMs.Where(x => x.TinhTrang == 1);
             ViewBag.listTH = db.THUONGHIEUx;
-
+            
 
             return View();
         }
@@ -108,6 +108,29 @@ namespace DOAN.Controllers
             if(user!=null)
             {
                 Session["TaiKhoan"] = user;
+                List<GIOHANG> lstGioHang = Session["GioHang"] as List<GIOHANG>;
+                if (lstGioHang != null)
+                {
+                    var ds = db.GIOHANGs.Where(x => x.IdKH == user.IdUser);
+                    db.GIOHANGs.RemoveRange(ds);
+                    foreach (var i in lstGioHang)
+                    {
+                        GIOHANG gh = new GIOHANG()
+                        {
+                            IdKH = user.IdUser,
+                            IdSP = i.IdSP,
+                            SoLuong = i.SoLuong,
+                            TinhTrang = i.TinhTrang
+                        };
+                        db.GIOHANGs.Add(gh);
+                    }
+                    db.SaveChanges();
+                }
+                else
+                {
+                    var listGH = db.GIOHANGs.Where(x => x.IdKH == user.IdUser).ToList();
+                    Session["GioHang"] = listGH;
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.ThongBao = 1;
@@ -117,6 +140,7 @@ namespace DOAN.Controllers
         public ActionResult DangXuat()
         {
             Session["TaiKhoan"] = null;
+            Session["GioHang"] = null;
             return RedirectToAction("Index");
         }
     }

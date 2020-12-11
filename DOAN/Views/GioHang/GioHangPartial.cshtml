@@ -1,9 +1,24 @@
-﻿<div class="sinlge-bar shopping">
+﻿@using DOAN.Models;
+
+@{ 
+    var listGH = Session["GioHang"] as List<GIOHANG>;
+    int TongSoLuong;
+    if (listGH == null)
+    {
+        TongSoLuong = -1;
+    }
+    else
+    {
+        TongSoLuong = listGH.Sum(x => x.SoLuong);
+    }
+}
+
+<div class="sinlge-bar shopping">
     <a href="@Url.Action("XemGioHang","GioHang")" class="single-icon">
         <i class="ti-bag"></i>
-        @if (ViewBag.TongSoLuong != 0)
+        @if (TongSoLuong != 0)
         {
-            <span class="total-count">@ViewBag.TongSoLuong</span>;
+            <span class="total-count">@TongSoLuong</span>;
             <span >@ViewBag.TongTien</span>;
         }
     </a>

@@ -41,6 +41,7 @@ namespace DOAN.Controllers
                 return null;
             }
             List<GIOHANG> lstGioHang = LayGioHang();
+            NGUOIDUNG user = Session["TaiKhoan"] as NGUOIDUNG;
             GIOHANG spCheck = lstGioHang.SingleOrDefault(x => x.IdSP == MaSP);
             if (spCheck != null)
             {
@@ -53,7 +54,26 @@ namespace DOAN.Controllers
                     spCheck.TinhTrang = true;
                     spCheck.SoLuong++;
                 }
+
                 
+                if (user != null)
+                {
+                    var ds = db.GIOHANGs.Where(x => x.IdKH == user.IdUser);
+                    db.GIOHANGs.RemoveRange(ds);
+                    foreach (var i in lstGioHang)
+                    {
+                        GIOHANG gh = new GIOHANG()
+                        {
+                            IdKH = user.IdUser,
+                            IdSP = i.IdSP,
+                            SoLuong = i.SoLuong,
+                            TinhTrang = i.TinhTrang
+                        };
+                        db.GIOHANGs.Add(gh);
+                    }
+                    db.SaveChanges();
+                }
+
                 return Redirect(strURL);
             }
 
@@ -63,6 +83,23 @@ namespace DOAN.Controllers
                 return Content("<h3>Không đủ số lượng</h3>");
             }
             lstGioHang.Add(item);
+            if(user!=null)
+            {
+                var ds = db.GIOHANGs.Where(x => x.IdKH == user.IdUser);
+                db.GIOHANGs.RemoveRange(ds);
+                foreach(var i in lstGioHang)
+                {
+                    GIOHANG gh = new GIOHANG()
+                    {
+                        IdKH=user.IdUser,
+                        IdSP=i.IdSP,
+                        SoLuong=i.SoLuong,
+                        TinhTrang=i.TinhTrang
+                    };
+                    db.GIOHANGs.Add(gh);
+                }
+                db.SaveChanges();
+            }    
             return Redirect(strURL);
         }
 

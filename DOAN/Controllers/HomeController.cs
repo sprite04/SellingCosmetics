@@ -99,7 +99,7 @@ namespace DOAN.Controllers
         }
 
         [HttpPost]
-        public ActionResult DangNhap(FormCollection f)
+        public ActionResult DangNhap(FormCollection f, string strURL)
         {
             ViewBag.ThongBao = 0;
             string username = f["username"].ToString();
@@ -131,17 +131,17 @@ namespace DOAN.Controllers
                     var listGH = db.GIOHANGs.Where(x => x.IdKH == user.IdUser).ToList();
                     Session["GioHang"] = listGH;
                 }
-                return RedirectToAction("Index");
+                return Redirect(strURL);
             }
             ViewBag.ThongBao = 1;
             return View();
         }
 
-        public ActionResult DangXuat()
+        public ActionResult DangXuat(string strURL)
         {
             Session["TaiKhoan"] = null;
             Session["GioHang"] = null;
-            return RedirectToAction("Index");
+            return Redirect(strURL);
         }
     }
 }

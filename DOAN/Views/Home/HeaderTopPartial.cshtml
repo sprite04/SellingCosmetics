@@ -74,11 +74,11 @@
                     <div class="sinlge-bar">
                         @if (Session["TaiKhoan"] != null && Session["TaiKhoan"].ToString() != "")
                         {
-                            <a href="@Url.Action("DangXuat","Home")" class="single-icon" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                            <a href="@Url.Action("DangXuat","Home", new {strURL=Request.Url.ToString() })" class="single-icon" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                         }
                         else
                         {
-                            <a href="@Url.Action("DangNhap","Home")" class="single-icon" data-toggle="tooltip" data-placement="bottom" title="Login"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                            <a href="@Url.Action("DangNhap","Home", new {strURL=Request.Url.ToString() })" class="single-icon" data-toggle="tooltip" data-placement="bottom" title="Login"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                         }
                     </div>
                     @Html.Action("GioHangPartial", "GioHang")

@@ -47,6 +47,7 @@ namespace DOAN.Controllers
                 if (sp.SoLuong < spCheck.SoLuong - 1)
                 {
                     spCheck.TinhTrang = false;
+                    return Content("<script> alert(\"Sản phẩm không còn đủ số lượng\")</script>");
                 }
                 else
                 {
@@ -73,13 +74,11 @@ namespace DOAN.Controllers
                     }
                     db.SaveChanges();
                 }
-                return Redirect(strURL);
             }
-
 
             return Redirect(strURL);
         }
-        public ActionResult ThemGioHang(int ?MaSP, string strURL)
+        public ActionResult ThemGioHangAjax(int ?MaSP, string strURL)
         {
             SANPHAM sp = db.SANPHAMs.SingleOrDefault(x => x.IdSP == MaSP);
             if (sp == null)
@@ -95,6 +94,7 @@ namespace DOAN.Controllers
                 if (sp.SoLuong < spCheck.SoLuong)
                 {
                     spCheck.TinhTrang = false;
+                    return Content("<script> alert(\"Sản phẩm không còn đủ số lượng\")</script>");
                 }
                 else
                 {
@@ -120,13 +120,13 @@ namespace DOAN.Controllers
                     }
                     db.SaveChanges();
                 }
-                return Redirect(strURL);
+                return RedirectToAction("GioHangPartial");
             }
 
             GIOHANG item = new GIOHANG() { IdSP = MaSP, SoLuong = 1, TinhTrang = true, SANPHAM=sp };
             if (sp.SoLuong < item.SoLuong)
             {
-                return Content("<h3>Không đủ số lượng</h3>");
+                return Content("<script> alert(\"Sản phẩm không còn đủ số lượng\")</script>");
             }
             lstGioHang.Add(item);
             if(user!=null)
@@ -145,7 +145,78 @@ namespace DOAN.Controllers
                     db.GIOHANGs.Add(gh);
                 }
                 db.SaveChanges();
-            }    
+            }
+            return RedirectToAction("GioHangPartial");
+        }
+
+        public ActionResult ThemGioHang(int? MaSP, string strURL)
+        {
+            SANPHAM sp = db.SANPHAMs.SingleOrDefault(x => x.IdSP == MaSP);
+            if (sp == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            List<GIOHANG> lstGioHang = LayGioHang();
+            NGUOIDUNG user = Session["TaiKhoan"] as NGUOIDUNG;
+            GIOHANG spCheck = lstGioHang.SingleOrDefault(x => x.IdSP == MaSP);
+            if (spCheck != null)
+            {
+                if (sp.SoLuong < spCheck.SoLuong)
+                {
+                    spCheck.TinhTrang = false;
+                    return Content("<script> alert(\"Sản phẩm không còn đủ số lượng\")</script>");
+                }
+                else
+                {
+                    spCheck.TinhTrang = true;
+                    spCheck.SoLuong++;
+                }
+
+
+                if (user != null)
+                {
+                    var ds = db.GIOHANGs.Where(x => x.IdKH == user.IdUser);
+                    db.GIOHANGs.RemoveRange(ds);
+                    foreach (var i in lstGioHang)
+                    {
+                        GIOHANG gh = new GIOHANG()
+                        {
+                            IdKH = user.IdUser,
+                            IdSP = i.IdSP,
+                            SoLuong = i.SoLuong,
+                            TinhTrang = i.TinhTrang
+                        };
+                        db.GIOHANGs.Add(gh);
+                    }
+                    db.SaveChanges();
+                }
+                return Redirect(strURL);
+            }
+
+            GIOHANG item = new GIOHANG() { IdSP = MaSP, SoLuong = 1, TinhTrang = true, SANPHAM = sp };
+            if (sp.SoLuong < item.SoLuong)
+            {
+                return Content("<script> alert(\"Sản phẩm không còn đủ số lượng\")</script>");
+            }
+            lstGioHang.Add(item);
+            if (user != null)
+            {
+                var ds = db.GIOHANGs.Where(x => x.IdKH == user.IdUser);
+                db.GIOHANGs.RemoveRange(ds);
+                foreach (var i in lstGioHang)
+                {
+                    GIOHANG gh = new GIOHANG()
+                    {
+                        IdKH = user.IdUser,
+                        IdSP = i.IdSP,
+                        SoLuong = i.SoLuong,
+                        TinhTrang = i.TinhTrang
+                    };
+                    db.GIOHANGs.Add(gh);
+                }
+                db.SaveChanges();
+            }
             return Redirect(strURL);
         }
 

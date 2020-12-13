@@ -63,7 +63,8 @@
 
                     
                     <div class="add-to-cart">
-                        <a href="@Url.Action("ThemGioHang","GioHang", new {MaSP=Model.IdSP,strURL=Request.Url.ToString() })" class="btn">Add to cart</a>
+                        
+                        @Ajax.ActionLink("Add to cart", "ThemGioHangAjax", "GioHang", new { MaSP = Model.IdSP, strURL = Request.Url.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "iconGioHang", InsertionMode = InsertionMode.Replace }, new { @class="btn"})
                     </div>
                     <div class="default-social">
                         <h4 class="share-now">Share:</h4>

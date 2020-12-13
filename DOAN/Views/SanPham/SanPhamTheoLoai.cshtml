@@ -1,4 +1,7 @@
 ﻿@using DOAN.Models;
+@using PagedList.Mvc;
+
+@model PagedList.IPagedList<SANPHAM>
 @{
     ViewBag.Title = "SanPhamTheoLoai";
     Layout = "~/Views/Shared/DetailLayout.cshtml";
@@ -16,7 +19,7 @@
                     <ul class="bread-list">
                         <li><a href="@Url.Action("Index","Home")">Home<i class="ti-arrow-right"></i></a></li>
                         <li class="active"><a href="@Url.Action("SanPhamTheoLoai","SanPham",new {idLoai=LoaiSP.IdLoaiSP})">@LoaiSP.TenLoai.ToLower()</a></li>
-                        @if ( TH!= null)
+                        @if (TH != null)
                         {
                             <li class="active"><a href="@Url.Action("SanPhamTheoLoai","SanPham",new {idLoai=LoaiSP.IdLoaiSP, idTH=TH.IdTH})"><i class="ti-arrow-right"></i>@TH.TenTH.ToLower()</a></li>
                         }
@@ -33,7 +36,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-4 col-12">
                 <div class="shop-sidebar">
-                    @Html.Action("BrandsPartial", "SanPham", new { loai=LoaiSP})
+                    @Html.Action("BrandsPartial", "SanPham", new { loai = LoaiSP })
 
                     <!--Shop By Price-->
                     <div class="single-widget range">
@@ -132,7 +135,17 @@
                     </div>
                 </div>
                 @Html.Action("DanhMucSP", "SanPham", new { listSP = Model })
+                @if(Model.PageCount>1)
+                {
+                    <div class="float-right text-right mt-lg-5 align-bottom">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("SanPhamTheoLoai", new { page = page, @idLoai = ViewBag.IdLoai, @idTH = ViewBag.IdTH }))
+                    </div>
+                }
+                
+
             </div>
+            
         </div>
     </div>
 </section>

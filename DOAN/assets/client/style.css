@@ -262,9 +262,9 @@ Version:1.0
 	position: absolute;
 	top: 100%;
 	z-index: 999;
-	-webkit-box-shadow: 0px 3px 5px #2322222322224d;
-	-moz-box-shadow: 0px 3px 5px #2322222322224d;
-	box-shadow: 0px 3px 5px #2322222322224d;
+	-webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
 	transform-origin: 0 0 0;
 	transform: scaleY(0.2);
 	-webkit-transition: all 0.3s ease 0s;
@@ -314,23 +314,22 @@ Version:1.0
 }
 .header .nav li .dropdown.sub-dropdown {
 	background: #fff;
-    width: 220px;
-    position: absolute;
-    left: 186px;
-    top: 0;
-    z-index: 999;
-   -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+	width: 220px;
+	position: absolute;
+	left: 186px;
+	top: 0;
+	z-index: 999;
+	-webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
 	box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
-	box-shadow: 0px 3px 5px #2322222322224d;
-    transform-origin: 0 0 0;
-    transform: scaleY(0.2);
-    -webkit-transition: all 0.3s ease 0s;
-    -moz-transition: all 0.3s ease 0s;
-    transition: all 0.3s ease 0s;
-    opacity: 0;
-    visibility: hidden;
-    padding: 10px;
+	transform-origin: 0 0 0;
+	transform: scaleY(0.2);
+	-webkit-transition: all 0.3s ease 0s;
+	-moz-transition: all 0.3s ease 0s;
+	transition: all 0.3s ease 0s;
+	opacity: 0;
+	visibility: hidden;
+	padding: 10px;
 }
 .header .nav li .dropdown li:hover .dropdown.sub-dropdown{
 	opacity:1;
@@ -705,23 +704,23 @@ Version:1.0
 	padding: 0 25px 0 20px;
 	width: 328px;
 }
-.header.shop .search-bar .btnn {
-	height: 50px;
-	line-height: 53px;
-	width: 62px;
-	text-align: center;
-	font-size: 18px;
-	color: #fff;
-	background: #232222232222;
-	position: absolute;
-	right: -2px;
-	top: -1px;
-	border: none;
-	border-radius: 0 5px 5px 0;
-	-webkit-transition: all 0.4s ease;
-	-moz-transition: all 0.4s ease;
-	transition: all 0.4s ease;
-}
+	.header.shop .search-bar .btnn {
+		height: 50px;
+		line-height: 53px;
+		width: 62px;
+		text-align: center;
+		font-size: 18px;
+		color: #fff;
+		background: rgba(0, 0, 0, 0.2);
+		position: absolute;
+		right: -2px;
+		top: -1px;
+		border: none;
+		border-radius: 0 5px 5px 0;
+		-webkit-transition: all 0.4s ease;
+		-moz-transition: all 0.4s ease;
+		transition: all 0.4s ease;
+	}
 .header.shop .search-bar .btnn:hover{
 	color:#fff;
 	background:#EB395F;
@@ -1689,10 +1688,10 @@ Version:1.0
 	border-radius: 0;
 	font-size: 15px;
 	text-align: center;
-	-webkit-transition:all 0.4s ease;
-	-moz-transition:all 0.4s ease;
-	transition:all 0.4s ease;
-	box-shadow: 0px 0px 10px #2322222322221c;
+	-webkit-transition: all 0.4s ease;
+	-moz-transition: all 0.4s ease;
+	transition: all 0.4s ease;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 .most-popular .owl-carousel .owl-nav div:hover{
 	color:#fff;
@@ -3594,7 +3593,7 @@ Version:1.0
 	font-size: 13px;
 	border-radius: 30px;
 	height: auto;
-	line-height: a;
+	line-height: 10px;
 	padding: 13px 32px;
 }
 .shop-list .list-content .btn:hover{
@@ -3603,44 +3602,39 @@ Version:1.0
 	border-color:transparent;
 }
 /* Pagination CSS */
-.pagination {
-	text-align: left;
-	margin: 50px 0 0 0;
-	display:block;
-}
-.pagination.center {
-	text-align: center;
-}
-.pagination .pagination-list li {
-	margin-right: 5px;
+.ul.pagination {
 	display: inline-block;
+	padding: 0px;
+	margin: 0px;
 }
-.pagination .pagination-list li:last-child{
-	margin-right:0px;
+
+ul.pagination li {
+	display: inline;
 }
-.pagination .pagination-list li a {
-	background: #F6F7FB;
-	color: #666;
-	padding: 6px 18px;
-	font-weight: 400;
-	border: 1px solid #e1e1e1;
-	font-size: 16px;
-	border-radius: 0px;
+
+ul.pagination li a {
+	color: black;
+	float: left;
+	padding: 3px 11px;
+	text-decoration: none;
+	transition: background-color .3s;
+	border: 1px solid #ddd;
 }
-.pagination .pagination-list li.active a,
-.pagination .pagination-list li:hover a{
-	background: #EB395F;
-	color: #fff;
-	border-color: transparent;
+
+ul.pagination li a.active {
+	background-color: #EB395F;
+	color: white;
+	border: 1px solid #EB395F;
 }
-.pagination .pagination-list li a i{
-	font-size:13px;
+
+ul.pagination li a:hover:not(.active) {
+	background-color: #EB395F;
 }
-.pagination .pagination-list li a i{}
-.blog-grids.pagination{
-	margin-top:50px;
-	text-align:center;
+
+ul.pagination .active {
+	background-color: #EB395F;
 }
+
 /*======================================
    End Shop List CSS
 ========================================*/
@@ -4761,7 +4755,7 @@ Version:1.0
 	font-size: 30px;
 }
 .mail-success .mail-inner p {
-	font-size: 14;
+	font-size: 14px;
 	color: #232222;
 	margin-bottom: 30px;
 	line-height: 22px;

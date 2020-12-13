@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DOAN.Models;
+using PagedList;
+
+
 
 namespace DOAN.Controllers
 {
@@ -26,9 +29,10 @@ namespace DOAN.Controllers
         }
 
       
-        public ActionResult SanPhamTheoThuongHieu(int ?idTH, int idLoai=0)
+        public ActionResult SanPhamTheoThuongHieu(int? page, int ?idTH, int idLoai=0)
         {
-            
+            ViewBag.IdTH = idTH;
+            ViewBag.IdLoai = idLoai;
             if (idTH == null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
@@ -48,12 +52,22 @@ namespace DOAN.Controllers
                 ViewBag.Loai= db.LOAISANPHAMs.SingleOrDefault(x => x.IdLoaiSP == idLoai);
             }    
             ViewBag.TH = db.THUONGHIEUx.SingleOrDefault(x => x.IdTH == idTH);
-            return View(listSP);
+
+
+            //So san pham tren 1 trang
+            int PageSize = 4;
+            //So trang hien tai
+            int PageNumber = (page ?? 1);
+            ViewBag.IdTH = idTH;
+            ViewBag.IdLoai = idLoai;
+            return View(listSP.OrderBy(x=>x.IdSP).ToPagedList(PageNumber,PageSize));
         }
 
       
-        public ActionResult SanPhamTheoLoai(int? idLoai,int idTH=0)
+        public ActionResult SanPhamTheoLoai(int? page, int? idLoai,int idTH=0)
         {
+            ViewBag.IdTH = idTH;
+            ViewBag.IdLoai = idLoai;
             if (idLoai == null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
@@ -74,7 +88,13 @@ namespace DOAN.Controllers
             }    
             
             ViewBag.Loai = db.LOAISANPHAMs.SingleOrDefault(x => x.IdLoaiSP == idLoai);
-            return View(listSP);
+            //So san pham tren 1 trang
+            int PageSize = 4;
+            //So trang hien tai
+            int PageNumber = (page ?? 1);
+            ViewBag.IdTH = idTH;
+            ViewBag.IdLoai = idLoai;
+            return View(listSP.OrderBy(x => x.IdSP).ToPagedList(PageNumber, PageSize));
         }
 
         [ChildActionOnly]

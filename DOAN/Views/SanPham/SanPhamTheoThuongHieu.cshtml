@@ -1,5 +1,7 @@
 ﻿@using DOAN.Models
-@model IEnumerable<SANPHAM>
+@using PagedList.Mvc;
+
+@model PagedList.IPagedList<SANPHAM>
 @{
     ViewBag.Title = "SanPhamTheoThuongHieu";
     Layout = "~/Views/Shared/DetailLayout.cshtml";
@@ -179,8 +181,19 @@
                     </div>
                 </div>
                 @Html.Action("DanhMucSP", "SanPham", new { listSP = Model })
+                @if(Model.PageCount>1)
+                {
+                    <div class="float-right text-right mt-lg-5 align-bottom">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("SanPhamTheoThuongHieu", new { page = page, @idLoai = ViewBag.IdLoai, @idTH = ViewBag.IdTH }))
+
+                    </div>
+                }
             </div>
+            
+            
         </div>
     </div>
 </section>
 <!--End Product Style-->
+

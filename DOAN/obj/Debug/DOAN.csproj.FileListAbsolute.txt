@@ -171,4 +171,8 @@ C:\Users\Thuy Tien\Desktop\TMDT\DOAN\obj\Debug\DOAN.csproj.CoreCompileInputs.cac
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\obj\Debug\DOAN.csproj.CopyComplete
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\obj\Debug\DOAN.dll
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\obj\Debug\DOAN.pdb
+C:\Users\Thuy Tien\Desktop\TMDT\DOAN\bin\PagedList.dll
+C:\Users\Thuy Tien\Desktop\TMDT\DOAN\bin\PagedList.Mvc.dll
+C:\Users\Thuy Tien\Desktop\TMDT\DOAN\bin\PagedList.xml
+C:\Users\Thuy Tien\Desktop\TMDT\DOAN\bin\PagedList.Mvc.xml
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\obj\Debug\DOAN.csprojAssemblyReference.cache

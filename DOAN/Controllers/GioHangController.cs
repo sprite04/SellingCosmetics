@@ -189,6 +189,38 @@ namespace DOAN.Controllers
             return Redirect(strURL);
         }
 
+        public ActionResult DatHang(string strURL)
+        {
+            if (Session["GioHang"] == null)
+                return RedirectToAction("Index", "Home");
+            NGUOIDUNG user = Session["TaiKhoan"] as NGUOIDUNG;
+            if (user == null)
+                return RedirectToAction("DangNhap", "Home", new { strURL = strURL });
+            HOADON hd = new HOADON();
+            hd.NgayDH = DateTime.Now;
+            hd.IdKH = user.IdUser;
+            hd.TinhTrang = 4;
+            hd.SDT = user.SDT;
+            hd.DiaChi = user.DiaChi;
+            db.HOADONs.Add(hd);
+            db.SaveChanges();
+            List<GIOHANG> lstGH = LayGioHang();
+            foreach(var item in lstGH)
+            {
+                CHITIETHD ct = new CHITIETHD();
+                ct.IdHD = hd.IdHD;
+                ct.IdSP = item.SANPHAM.IdSP;
+                ct.SoLuong = item.SoLuong;
+                db.CHITIETHDs.Add(ct);
+            }
+            db.SaveChanges();
+            var dsGH=db.GIOHANGs.Where(x => x.IdKH == user.IdUser);
+            db.GIOHANGs.RemoveRange(dsGH);
+            db.SaveChanges();
+            Session["GioHang"] = null;
+            return RedirectToAction("XemGioHang");
+        }
+
         public int TinhTongSoLuong()
         {
             List<GIOHANG> listGioHang = Session["GioHang"] as List<GIOHANG>;

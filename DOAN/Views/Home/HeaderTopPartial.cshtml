@@ -38,6 +38,7 @@
                     <div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
                     <!-- Search Form -->
                     <div class="search-top">
+                        
                         <form class="search-form">
                             <input type="text" placeholder="Search here..." name="search">
                             <button value="search" type="submit"><i class="ti-search"></i></button>
@@ -56,10 +57,11 @@
                             <option>mobile</option>
                             <option>kid’s item</option>
                         </select>
-                        <form>
-                            <input name="search" placeholder="Search Products Here....." type="search">
-                            <button class="btnn"><i class="ti-search"></i></button>
-                        </form>
+                        @using (Html.BeginForm("TimKiemTuKhoa", "TimKiem"))
+                        {
+                            <input name="sTuKhoa" placeholder="Search Products Here....." type="search">
+                            <button class="btnn" type="submit"><i class="ti-search"></i></button>
+                        }
                     </div>
                 </div>
             </div>

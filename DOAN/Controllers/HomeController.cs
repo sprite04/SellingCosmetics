@@ -63,7 +63,6 @@ namespace DOAN.Controllers
             ViewBag.ThongBao = 0;
             if (this.IsCaptchaValid("Captcha is not valid"))
             {
-                
                 user.Password = Encryptor.MD5Hash(user.Password);
                 user.Password1 = Encryptor.MD5Hash(user.Password1);
                 user.NgayTao = DateTime.Now;

@@ -22,10 +22,14 @@ namespace DOAN.Models
         [StringLength(50)]
         public string HoTen { get; set; }
 
+
+        [StringLength(255)]
+        public string Avatar { get; set; }
+
         [Column(TypeName = "date")]
         public DateTime? NgaySinh { get; set; }
 
-        public bool? GioiTinh { get; set; }
+        public bool GioiTinh { get; set; }
 
         [StringLength(50)]
         public string DiaChi { get; set; }
@@ -46,7 +50,7 @@ namespace DOAN.Models
 
         public int? IdLoaiUser { get; set; }
 
-        public bool? TT_User { get; set; }
+        public bool TT_User { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? NgayTao { get; set; }

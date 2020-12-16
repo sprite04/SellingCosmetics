@@ -17,5 +17,12 @@ namespace DOAN.Controllers
             var model = db.NHAPHANGs.OrderByDescending(x => x.NgayNhap);
             return View(model);
         }
+
+        public ActionResult PhieuNhap()
+        {
+            ViewBag.ThuongHieu = new SelectList(db.THUONGHIEUx, "IdTH", "TenTH");
+            ViewBag.SanPham = new SelectList(db.SANPHAMs, "IdSP", "TenSP");
+            return View();
+        }
     }
 }

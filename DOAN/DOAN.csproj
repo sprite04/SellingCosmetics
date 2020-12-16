@@ -2282,6 +2282,7 @@
     <Content Include="Views\QuanLySanPham\Edit.cshtml" />
     <Content Include="Views\QuanLySanPham\NhapHang.cshtml" />
     <Content Include="Views\NhapHang\Index.cshtml" />
+    <Content Include="Views\NhapHang\PhieuNhap.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

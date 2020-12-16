@@ -2210,6 +2210,7 @@
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NguoiDungController.cs" />
+    <Compile Include="Controllers\NhapHangController.cs" />
     <Compile Include="Controllers\QuanLySanPhamController.cs" />
     <Compile Include="Controllers\SanPhamController.cs" />
     <Compile Include="Controllers\TimKiemController.cs" />
@@ -2226,6 +2227,7 @@
     <Compile Include="Models\Metadata\GIOHANG.cs" />
     <Compile Include="Models\Metadata\LOAISANPHAM.cs" />
     <Compile Include="Models\Metadata\NGUOIDUNG.cs" />
+    <Compile Include="Models\Metadata\NHAPHANG.cs" />
     <Compile Include="Models\Metadata\SANPHAM.cs" />
     <Compile Include="Models\NGUOIDUNG.cs" />
     <Compile Include="Models\NHAPHANG.cs" />
@@ -2278,6 +2280,8 @@
     <Content Include="Views\QuanLySanPham\Index.cshtml" />
     <Content Include="Views\QuanLySanPham\Create.cshtml" />
     <Content Include="Views\QuanLySanPham\Edit.cshtml" />
+    <Content Include="Views\QuanLySanPham\NhapHang.cshtml" />
+    <Content Include="Views\NhapHang\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

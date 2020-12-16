@@ -186,5 +186,71 @@ namespace DOAN.Controllers
             }
             return View(sp);
         }
+
+        
+        public ActionResult NhapHang(int? id,DateTime? ngay)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if(ngay!=null)
+            {
+                NHAPHANG nh = db.NHAPHANGs.FirstOrDefault(x => x.IdSP == id && x.NgayNhap == ngay);
+                if (nh == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.TenSP = nh.SANPHAM.TenSP;
+                return View(nh);
+            }    
+            else
+            {
+                SANPHAM sp = db.SANPHAMs.FirstOrDefault(x => x.IdSP == id);
+                if (sp == null)
+                {
+                    return HttpNotFound();
+                }
+                NHAPHANG nh = new NHAPHANG();
+                nh.IdSP = sp.IdSP;
+                ViewBag.TenSP = sp.TenSP;
+                nh.NgayNhap = DateTime.Now;
+                nh.GiaNhap = sp.GiaGoc;
+                nh.SoLuong = 0;
+                return View(nh);
+            }    
+        }
+
+        [HttpPost]
+        public ActionResult NhapHang(NHAPHANG nh)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if(db.NHAPHANGs.Where(x=>x.NgayNhap==nh.NgayNhap&& x.IdSP==nh.IdSP).Count()>0)
+                    {
+                        db.Entry(nh).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        db.NHAPHANGs.Add(nh);
+                        db.SaveChanges();
+                    }    
+                    
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Import failed.");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Please check the information you entered.");
+            }
+            return View(nh);
+        }
     }
 }

@@ -54,7 +54,7 @@
                         <div class="card-header">
                             <h3 class="card-title">@th.TenTH</h3>
                             <!-- Button trigger modal -->
-                            <a class="btn btn-success float-right" href="@Url.Action("Create","QuanLySanPham")">
+                            <a class="btn btn-success float-right" href="@Url.Action("Create","QuanLySanPham",new {idTH=th.IdTH})">
                                 Create
                             </a>
                         </div>
@@ -73,6 +73,7 @@
                                                     <th>@Html.DisplayNameFor(model => model.SoLuong)</th>
                                                     <th>@Html.DisplayNameFor(model => model.LOAISANPHAM.TenLoai)</th>
                                                     <th>@Html.DisplayNameFor(model => model.TINHTRANG1.TenTT)</th>
+                                                    <th></th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -102,6 +103,13 @@
                                                             </td>
                                                             <td>
                                                                 @Html.DisplayFor(modelItem => item.TINHTRANG1.TenTT)
+                                                            </td>
+                                                            <td>
+                                                                <div class="btn-group btn-group-sm">
+                                                                    <a class="btn btn-success" href="@Url.Action("NhapHang","QuanLySanPham",new { id=item.IdSP})">
+                                                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </div>
                                                             </td>
                                                             <td>
                                                                 <div class="btn-group btn-group-sm">

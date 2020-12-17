@@ -34,17 +34,20 @@ namespace DOAN.Controllers
         [Route("Create")]
         public ActionResult Create(NGUOIDUNG nd, HttpPostedFileBase Avatar)
         {
-
-            if (Avatar.ContentLength > 0)
+            if(Avatar!=null)
             {
-                var fileName = Path.GetFileName(Avatar.FileName);
-                var path = Path.Combine(Server.MapPath("~/assets/admin/hinhnd"), fileName);
-                nd.Avatar = fileName;
-                if (!System.IO.File.Exists(path))
+                if (Avatar.ContentLength > 0)
                 {
-                    Avatar.SaveAs(path);
+                    var fileName = Path.GetFileName(Avatar.FileName);
+                    var path = Path.Combine(Server.MapPath("~/assets/admin/hinhnd"), fileName);
+                    nd.Avatar = fileName;
+                    if (!System.IO.File.Exists(path))
+                    {
+                        Avatar.SaveAs(path);
+                    }
                 }
-            }
+            }    
+            
             nd.Password = Encryptor.MD5Hash(nd.Password);
             nd.Password1 = Encryptor.MD5Hash(nd.Password1);
             nd.NgayTao = DateTime.Now;

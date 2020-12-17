@@ -1,9 +1,11 @@
 ﻿@using DOAN.Models;
-
+@model IEnumerable<NHAPHANG>
 
 @{
     ViewBag.Title = "PhieuNhap";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
+    var lstSanPham = ViewBag.SanPham as IEnumerable<SANPHAM>;
+
 }
 
 
@@ -19,10 +21,40 @@
     </div>
 }
 
+
 @section script{
     <script>
-        
+
+
         $(".DeleteId").prepend("<i class='far fa-trash-alt'></i>");
+
+        $("#btnAdd").click(function () {
+            var id_cuoi = $(".ChiTietPhieuNhap").find("tr:last-child").attr("data-id");
+            i = parseInt(id_cuoi) + 1;
+
+            var noidung = $(".trAppend").html();
+            //var nd = "<tr><td>kkkkkk</td><td><input/></td><td><input/></td><td><div class=\"btn-group btn-group-sm\"><a class=\"btn btn-info\" href=\"#\"><i class=\"fa fa-minus\"></i></a></div></td></tr>"
+            var trnoidung = "<tr class=\"trAppended\" data-id=\"" + i + "\">" + noidung + "</tr>";
+            $(".ChiTietPhieuNhap").append(trnoidung);
+            LoadId();
+        });
+
+        function LoadId() {
+            $(".trAppended").each(function () {
+                var id = $(this).attr("data-id");
+                var nameIdSP = "[" + id + "].IdSP";
+                var nameSoLuong = "[" + id + "].SoLuong";
+                var nameGiaNhap = "[" + id + "].GiaNhap";
+                $(this).find(".ddlSanPham").prop("name", nameIdSP);
+                $(this).find(".iSoLuong").prop("name", nameSoLuong);
+                $(this).find(".iGiaNhap").prop("name", nameGiaNhap);
+            })
+        };
+
+        $("body").delegate(".btnXoa", "click", function () {
+            $(this).closest(".trAppended").remove();
+
+        });
 
     </script>
 }
@@ -41,88 +73,78 @@
                             Create
                         </a>
                     </div>
-                    @using (Html.BeginForm("Create", "NguoiDung", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("PhieuNhap","NhapHang"))
                     {
                         @Html.AntiForgeryToken()
 
-                <div class="card-body">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.Label("NgayNhap", htmlAttributes: new { @for = "inputBD" })
-                                @Html.TextBox("NgayNhap", "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control", @id = "inputBD" })
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.Label("ThuongHieu")
-                                @Html.DropDownList("ThuongHieu", null, htmlAttributes: new { @class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-
-                        
-
-
-
-                        
-                        <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <div class="card-body">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="row">
-                                <div class="col-sm-12 col-md-6"></div>
-                                <div class="col-sm-12 col-md-6"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
-                                        <thead>
-                                            <tr>
-                                                <th>hjkhjkhkjk</th>
-                                                <th>hgkjhkjhjk</th>
-                                                <th>khjkjbnbn</th>
-                                                <th>gvcgdgxgx</th>
-                                                <th>gsgfgfhs</th>
-                                                <th>fghshsfhfsh</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr id="row">
-                                                <td>
-                                                    gxgxvcbv
-                                                </td>
-                                                <td>
-                                                    bxbbcxbx
-                                                </td>
-                                                <td>
-                                                    bxbbx
-                                                </td>
-                                                <td>
-                                                    xbxbx
-                                                </td>
-                                                <td>
-                                                    xbxbxb
-                                                </td>
-                                                <td>
-                                                    xbxbx
-                                                </td>
-                                                <td>
-                                                    <div class="btn-group btn-group-sm">
-                                                        <a class="btn btn-info" href="#">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("NgayNhap", htmlAttributes: new { @for = "inputBD" })
+                                        @Html.TextBox("NgayNhap", "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control", @id = "inputBD", @value = DateTime.Now })
+                                        @Html.ValidationMessage("NgayNhap",new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+
+                        
+
+
+
+                        
+                                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6"></div>
+                                        <div class="col-sm-12 col-md-6"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                                                <thead>
+                                                    <tr data-id="-1">
+                                                        <th>hjkhjkhkjk</th>
+                                                        <th>hgkjhkjhjk</th>
+                                                        <th>khjkjbnbn</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="ChiTietPhieuNhap">
+                                                    
+                                                    <tr id="row" class="trAppend" style="display:none" data-id="-1">
+                                                        <td>
+                                                            <select class="ddlSanPham form-control" name="">
+                                                                @foreach (var item in lstSanPham)
+                                                                {
+                                                                    <option value="@item.IdSP">@item.TenSP</option>
+                                                                }
+                                                            </select>
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            <input class="iSoLuong" value="0"/>
+                                                        </td>
+                                                        <td>
+                                                            <input class="iGiaNhap" value="0"/>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-danger btnXoa" style="font-size: 9px;padding: 7px 10px">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <!-- /.card-body -->
+                        
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary float-right">Save</button>
+                            <button type="button" class="btn btn-success float-left" style="font-size:10px; padding:8px 11px" id="btnAdd"><i class="fa fa-plus"></i></button>
+                            <button type="submit" class="btn btn-primary float-right" id="btnNhapHang">Save</button>
                         </div>
                         }
                         <!-- /.card-header -->
@@ -141,4 +163,3 @@
 <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
 </a>
-

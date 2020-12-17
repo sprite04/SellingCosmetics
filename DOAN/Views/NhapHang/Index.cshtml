@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
+    int k = 0;
 }
 
 
@@ -47,11 +48,22 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
+                
                 @foreach (var item in Model.GroupBy(x => (x.NgayNhap.Month, x.NgayNhap.Year)))
                 {
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">@item.Key</h3>
+                            @if(k==0)
+                            {
+                                <a class="btn btn-success float-right" href="@Url.Action("PhieuNhap","NhapHang")">
+                                    Create
+                                </a>
+                            }
+                            @{ 
+                                k = 1;
+                            }
+                            
                             <!-- Button trigger modal -->
                         </div>
                         <!-- /.card-header -->
@@ -72,7 +84,7 @@
                                             <tbody>
                                                 @foreach (var i in item)
                                                 {
-                                                    <tr id="row1_@i.NgayNhap/@i.IdSP">
+                                                    <tr id="row1_@i.NgayNhap.ToString()_@i.IdSP">
                                                         <td>
                                                             @Html.DisplayFor(modelItem => i.SANPHAM.TenSP)
                                                         </td>
@@ -90,8 +102,10 @@
                                                                 <a class="btn btn-info" href="@Url.Action("NhapHang","QuanLySanPham",new { id=i.IdSP, ngay=i.NgayNhap})">
                                                                     <i class="fas fa-pencil-alt"></i>
                                                                 </a>
-                                                                @Ajax.ActionLink(" ", "Delete", new { id = i.IdSP }, new AjaxOptions { Confirm = "Bạn có muốn xoá sản phẩm này?", OnComplete = "$('#row1_" + @i.IdSP + "').remove()", HttpMethod = "Post" }, new { @class = "btn btn-danger DeleteId" })
-
+                                                                
+                                                                <a class="btn btn-danger" href="@Url.Action("Delete","NhapHang",new { dt=i.NgayNhap,idSP = i.IdSP })">
+                                                                    <i class="far fa-trash-alt"></i>
+                                                                </a>
                                                             </div>
 
                                                         </td>

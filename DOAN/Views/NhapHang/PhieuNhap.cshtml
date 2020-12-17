@@ -11,7 +11,6 @@
 
 @section header{
     <div class="col-sm-6">
-        <h1>Products</h1>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -56,6 +55,32 @@
 
         });
 
+        $("#btnNhapHang").click(function () {
+
+            if (kiemtra() == false) {
+                return false;
+            }
+        });
+
+        function kiemtra() {
+            var result = true;
+            $(".iSoLuong").each(function () {
+                var giatri = $(this).val();
+                if (isNaN(giatri) == true) {
+                    alert("Invalid amount.");
+                    result= false;
+                }
+            });
+            $(".iGiaNhap").each(function () {
+                var giatri = $(this).val();
+                if (isNaN(giatri) == true) {
+                    alert("Invalid price.");
+                    result = false;
+                }
+            });
+            return result;
+        }
+
     </script>
 }
 
@@ -67,11 +92,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">hhihhiihi</h3>
+                        <h3 class="card-title">Import goods</h3>
                         <!-- Button trigger modal -->
-                        <a class="btn btn-success float-right" href="#">
-                            Create
-                        </a>
                     </div>
                     @using (Html.BeginForm("PhieuNhap","NhapHang"))
                     {
@@ -82,17 +104,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        @Html.Label("NgayNhap", htmlAttributes: new { @for = "inputBD" })
-                                        @Html.TextBox("NgayNhap", "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control", @id = "inputBD", @value = DateTime.Now })
-                                        @Html.ValidationMessage("NgayNhap",new { @class = "text-danger" })
+                                        @Html.Label("Date", htmlAttributes: new { @for = "inputBD" })
+                                        <input name="NgayNhap" type="date" id="myDate" value=@DateTime.Now.ToString("yyyy-MM-dd") class = "form-control">
+                                        @Html.ValidationMessage("NgayNhap", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
-
-                        
-
-
-
                         
                                 <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
@@ -104,9 +121,9 @@
                                             <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
                                                 <thead>
                                                     <tr data-id="-1">
-                                                        <th>hjkhjkhkjk</th>
-                                                        <th>hgkjhkjhjk</th>
-                                                        <th>khjkjbnbn</th>
+                                                        <th>Products</th>
+                                                        <th>Amount</th>
+                                                        <th>Price</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>

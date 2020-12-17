@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DOAN.Models;
@@ -17,6 +18,33 @@ namespace DOAN.Controllers
         {
             var model = db.NHAPHANGs.OrderByDescending(x => x.NgayNhap);
             return View(model);
+        }
+
+       
+        public ActionResult Delete(DateTime dt, int ? idSP)
+        {
+            if (idSP == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            NHAPHANG nh = db.NHAPHANGs.FirstOrDefault(x => x.IdSP == idSP && x.NgayNhap == dt);
+            if (nh == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            try
+            {
+                db.NHAPHANGs.Remove(nh);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Content("<script> alert(\"Quá trình thực hiện thất bại\")</script>");
+            }
         }
 
         public ActionResult PhieuNhap()
@@ -55,7 +83,7 @@ namespace DOAN.Controllers
             }
             catch (Exception)
             {
-                ModelState.AddModelError("", "Bạn chưa lựa chọn ngày");
+                ModelState.AddModelError("", "Please check the information you entered.");
                 ViewBag.SanPham = db.SANPHAMs;
                 return View();
             }

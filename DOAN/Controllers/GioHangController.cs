@@ -260,19 +260,32 @@ namespace DOAN.Controllers
             return Redirect(strURL);
         }
 
-        public ActionResult DatHang(string strURL)
+        public ActionResult DatHang(string strURL, string MaKM)
         {
             if (Session["GioHang"] == null)
                 return RedirectToAction("Index", "Home");
             NGUOIDUNG user = Session["TaiKhoan"] as NGUOIDUNG;
             if (user == null)
                 return RedirectToAction("DangNhap", "Home", new { strURL = strURL });
+            int TienVanChuyen = db.DTGIAOHANGs.First().TienVanChuyen ?? 20000;
+            int TongTienSP = TinhTongThanhTien();
+            int TienGiam = 0;
             HOADON hd = new HOADON();
             hd.NgayDH = DateTime.Now;
             hd.IdKH = user.IdUser;
             hd.TinhTrang = 4;
             hd.SDT = user.SDT;
             hd.DiaChi = user.DiaChi;
+            KHUYENMAI km = db.KHUYENMAIs.FirstOrDefault(x => x.MaKM == MaKM);
+            if (km != null && km.TinhTrang == true)
+            {
+                hd.MaKM = km.MaKM;
+                if (km.LoaiKM == 1)
+                {
+                    TienGiam = (TongTienSP * (km.GiaTri ?? 0)) / 100;
+                }
+            }
+            hd.TongTien = TongTienSP + TienVanChuyen - TienGiam;
             db.HOADONs.Add(hd);
             db.SaveChanges();
             List<GIOHANG> lstGH = LayGioHang();
@@ -311,9 +324,60 @@ namespace DOAN.Controllers
         // GET: GioHang
         public ActionResult XemGioHang()
         {
-            ViewBag.TongSoLuong = TinhTongSoLuong();
-            ViewBag.TongTien = TinhTongThanhTien();
+            int TienVanChuyen= db.DTGIAOHANGs.First().TienVanChuyen ??20000;
+            int TongTienSP = TinhTongThanhTien();
+            int SoLuongSP= TinhTongSoLuong();
+            ViewBag.TienVanChuyen = TienVanChuyen;
+            ViewBag.TongSoLuong = SoLuongSP;
+            ViewBag.TongTien = TongTienSP;
+            ViewBag.IsKM = 0;
+            ViewBag.KhuyenMai = "";
+            ViewBag.GiamGia = 0;
+            ViewBag.ThanhToan = TongTienSP + TienVanChuyen;
             List<GIOHANG> listGioHang = LayGioHang();
+            return View(listGioHang);
+        }
+
+        [HttpPost]
+        public ActionResult XemGioHang(FormCollection f)
+        {
+            string MaKM = f["MaKM"];
+            int TienVanChuyen = db.DTGIAOHANGs.First().TienVanChuyen ?? 20000;
+            int TongTienSP = TinhTongThanhTien();
+            int SoLuongSP = TinhTongSoLuong();
+            ViewBag.TienVanChuyen = TienVanChuyen;
+            ViewBag.TongSoLuong = SoLuongSP;
+            ViewBag.TongTien = TongTienSP;
+            ViewBag.IsKM = 0;
+            ViewBag.GiamGia = 0;
+            List<GIOHANG> listGioHang = LayGioHang();
+            KHUYENMAI km= db.KHUYENMAIs.FirstOrDefault(x => x.MaKM == MaKM);
+            if(km==null)
+            {
+                ViewBag.KhuyenMai = "";
+                ViewBag.IsKM = 1;
+                ViewBag.ThanhToan = TongTienSP + TienVanChuyen;
+            }
+            else if(km.TinhTrang == false)
+            {
+                ViewBag.KhuyenMai = "";
+                ViewBag.IsKM = 2;
+                ViewBag.ThanhToan = TongTienSP + TienVanChuyen;
+            }
+            else
+            {
+                int TienGiam = 0;
+                ViewBag.KhuyenMai = MaKM;
+                ViewBag.IsKM = 3;
+                if(km.LoaiKM==1)
+                {
+                    TienGiam = (TongTienSP * (km.GiaTri??0)) / 100;
+                    ViewBag.ThanhToan = TongTienSP + TienVanChuyen-TienGiam;
+                    ViewBag.GiamGia = TienGiam;
+                }    
+                
+            }    
+            
             return View(listGioHang);
         }
 

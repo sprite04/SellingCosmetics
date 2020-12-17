@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "XemGioHang";
     Layout = "~/Views/Shared/DetailLayout.cshtml";
+    string strKM = ViewBag.KhuyenMai;
 }
 
 
@@ -89,26 +90,42 @@
                             <div class="col-lg-8 col-md-5 col-12">
                                 <div class="left">
                                     <div class="coupon">
-                                        <form action="#" target="_blank">
-                                            <input name="Coupon" placeholder="Enter Your Coupon">
-                                            <button class="btn">Apply</button>
-                                        </form>
+                                        @using (Html.BeginForm("XemGioHang", "GioHang"))
+                                        {
+                                            <input name="MaKM" placeholder="Enter Your Coupon" value="@ViewBag.KhuyenMai">
+                                            <button class="btn" type="submit">Apply</button>
+                                        }
                                     </div>
                                     <div class="checkbox">
-                                        <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox"> Shipping (+10$)</label>
+                                        @if (ViewBag.IsKM == 1)
+                                        {
+                                            <span>Không tồn tại mã khuyễn mãi này</span>
+                                        }
+                                        @if (ViewBag.IsKM == 2)
+                                        {
+                                            <span>Mã khuyến mãi này đã hết hạn</span>
+                                        }
+                                        @if (ViewBag.IsKM == 3)
+                                        {
+                                            <span>Áp dụng mã khuyến mãi thành công</span>
+                                        }
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-7 col-12">
                                 <div class="right">
                                     <ul>
-                                        <li>Cart Subtotal<span>$330.00</span></li>
-                                        <li>Shipping<span>Free</span></li>
-                                        <li>You Save<span>$20.00</span></li>
-                                        <li class="last">You Pay<span>$310.00</span></li>
+                                        <li>Cart Subtotal<span>@ViewBag.TongTien</span></li>
+                                        <li>Shipping<span>@ViewBag.TienVanChuyen</span></li>
+                                        @if (ViewBag.IsKM == 3)
+                                        {
+                                            <li>You Save<span>@ViewBag.GiamGia</span></li>
+                                        }
+
+                                        <li class="last">You Pay<span>@ViewBag.ThanhToan</span></li>
                                     </ul>
                                     <div class="button5">
-                                        <a href="@Url.Action("DatHang","GioHang",new { strURL=Request.Url.ToString()})" class="btn">Checkout</a>
+                                        <a href="@Url.Action("DatHang","GioHang",new { strURL=Request.Url.ToString(),MaKM=strKM})" class="btn">Checkout</a>
                                         <a href="#" class="btn">Continue shopping</a>
                                     </div>
                                 </div>

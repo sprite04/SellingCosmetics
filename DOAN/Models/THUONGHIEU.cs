@@ -30,7 +30,7 @@ namespace DOAN.Models
         [StringLength(50)]
         public string DiaChi { get; set; }
 
-        [StringLength(200)]
+        [StringLength(3000)]
         public string ChiTiet { get; set; }
 
         public bool? TinhTrang { get; set; }

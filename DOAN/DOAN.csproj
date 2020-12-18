@@ -2211,6 +2211,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NguoiDungController.cs" />
     <Compile Include="Controllers\NhapHangController.cs" />
+    <Compile Include="Controllers\QuanLyLoaiSPController.cs" />
     <Compile Include="Controllers\QuanLySanPhamController.cs" />
     <Compile Include="Controllers\QuanLyThuongHieuController.cs" />
     <Compile Include="Controllers\SanPhamController.cs" />
@@ -2219,6 +2220,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CHITIETHD.cs" />
+    <Compile Include="Models\DANHMUC.cs" />
     <Compile Include="Models\DTGIAOHANG.cs" />
     <Compile Include="Models\GIOHANG.cs" />
     <Compile Include="Models\HOADON.cs" />
@@ -2287,6 +2289,9 @@
     <Content Include="Views\QuanLyThuongHieu\Index.cshtml" />
     <Content Include="Views\QuanLyThuongHieu\Create.cshtml" />
     <Content Include="Views\QuanLyThuongHieu\Edit.cshtml" />
+    <Content Include="Views\QuanLyLoaiSP\Index.cshtml" />
+    <Content Include="Views\QuanLyLoaiSP\Create.cshtml" />
+    <Content Include="Views\QuanLyLoaiSP\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

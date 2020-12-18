@@ -23,6 +23,8 @@ namespace DOAN.Models
 
         public int DanhMuc { get; set; }
 
+        public bool? TinhTrang { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SANPHAM> SANPHAMs { get; set; }
     }

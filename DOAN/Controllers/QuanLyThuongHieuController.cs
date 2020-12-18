@@ -98,7 +98,7 @@ namespace DOAN.Controllers
             catch (Exception ex)
             {
                 string message = ex.Message;
-                return Content("<script> alert(\"the implementation failed.\")</script>");
+                return Content("<script> alert(\"The implementation failed.\")</script>");
             }
         }
 

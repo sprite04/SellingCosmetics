@@ -49,7 +49,7 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td class="image" data-title="No"><img src="@Url.Content("~/assets/client/hinhsp/"+item.SANPHAM.AnhSP)" alt="#"></td>
+                                    <td class="image" data-title="No"><img src="@Url.Content("~/assets/client/hinhsp/"+item.SANPHAM.THUONGHIEU.TenTH.ToLower()+"/"+item.SANPHAM.AnhSP)" alt="#"></td>
                                     <td class="product-des" data-title="Description">
                                         <p class="product-name"><a href="#">@item.SANPHAM.TenSP</a></p>
                                         <p class="product-des">Maboriosam in a tonto nesciung eget  distingy magndapibus.</p>
@@ -71,7 +71,10 @@
                                         </div>
                                         <!--/ End Input Order -->
                                     </td>
-                                    <td class="total-amount" data-title="Total"><span>$220.88</span></td>
+                                    @{ 
+                                        int gia = item.SANPHAM.GiaGoc * item.SoLuong;
+                                    }
+                                    <td class="total-amount" data-title="Total"><span>@gia</span></td>
                                     <td class="action" data-title="Remove"><a href="@Url.Action("XoaGioHang","GioHang", new {MaSP=item.IdSP,strURL=Request.Url.ToString() })"><i class="ti-trash remove-icon"></i></a></td>
                                 </tr>
                             }

@@ -276,13 +276,11 @@ namespace DOAN.Controllers
             hd.TinhTrang = 4;
             hd.SDT = user.SDT;
             hd.DiaChi = user.DiaChi;
-            KHUYENMAI km = db.KHUYENMAIs.FirstOrDefault(x => x.MaKM == MaKM);
-            if (km != null && km.TinhTrang == true)
+            if (hd.KHUYENMAI != null && hd.KHUYENMAI.TinhTrang==true)
             {
-                hd.MaKM = km.MaKM;
-                if (km.LoaiKM == 1)
+                if (hd.KHUYENMAI.LoaiKM == 1)
                 {
-                    TienGiam = (TongTienSP * (km.GiaTri ?? 0)) / 100;
+                    TienGiam = (TongTienSP * (hd.KHUYENMAI.GiaTri ?? 0)) / 100;
                 }
             }
             hd.TongTien = TongTienSP + TienVanChuyen - TienGiam;

@@ -37,6 +37,7 @@ namespace DOAN.Models
         [StringLength(12)]
         public string SDT { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string Mail { get; set; }
 

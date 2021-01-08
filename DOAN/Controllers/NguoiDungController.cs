@@ -11,6 +11,7 @@ using DOAN.Models;
 
 namespace DOAN.Controllers
 {
+    [Authorize(Roles = "*")]
     public class NguoiDungController : Controller
     {
 

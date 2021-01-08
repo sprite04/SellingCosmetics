@@ -10,6 +10,7 @@ using DOAN.Models;
 
 namespace DOAN.Controllers
 {
+    [Authorize(Roles = "*,nhaphang")]
     public class QuanLySanPhamController : Controller
     {
         TMDTDbContext db = new TMDTDbContext();
@@ -21,6 +22,7 @@ namespace DOAN.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "*")]
         public ActionResult Create(int ?idTH)
         {
             if(idTH==null)
@@ -45,6 +47,7 @@ namespace DOAN.Controllers
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [Route("Create")]
+        [Authorize(Roles = "*")]
         public ActionResult Create(SANPHAM sp, HttpPostedFileBase [] AnhSP)
         {
             for(int i=0; i<AnhSP.Length; i++)
@@ -97,6 +100,7 @@ namespace DOAN.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "*")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -124,6 +128,7 @@ namespace DOAN.Controllers
             }
         }
 
+        [Authorize(Roles = "*")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -144,6 +149,7 @@ namespace DOAN.Controllers
         [HttpPost]
         [Route("Edit")]
         [ValidateInput(false)]
+        [Authorize(Roles = "*")]
         public ActionResult Edit(SANPHAM sp, HttpPostedFileBase[] AnhSP)
         {
             for (int i = 0; i < AnhSP.Length; i++)

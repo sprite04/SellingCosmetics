@@ -13,5 +13,10 @@ namespace DOAN.Controllers
         {
             return View();
         }
+
+        public ActionResult LoiPhanQuyen()
+        {
+            return View();
+        }
     }
 }

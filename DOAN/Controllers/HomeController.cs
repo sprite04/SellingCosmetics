@@ -7,6 +7,7 @@ using DOAN.Models;
 using CaptchaMvc.HtmlHelpers;
 using CaptchaMvc;
 using DOAN.Common;
+using System.Web.Security;
 
 namespace DOAN.Controllers
 {
@@ -106,6 +107,16 @@ namespace DOAN.Controllers
             var user = db.NGUOIDUNGs.SingleOrDefault(x => x.Username == username && x.Password == password);
             if(user!=null)
             {
+                IEnumerable<PHANQUYEN> lstQuyen = db.PHANQUYENs.Where(x => x.IdLoaiUser == user.IdLoaiUser);
+                string Quyen = "";
+                foreach (var item in lstQuyen)
+                {
+                    Quyen += item.TinhNang + ",";
+                }
+                Quyen = Quyen.Substring(0, Quyen.Length - 1);
+                PhanQuyen(username, Quyen);
+
+
                 Session["TaiKhoan"] = user;
                 List<GIOHANG> lstGioHang = Session["GioHang"] as List<GIOHANG>;
                 if (lstGioHang != null)
@@ -136,10 +147,26 @@ namespace DOAN.Controllers
             return View();
         }
 
+        public void PhanQuyen(string username, string quyen)
+        {
+            FormsAuthentication.Initialize();
+            var ticket = new FormsAuthenticationTicket(1, username, DateTime.Now,
+                                                        DateTime.Now.AddHours(3), //timeout
+                                                        false,//remember me
+                                                        quyen,
+                                                        FormsAuthentication.FormsCookiePath);
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket));
+            if (ticket.IsPersistent)
+                cookie.Expires = ticket.Expiration;
+            Response.Cookies.Add(cookie);
+
+        }
+
         public ActionResult DangXuat(string strURL)
         {
             Session["TaiKhoan"] = null;
             Session["GioHang"] = null;
+            FormsAuthentication.SignOut();
             return Redirect(strURL);
         }
     }

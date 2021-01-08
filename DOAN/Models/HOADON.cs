@@ -26,8 +26,7 @@ namespace DOAN.Models
 
         public int? IdKH { get; set; }
 
-        [StringLength(30)]
-        public string MaKM { get; set; }
+        public int? IdKM { get; set; }
 
         [Required]
         [StringLength(12)]
@@ -39,10 +38,20 @@ namespace DOAN.Models
 
         public int? TinhTrang { get; set; }
 
+        [Column(TypeName = "date")]
+        public DateTime? NgayGH { get; set; }
+
+        public bool? DaThanhToan { get; set; }
+        public int? IdDTGH { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHITIETHD> CHITIETHDs { get; set; }
 
+        public virtual DTGIAOHANG DTGIAOHANG { get; set; }
+
         public virtual NGUOIDUNG NGUOIDUNG { get; set; }
+
+        public virtual KHUYENMAI KHUYENMAI { get; set; }
 
         public virtual TINHTRANG TINHTRANG1 { get; set; }
 

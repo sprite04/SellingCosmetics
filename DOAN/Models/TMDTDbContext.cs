@@ -32,9 +32,7 @@ namespace DOAN.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<HOADON>()
-                .Property(e => e.MaKM)
-                .IsUnicode(false);
+            
 
             modelBuilder.Entity<HOADON>()
                 .Property(e => e.SDT)
@@ -57,6 +55,11 @@ namespace DOAN.Models
             modelBuilder.Entity<KHUYENMAI>()
                 .Property(e => e.MaKM)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<KHUYENMAI>()
+                .HasMany(e => e.HOADONs)
+                .WithOptional(e => e.KHUYENMAI)
+                .HasForeignKey(e => e.IdKM);
 
             modelBuilder.Entity<KHUYENMAI>()
                 .HasMany(e => e.SANPHAMs)

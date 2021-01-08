@@ -2206,11 +2206,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Common\Encryptor.cs" />
+    <Compile Include="Common\LoaiKM.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NguoiDungController.cs" />
     <Compile Include="Controllers\NhapHangController.cs" />
+    <Compile Include="Controllers\QLHoaDonController.cs" />
+    <Compile Include="Controllers\QLKhuyenMaiController.cs" />
     <Compile Include="Controllers\QuanLyLoaiSPController.cs" />
     <Compile Include="Controllers\QuanLySanPhamController.cs" />
     <Compile Include="Controllers\QuanLyThuongHieuController.cs" />
@@ -2292,6 +2295,12 @@
     <Content Include="Views\QuanLyLoaiSP\Index.cshtml" />
     <Content Include="Views\QuanLyLoaiSP\Create.cshtml" />
     <Content Include="Views\QuanLyLoaiSP\Edit.cshtml" />
+    <Content Include="Views\Dashboard\LoiPhanQuyen.cshtml" />
+    <Content Include="Views\QLKhuyenMai\Index.cshtml" />
+    <Content Include="Views\QLKhuyenMai\Create.cshtml" />
+    <Content Include="Views\QLKhuyenMai\Edit.cshtml" />
+    <Content Include="Views\QLHoaDon\Index.cshtml" />
+    <Content Include="Views\QLHoaDon\ChiTiet.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

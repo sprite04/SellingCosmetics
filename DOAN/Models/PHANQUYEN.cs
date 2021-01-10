@@ -11,6 +11,7 @@ namespace DOAN.Models
     {
         [Key]
         [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int IdLoaiUser { get; set; }
 
         [Key]

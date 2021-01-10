@@ -141,7 +141,10 @@ namespace DOAN.Controllers
                     var listGH = db.GIOHANGs.Where(x => x.IdKH == user.IdUser).ToList();
                     Session["GioHang"] = listGH;
                 }
-                return Redirect(strURL);
+                if (strURL != null && strURL != "")
+                    return Redirect(strURL);
+                else
+                    return RedirectToAction("Index", "Home");
             }
             ViewBag.ThongBao = 1;
             return View();

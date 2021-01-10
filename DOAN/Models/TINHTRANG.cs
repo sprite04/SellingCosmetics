@@ -14,7 +14,6 @@ namespace DOAN.Models
         {
             HOADONs = new HashSet<HOADON>();
             SANPHAMs = new HashSet<SANPHAM>();
-            TINHTRANGDHs = new HashSet<TINHTRANGDH>();
         }
 
         [Key]
@@ -28,8 +27,5 @@ namespace DOAN.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SANPHAM> SANPHAMs { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TINHTRANGDH> TINHTRANGDHs { get; set; }
     }
 }

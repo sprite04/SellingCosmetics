@@ -12,7 +12,7 @@ namespace DOAN.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DTGIAOHANG()
         {
-            TINHTRANGDHs = new HashSet<TINHTRANGDH>();
+            HOADONs = new HashSet<HOADON>();
         }
 
         [Key]
@@ -26,6 +26,6 @@ namespace DOAN.Models
         public int? TienVanChuyen { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TINHTRANGDH> TINHTRANGDHs { get; set; }
+        public virtual ICollection<HOADON> HOADONs { get; set; }
     }
 }

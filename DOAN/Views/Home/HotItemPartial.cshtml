@@ -24,7 +24,7 @@
             <div class="col-12">
                 <div class="owl-carousel popular-slider mt-0">
 
-                    @foreach (var item in listSP.Take(10))
+                    @foreach (var item in listSP.OrderByDescending(x=>x.SoLanMua).Take(10))
                     {
                         <!-- Start Single Product -->
                         <div class="single-product">
@@ -53,8 +53,7 @@
                             <div class="product-content">
                                 <h3><a href="@Url.Action("Index","SanPham",new {id=item.IdSP})">@item.TenSP</a></h3>
                                 <div class="product-price">
-                                    <span class="old">@item.GiaGoc <sup>đ</sup></span>
-                                    <span>tien sau khi km <sup>đ</sup></span>
+                                    <span>@Url.Content(((Int32)(item.GiaGoc * @item.LoiNhuan)).ToString())<sup>đ</sup></span>
                                 </div>
                             </div>
                         </div>

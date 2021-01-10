@@ -8,7 +8,7 @@ namespace DOAN.Models
     public partial class TMDTDbContext : DbContext
     {
         public TMDTDbContext()
-            : base("name=TMDT")
+            : base("name=TMDTM")
         {
         }
 
@@ -27,13 +27,10 @@ namespace DOAN.Models
         public virtual DbSet<THONGKETHANG> THONGKETHANGs { get; set; }
         public virtual DbSet<THUONGHIEU> THUONGHIEUx { get; set; }
         public virtual DbSet<TINHTRANG> TINHTRANGs { get; set; }
-        public virtual DbSet<TINHTRANGDH> TINHTRANGDHs { get; set; }
         public virtual DbSet<TRAHANG> TRAHANGs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
-
             modelBuilder.Entity<HOADON>()
                 .Property(e => e.SDT)
                 .IsUnicode(false);
@@ -47,10 +44,6 @@ namespace DOAN.Models
                 .HasMany(e => e.TRAHANGs)
                 .WithRequired(e => e.HOADON)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<HOADON>()
-                .HasOptional(e => e.TINHTRANGDH)
-                .WithRequired(e => e.HOADON);
 
             modelBuilder.Entity<KHUYENMAI>()
                 .Property(e => e.MaKM)
@@ -70,6 +63,10 @@ namespace DOAN.Models
                 .HasMany(e => e.PHANQUYENs)
                 .WithRequired(e => e.LOAIUSER)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<NGUOIDUNG>()
+                .Property(e => e.Avatar)
+                .IsUnicode(false);
 
             modelBuilder.Entity<NGUOIDUNG>()
                 .Property(e => e.SDT)
@@ -145,11 +142,6 @@ namespace DOAN.Models
 
             modelBuilder.Entity<TINHTRANG>()
                 .HasMany(e => e.SANPHAMs)
-                .WithOptional(e => e.TINHTRANG1)
-                .HasForeignKey(e => e.TinhTrang);
-
-            modelBuilder.Entity<TINHTRANG>()
-                .HasMany(e => e.TINHTRANGDHs)
                 .WithOptional(e => e.TINHTRANG1)
                 .HasForeignKey(e => e.TinhTrang);
         }

@@ -19,7 +19,6 @@ namespace DOAN.Models
         [Key]
         public int IdHD { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? NgayDH { get; set; }
 
         public int? TongTien { get; set; }
@@ -38,11 +37,13 @@ namespace DOAN.Models
 
         public int? TinhTrang { get; set; }
 
-        [Column(TypeName = "date")]
+        public int? IdDTGH { get; set; }
+
         public DateTime? NgayGH { get; set; }
 
         public bool? DaThanhToan { get; set; }
-        public int? IdDTGH { get; set; }
+
+        public int? TienVanChuyen { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHITIETHD> CHITIETHDs { get; set; }
@@ -57,7 +58,5 @@ namespace DOAN.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TRAHANG> TRAHANGs { get; set; }
-
-        public virtual TINHTRANGDH TINHTRANGDH { get; set; }
     }
 }

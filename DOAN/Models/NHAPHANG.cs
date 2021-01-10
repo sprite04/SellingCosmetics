@@ -18,9 +18,9 @@ namespace DOAN.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int IdSP { get; set; }
 
-        public int? SoLuong { get; set; }
+        public int SoLuong { get; set; }
 
-        public int? GiaNhap { get; set; }
+        public int GiaNhap { get; set; }
 
         public virtual SANPHAM SANPHAM { get; set; }
     }

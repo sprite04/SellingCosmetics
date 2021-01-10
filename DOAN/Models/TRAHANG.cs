@@ -19,14 +19,13 @@ namespace DOAN.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int IdSP { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? NgayTra { get; set; }
 
         public bool? TinhTrang { get; set; }
 
-        public int? SoLuong { get; set; }
+        public int SoLuong { get; set; }
 
-        [StringLength(200)]
+        [Column(TypeName = "ntext")]
         public string LyDo { get; set; }
 
         public virtual HOADON HOADON { get; set; }

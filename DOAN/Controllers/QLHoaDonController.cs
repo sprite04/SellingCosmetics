@@ -25,6 +25,20 @@ namespace DOAN.Controllers
                 return HttpNotFound();
             var listCT = db.CHITIETHDs.Where(x => x.IdHD == id);
 
+            ViewBag.DoiTacGH = db.DTGIAOHANGs.SingleOrDefault(x=>x.IdDTGH==hoadon.IdDTGH);
+            ViewBag.HoaDon = hoadon;
+            ViewBag.ChiTiet = listCT;
+            return View();
+        }
+
+        public ActionResult Print(int id)
+        {
+            var hoadon = db.HOADONs.Find(id);
+            if (hoadon == null)
+                return HttpNotFound();
+            var listCT = db.CHITIETHDs.Where(x => x.IdHD == id);
+
+            ViewBag.DoiTacGH = db.DTGIAOHANGs.SingleOrDefault(x => x.IdDTGH == hoadon.IdDTGH);
             ViewBag.HoaDon = hoadon;
             ViewBag.ChiTiet = listCT;
             return View();

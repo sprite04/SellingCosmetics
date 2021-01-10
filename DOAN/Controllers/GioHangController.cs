@@ -276,6 +276,7 @@ namespace DOAN.Controllers
             hd.TinhTrang = 4;
             hd.SDT = user.SDT;
             hd.DiaChi = user.DiaChi;
+            hd.IdDTGH = db.DTGIAOHANGs.SingleOrDefault(x => x.TinhTrang == true).IdDTGH;
             if (hd.KHUYENMAI != null && hd.KHUYENMAI.TinhTrang==true)
             {
                 if (hd.KHUYENMAI.LoaiKM == 1)
@@ -293,6 +294,7 @@ namespace DOAN.Controllers
                 ct.IdHD = hd.IdHD;
                 ct.IdSP = item.SANPHAM.IdSP;
                 ct.SoLuong = item.SoLuong;
+                ct.GiaBan = (int)(item.SANPHAM.GiaGoc * item.SANPHAM.LoiNhuan);
                 db.CHITIETHDs.Add(ct);
             }
             db.SaveChanges();
@@ -316,13 +318,13 @@ namespace DOAN.Controllers
             List<GIOHANG> listGioHang = Session["GioHang"] as List<GIOHANG>;
             if (listGioHang == null)
                 return 0;
-            return listGioHang.Sum(x => (x.SoLuong*x.SANPHAM.GiaGoc));
+            return listGioHang.Sum(x => (Int32)(x.SoLuong*x.SANPHAM.GiaGoc*x.SANPHAM.LoiNhuan));
         }
 
         // GET: GioHang
         public ActionResult XemGioHang()
         {
-            int TienVanChuyen= db.DTGIAOHANGs.First().TienVanChuyen ??20000;
+            int TienVanChuyen= db.DTGIAOHANGs.SingleOrDefault(x=>x.TinhTrang==true).TienVanChuyen ??20000;
             int TongTienSP = TinhTongThanhTien();
             int SoLuongSP= TinhTongSoLuong();
             ViewBag.TienVanChuyen = TienVanChuyen;

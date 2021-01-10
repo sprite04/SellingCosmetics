@@ -19,9 +19,10 @@ namespace DOAN.Models
         [Key]
         public int IdUser { get; set; }
 
+        public int? IdLoaiUser { get; set; }
+
         [StringLength(50)]
         public string HoTen { get; set; }
-
 
         [StringLength(255)]
         public string Avatar { get; set; }
@@ -37,10 +38,8 @@ namespace DOAN.Models
         [StringLength(12)]
         public string SDT { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string Mail { get; set; }
-
 
         [StringLength(50)]
         public string Username { get; set; }
@@ -49,15 +48,12 @@ namespace DOAN.Models
         [StringLength(50)]
         public string Password { get; set; }
 
-        public int? IdLoaiUser { get; set; }
-
-        public bool TT_User { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime? NgayTao { get; set; }
-
         [StringLength(50)]
         public string Password1 { get; set; }
+
+        public bool? TT_User { get; set; }
+
+        public DateTime? NgayTao { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GIOHANG> GIOHANGs { get; set; }

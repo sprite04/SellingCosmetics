@@ -55,7 +55,7 @@ namespace DOAN.Controllers
 
 
             //So san pham tren 1 trang
-            int PageSize = 4;
+            int PageSize = 8;
             //So trang hien tai
             int PageNumber = (page ?? 1);
             ViewBag.IdTH = idTH;
@@ -89,7 +89,7 @@ namespace DOAN.Controllers
             
             ViewBag.Loai = db.LOAISANPHAMs.SingleOrDefault(x => x.IdLoaiSP == idLoai);
             //So san pham tren 1 trang
-            int PageSize = 4;
+            int PageSize = 8;
             //So trang hien tai
             int PageNumber = (page ?? 1);
             ViewBag.IdTH = idTH;

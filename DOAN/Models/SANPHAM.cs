@@ -28,10 +28,9 @@ namespace DOAN.Models
         [StringLength(50)]
         public string AnhSP { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? NgayTao { get; set; }
 
-        [StringLength(2000)]
+        [Column(TypeName = "ntext")]
         public string MoTa { get; set; }
 
         public int? TinhTrang { get; set; }

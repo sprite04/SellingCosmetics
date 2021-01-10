@@ -8,6 +8,17 @@
     var listCT = ViewBag.ChiTiet as IEnumerable<CHITIETHD>;
     int tongtiensp = 0;
     int thanhtoan = 0;
+    var doitacgh = ViewBag.DoiTacGH as DTGIAOHANG;
+    int tienvanchuyen = 0;
+    if (doitacgh!=null)
+    {
+        tienvanchuyen = doitacgh.TienVanChuyen??0;
+    }
+    else
+    {
+        tienvanchuyen = 0;
+    }
+
 }
 
 <div class="invoice p-3 mb-3">
@@ -89,7 +100,15 @@
         </div>
         <!-- /.col -->
         <div class="col-6">
-            <p class="lead">Amount Due 2/22/2014</p>
+            @if (hoadon.DaThanhToan == true)
+            {
+                <p class="lead">Đã thanh toán</p>
+            }
+            else
+            {
+                <p class="lead">Chưa thanh toán </p>
+            }
+
 
             <div class="table-responsive">
                 <table class="table">
@@ -102,7 +121,7 @@
                             <th>Save</th>
                             @if (hoadon.IdKM != null && hoadon.KHUYENMAI.LoaiKM == 1)
                             {
-                                <td>@Url.Content(hoadon.KHUYENMAI.GiaTri.ToString()+"%")</td>
+                                <td>@Url.Content(hoadon.KHUYENMAI.GiaTri.ToString() + "%")</td>
                             }
                             else if (hoadon.IdKM != null && hoadon.KHUYENMAI.LoaiKM == 2)
                             {
@@ -115,20 +134,20 @@
                         </tr>
                         <tr>
                             <th>Shipping:</th>
-                            <td>@hoadon.DTGIAOHANG.TienVanChuyen</td>
+                            <td>@tienvanchuyen</td>
                         </tr>
-                        @{ 
-                            if(hoadon.IdKM!=null&& hoadon.KHUYENMAI.LoaiKM==1)
+                        @{
+                            if (hoadon.IdKM != null && hoadon.KHUYENMAI.LoaiKM == 1)
                             {
-                                thanhtoan =(Int32)(tongtiensp * (1 - hoadon.KHUYENMAI.GiaTri * 1.0 / 100) + hoadon.DTGIAOHANG.TienVanChuyen);
+                                thanhtoan = (Int32)(tongtiensp * (1 - hoadon.KHUYENMAI.GiaTri * 1.0 / 100) + hoadon.DTGIAOHANG.TienVanChuyen);
                             }
-                            else if(hoadon.IdKM != null && hoadon.KHUYENMAI.LoaiKM==2)
+                            else if (hoadon.IdKM != null && hoadon.KHUYENMAI.LoaiKM == 2)
                             {
-                                thanhtoan = (Int32)(tongtiensp  + hoadon.DTGIAOHANG.TienVanChuyen -hoadon.KHUYENMAI.GiaTri);
+                                thanhtoan = (Int32)(tongtiensp + tienvanchuyen - hoadon.KHUYENMAI.GiaTri);
                             }
                             else
                             {
-                                thanhtoan = (Int32)(tongtiensp + hoadon.DTGIAOHANG.TienVanChuyen);
+                                thanhtoan = (Int32)(tongtiensp + tienvanchuyen);
                             }
 
                         }
@@ -146,7 +165,7 @@
     <!-- this row will not appear when printing -->
     <div class="row no-print">
         <div class="col-12">
-            <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+            <a href="@Url.Action("Print","QLHoaDon",new { id=hoadon.IdHD})" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
             <button type="button" class="btn btn-success float-right">
                 <i class="far fa-credit-card"></i> Submit
                 Payment

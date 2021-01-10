@@ -13,6 +13,9 @@ namespace DOAN.Models
         {
             [Required(ErrorMessage = "Can not be empty")]
             public float? LoiNhuan { get; set; }
+
+            [Required(ErrorMessage = "Can not be empty")]
+            public int GiaGoc { get; set; }
         }
     }
 

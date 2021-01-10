@@ -104,7 +104,7 @@
                                                                     <div class="product-content">
                                                                         <h3><a href="@Url.Action("Index","SanPham",new {id=item.IdSP})">@item.TenSP</a></h3>
                                                                         <div class="product-price">
-                                                                            <span style="color:#EB395F;">@item.GiaGoc <sup>đ</sup></span>
+                                                                            <span style="color:#EB395F;">@Url.Content(((Int32)(item.GiaGoc * @item.LoiNhuan)).ToString())<sup>đ</sup></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -149,7 +149,7 @@
                                                                     <div class="product-content">
                                                                         <h3><a href="@Url.Action("Index","SanPham",new {id=item.IdSP})">@item.TenSP</a></h3>
                                                                         <div class="product-price">
-                                                                            <span style="color:#EB395F;">@item.GiaGoc <sup>đ</sup></span>
+                                                                            <span style="color:#EB395F;">@Url.Content(((Int32)(item.GiaGoc * @item.LoiNhuan)).ToString()) <sup>đ</sup></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>

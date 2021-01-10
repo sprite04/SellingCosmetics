@@ -12,6 +12,7 @@ namespace DOAN.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public KHUYENMAI()
         {
+            HOADONs = new HashSet<HOADON>();
             SANPHAMs = new HashSet<SANPHAM>();
         }
 
@@ -24,10 +25,8 @@ namespace DOAN.Models
 
         public int? LoaiKM { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? NgayBD { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? NgayKT { get; set; }
 
         public int? GiaTri { get; set; }

@@ -2223,13 +2223,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CHITIETHD.cs" />
-    <Compile Include="Models\DANHMUC.cs" />
     <Compile Include="Models\DTGIAOHANG.cs" />
     <Compile Include="Models\GIOHANG.cs" />
     <Compile Include="Models\HOADON.cs" />
     <Compile Include="Models\KHUYENMAI.cs" />
     <Compile Include="Models\LOAISANPHAM.cs" />
     <Compile Include="Models\LOAIUSER.cs" />
+    <Compile Include="Models\Metadata\DANHMUC.cs" />
     <Compile Include="Models\Metadata\GIOHANG.cs" />
     <Compile Include="Models\Metadata\LOAISANPHAM.cs" />
     <Compile Include="Models\Metadata\NGUOIDUNG.cs" />
@@ -2243,7 +2243,6 @@
     <Compile Include="Models\THONGKETHANG.cs" />
     <Compile Include="Models\THUONGHIEU.cs" />
     <Compile Include="Models\TINHTRANG.cs" />
-    <Compile Include="Models\TINHTRANGDH.cs" />
     <Compile Include="Models\TMDTDbContext.cs" />
     <Compile Include="Models\TRAHANG.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2301,6 +2300,7 @@
     <Content Include="Views\QLKhuyenMai\Edit.cshtml" />
     <Content Include="Views\QLHoaDon\Index.cshtml" />
     <Content Include="Views\QLHoaDon\ChiTiet.cshtml" />
+    <Content Include="Views\QLHoaDon\Print.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

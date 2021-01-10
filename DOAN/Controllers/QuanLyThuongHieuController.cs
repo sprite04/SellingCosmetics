@@ -16,8 +16,9 @@ namespace DOAN.Controllers
     {
         TMDTDbContext db = new TMDTDbContext();
         // GET: QuanLyThuongHieu
-        public ActionResult Index()
+        public ActionResult Index(int error=0)
         {
+            ViewBag.Error = error;
             var model = db.THUONGHIEUx.Where(x => x.TinhTrang == true);
             return View(model);
         }
@@ -65,12 +66,12 @@ namespace DOAN.Controllers
                 }
                 catch (Exception)
                 {
-                    ModelState.AddModelError("", "Brand creation failed");
+                    ModelState.AddModelError("", "Quá trình thực hiện thất bại.");
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Please check the information you entered.");
+                ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập.");
             }
             return View(th);
         }
@@ -93,13 +94,13 @@ namespace DOAN.Controllers
                 th.TinhTrang = false;
                 db.Entry(th).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","QuanLyThuongHieu",new {error=-1});
 
             }
             catch (Exception ex)
             {
                 string message = ex.Message;
-                return Content("<script> alert(\"The implementation failed.\")</script>");
+                return RedirectToAction("Index", "QuanLyThuongHieu", new { error = 1 });
             }
         }
 
@@ -145,17 +146,17 @@ namespace DOAN.Controllers
                 {
                     db.Entry(th).State = EntityState.Modified;
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "QuanLyThuongHieu", new { error=-1});
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "Product creation failed");
+                    ModelState.AddModelError("", "Quá trình thực hiện thất bại.");
                     ViewBag.AnhCu = th.AnhTH;
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Please check the information you entered."); 
+                ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập."); 
                 ViewBag.AnhCu = th.AnhTH;
             }
             return View(th);

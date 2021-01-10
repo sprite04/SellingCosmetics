@@ -4,18 +4,17 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
-    int k = 0;
+
 }
 
 
 @section header{
     <div class="col-sm-6">
-        <h1>Import goods</h1>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="@Url.Action("Index","Dashboard")">Home</a></li>
-            <li class="breadcrumb-item active">Import goods</li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index","Dashboard")">Trang chu</a></li>
+            <li class="breadcrumb-item active">Nhap hang</li>
         </ol>
     </div>
 }
@@ -51,16 +50,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Nhập hàng</h3>
-                        @if (k == 0)
-                        {
-                            <a class="btn btn-success float-right" href="@Url.Action("PhieuNhap","NhapHang")">
-                                Create
-                            </a>
-                        }
-                        @{
-                            k = 1;
-                        }
-
                         <!-- Button trigger modal -->
                     </div>
                     <!-- /.card-header -->
@@ -75,7 +64,6 @@
                                                 <th>@Html.DisplayNameFor(model => model.NgayNhap)</th>
                                                 <th>@Html.DisplayNameFor(model => model.SoLuong)</th>
                                                 <th>@Html.DisplayNameFor(model => model.GiaNhap)</th>
-                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -93,18 +81,6 @@
                                                     </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => i.GiaNhap)
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <a class="btn btn-info" href="@Url.Action("NhapHang","QuanLySanPham",new { id=i.IdSP, ngay=i.NgayNhap})">
-                                                                <i class="fas fa-pencil-alt"></i>
-                                                            </a>
-
-                                                            <a class="btn btn-danger" href="@Url.Action("Delete","NhapHang",new { dt=i.NgayNhap,idSP = i.IdSP })">
-                                                                <i class="far fa-trash-alt"></i>
-                                                            </a>
-                                                        </div>
-
                                                     </td>
                                                 </tr>
                                             }

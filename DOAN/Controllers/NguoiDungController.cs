@@ -11,7 +11,7 @@ using DOAN.Models;
 
 namespace DOAN.Controllers
 {
-    [Authorize(Roles = "*")]
+    //[Authorize(Roles = "*")]
     public class NguoiDungController : Controller
     {
 
@@ -19,8 +19,38 @@ namespace DOAN.Controllers
         // GET: NguoiDung
         public ActionResult Index()
         {
-            var model = db.NGUOIDUNGs.Where(x => x.TT_User == true);
-            return View(model);
+            var list = db.NGUOIDUNGs.Where(x => x.TT_User == true);
+            var listND = db.LOAIUSERs;
+            ViewBag.items = new SelectList(listND, "IdLoaiUser", "TenLoai");
+            ViewBag.GiaTri = 0;
+            ViewBag.DanhSach = list;
+
+            return View(list);
+        }
+
+        [HttpPost]
+        public ActionResult Index(FormCollection f)
+        {
+            var kq = f["ddlNguoiDung"];
+            var listND = db.LOAIUSERs;
+
+            if (kq != "")
+            {
+                int giatri = int.Parse(kq);
+                var list = db.NGUOIDUNGs.Where(x => x.TT_User == true && x.IdLoaiUser==giatri);
+                ViewBag.DanhSach = list;
+                ViewBag.items = new SelectList(listND, "IdLoaiUser", "TenLoai",giatri);
+                ViewBag.GiaTri = giatri;
+                return View(list);
+            }
+            else
+            {
+                var list = db.NGUOIDUNGs.Where(x => x.TT_User == true);
+                ViewBag.DanhSach = list;
+                ViewBag.items = new SelectList(listND, "IdLoaiUser", "TenLoai");
+                ViewBag.GiaTri = 0;
+                return View(list);
+            }
         }
 
         public ActionResult Create()
@@ -67,20 +97,20 @@ namespace DOAN.Controllers
                     }
                     catch (Exception)
                     {
-                        ModelState.AddModelError("", "Account creation failed.");
+                        ModelState.AddModelError("", "Quá trình thực hiện thất bại.");
                         ViewBag.IdLoaiUser = new SelectList(db.LOAIUSERs, "IdLoaiUser", "TenLoai", nd.IdLoaiUser);
                     }
                     
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The email address you entered is already in use. Please enter another email address.");
+                    ModelState.AddModelError("", "Email bạn nhập đã được sử dụng. Vui lòng sử dụng email khác.");
                     ViewBag.IdLoaiUser = new SelectList(db.LOAIUSERs, "IdLoaiUser", "TenLoai", nd.IdLoaiUser);
                 }    
             }
             else
             {
-                ModelState.AddModelError("", "Please check your information.");
+                ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập.");
                 ViewBag.IdLoaiUser = new SelectList(db.LOAIUSERs, "IdLoaiUser", "TenLoai", nd.IdLoaiUser);
             }    
             return View(nd);
@@ -136,9 +166,6 @@ namespace DOAN.Controllers
             return View(nd);
         }
 
-        // POST: NGUOIDUNGs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Route("Edit")]
         public ActionResult Edit(NGUOIDUNG nd, HttpPostedFileBase Avatar)
@@ -180,13 +207,13 @@ namespace DOAN.Controllers
                 }
                 catch (Exception ex)
                 {
-                    string message = ex.Message;
-                    return Content("<script> alert(\"Quá trình thực hiện thất bại\")</script>");
+                    ModelState.AddModelError("", "Quá trình thực hiện thất bại.");
+                    ViewBag.IdLoaiUser = new SelectList(db.LOAIUSERs, "IdLoaiUser", "TenLoai", nd.IdLoaiUser);
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Please check your information.");
+                ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập.");
                 ViewBag.IdLoaiUser = new SelectList(db.LOAIUSERs, "IdLoaiUser", "TenLoai", nd.IdLoaiUser);
             }
             return View(nd);

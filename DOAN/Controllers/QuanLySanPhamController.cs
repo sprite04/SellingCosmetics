@@ -15,11 +15,48 @@ namespace DOAN.Controllers
     {
         TMDTDbContext db = new TMDTDbContext();
         // GET: QuanLySanPham
-        public ActionResult Index()
+        public ActionResult Index(int error=0)
         {
-            var model = db.SANPHAMs.Where(x => (x.TinhTrang == 1||x.TinhTrang==2));
-            ViewBag.ThuongHieu = db.THUONGHIEUx.Where(x => x.TinhTrang == true);
-            return View(model);
+            ViewBag.ThuongHieu = null;
+            ViewBag.Error = error;
+            var list = db.SANPHAMs.Where(x => (x.TinhTrang == 1 || x.TinhTrang == 2));
+            var listTH = db.THUONGHIEUx.Where(x => x.TinhTrang == true);
+            ViewBag.items = new SelectList(listTH, "IdTH", "TenTH");
+            ViewBag.GiaTri = 0;
+            ViewBag.DanhSach = list;
+
+            return View(list);
+        }
+
+        [HttpPost]
+        public ActionResult Index(FormCollection f)
+        {
+            var kq = f["ddlThuongHieu"];
+
+            var listTH = db.THUONGHIEUx.Where(x => x.TinhTrang == true);
+
+   
+
+            if (kq != "")
+            {
+                int giatri = int.Parse(kq);
+                ViewBag.ThuongHieu = db.THUONGHIEUx.Find(giatri);
+                var list = db.SANPHAMs.Where(x => (x.TinhTrang == 1 || x.TinhTrang == 2)&&x.IdTH==giatri);
+
+                ViewBag.DanhSach = list;
+                ViewBag.items = new SelectList(listTH, "IdTH", "TenTH",giatri);
+                ViewBag.GiaTri = giatri;
+                return View(list);
+            }
+            else
+            {
+                ViewBag.ThuongHieu = null;
+                var list = db.SANPHAMs.Where(x => (x.TinhTrang == 1 || x.TinhTrang == 2));
+                ViewBag.DanhSach = list;
+                ViewBag.items = new SelectList(listTH, "IdTH", "TenTH");
+                ViewBag.GiaTri = 0;
+                return View(list);
+            }
         }
 
         [Authorize(Roles = "*")]
@@ -83,7 +120,7 @@ namespace DOAN.Controllers
                 }
                 catch (Exception)
                 {
-                    ModelState.AddModelError("", "Product creation failed");
+                    ModelState.AddModelError("", "Quá trình thực hiện thất bại");
                     ViewBag.MaKM = new SelectList(db.KHUYENMAIs, "IdMa", "MaKM",sp.MaKM);
                     ViewBag.IdTH = new SelectList(db.THUONGHIEUx, "IdTH", "TenTH",sp.IdTH);
                     ViewBag.IdLoaiSP = new SelectList(db.LOAISANPHAMs, "IdLoaiSP", "TenLoai",sp.IdLoaiSP);
@@ -91,7 +128,7 @@ namespace DOAN.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Please check the information you entered.");
+                ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập");
                 ViewBag.MaKM = new SelectList(db.KHUYENMAIs, "IdMa", "MaKM", sp.MaKM);
                 ViewBag.IdTH = new SelectList(db.THUONGHIEUx, "IdTH", "TenTH", sp.IdTH);
                 ViewBag.IdLoaiSP = new SelectList(db.LOAISANPHAMs, "IdLoaiSP", "TenLoai", sp.IdLoaiSP);
@@ -124,7 +161,8 @@ namespace DOAN.Controllers
             catch (Exception ex)
             {
                 string message = ex.Message;
-                return Content("<script> alert(\"Quá trình thực hiện thất bại\")</script>");
+
+                return RedirectToAction("Index","QuanLySanPham",new {error=2});
             }
         }
 
@@ -177,7 +215,7 @@ namespace DOAN.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "Product creation failed");
+                    ModelState.AddModelError("", "Quá trình thực hiện thất bại.");
                     ViewBag.MaKM = new SelectList(db.KHUYENMAIs, "IdMa", "MaKM", sp.MaKM);
                     ViewBag.IdTH = new SelectList(db.THUONGHIEUx, "IdTH", "TenTH", sp.IdTH);
                     ViewBag.IdLoaiSP = new SelectList(db.LOAISANPHAMs, "IdLoaiSP", "TenLoai", sp.IdLoaiSP);
@@ -185,7 +223,7 @@ namespace DOAN.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Please check the information you entered.");
+                ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập.");
                 ViewBag.MaKM = new SelectList(db.KHUYENMAIs, "IdMa", "MaKM", sp.MaKM);
                 ViewBag.IdTH = new SelectList(db.THUONGHIEUx, "IdTH", "TenTH", sp.IdTH);
                 ViewBag.IdLoaiSP = new SelectList(db.LOAISANPHAMs, "IdLoaiSP", "TenLoai", sp.IdLoaiSP);
@@ -194,37 +232,24 @@ namespace DOAN.Controllers
         }
 
         
-        public ActionResult NhapHang(int? id,DateTime? ngay)
+        public ActionResult NhapHang(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if(ngay!=null)
+            SANPHAM sp = db.SANPHAMs.FirstOrDefault(x => x.IdSP == id);
+            if (sp == null)
             {
-                NHAPHANG nh = db.NHAPHANGs.FirstOrDefault(x => x.IdSP == id && x.NgayNhap == ngay);
-                if (nh == null)
-                {
-                    return HttpNotFound();
-                }
-                ViewBag.TenSP = nh.SANPHAM.TenSP;
-                return View(nh);
-            }    
-            else
-            {
-                SANPHAM sp = db.SANPHAMs.FirstOrDefault(x => x.IdSP == id);
-                if (sp == null)
-                {
-                    return HttpNotFound();
-                }
-                NHAPHANG nh = new NHAPHANG();
-                nh.IdSP = sp.IdSP;
-                ViewBag.TenSP = sp.TenSP;
-                nh.NgayNhap = DateTime.Now;
-                nh.GiaNhap = sp.GiaGoc;
-                nh.SoLuong = 0;
-                return View(nh);
-            }    
+                return HttpNotFound();
+            }
+            NHAPHANG nh = new NHAPHANG();
+            nh.IdSP = sp.IdSP;
+            ViewBag.TenSP = sp.TenSP;
+            nh.NgayNhap = DateTime.Now;
+            nh.GiaNhap = sp.GiaGoc;
+            nh.SoLuong = 0;
+            return View(nh);
         }
 
         [HttpPost]
@@ -234,27 +259,25 @@ namespace DOAN.Controllers
             {
                 try
                 {
-                    if(db.NHAPHANGs.Where(x=>x.NgayNhap==nh.NgayNhap&& x.IdSP==nh.IdSP).Count()>0)
+                    if(db.NHAPHANGs.Where(x=>x.NgayNhap==nh.NgayNhap&& x.IdSP==nh.IdSP).Count()==0)
                     {
-                        db.Entry(nh).State = EntityState.Modified;
+                        db.NHAPHANGs.Add(nh);
                         db.SaveChanges();
                     }
                     else
                     {
-                        db.NHAPHANGs.Add(nh);
-                        db.SaveChanges();
+                        return RedirectToAction("Index", "QuanLySanPham", new { error = 1 });
                     }    
-                    
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index","QuanLySanPham",new { error=-1});
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "Import failed.");
+                    ModelState.AddModelError("", "Quá trình thực hiện thất bại.");
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Please check the information you entered.");
+                ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập.");
             }
             return View(nh);
         }

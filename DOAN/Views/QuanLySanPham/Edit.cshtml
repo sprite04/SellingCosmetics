@@ -10,9 +10,9 @@
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="@Url.Action("Index","QuanLySanPham")">Products</a></li>
-            <li class="breadcrumb-item active">Edit</li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index","Dashboard")">Trang chu</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index","QuanLySanPham")">San pham</a></li>
+            <li class="breadcrumb-item active">Chinh sua</li>
         </ol>
     </div>
 }
@@ -43,7 +43,7 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Edit</h3>
+                        <h3 class="card-title">Chỉnh sửa</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -68,7 +68,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputFile">AnhSP</label>
+                                <label for="exampleInputFile">Ảnh</label>
                                 <div class="input-group">
                                     <div class="custom-file">
                                         @Html.LabelFor(model => model.AnhSP, "Choose File", new { @for = "AnhSP", @class = "custom-file-label" })
@@ -90,11 +90,7 @@
                                 @Html.ValidationMessageFor(model => model.IdTH, "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.MaKM)
-                                @Html.DropDownList("MaKM", null, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.MaKM, "", new { @class = "text-danger" })
-                            </div>
+                            
                             <div class="form-group">
                                 @Html.LabelFor(model => model.IdLoaiSP)
                                 @Html.DropDownList("IdLoaiSP", null, htmlAttributes: new { @class = "form-control" })
@@ -116,7 +112,7 @@
 
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary float-right">Save</button>
+                            <button type="submit" class="btn btn-primary float-right">Lưu</button>
                         </div>
                     }
                 </div>

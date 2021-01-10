@@ -21,41 +21,32 @@ namespace DOAN.Controllers
         }
 
        
-        public ActionResult Delete(DateTime dt, int ? idSP)
-        {
-            if (idSP == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            NHAPHANG nh = db.NHAPHANGs.FirstOrDefault(x => x.IdSP == idSP && x.NgayNhap == dt);
-            if (nh == null)
-            {
-                Response.StatusCode = 404;
-                return null;
-            }
-            try
-            {
-                db.NHAPHANGs.Remove(nh);
-                db.SaveChanges();
-                return RedirectToAction("Index");
 
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-                return Content("<script> alert(\"Quá trình thực hiện thất bại\")</script>");
-            }
-        }
-
-        public ActionResult PhieuNhap()
+        public ActionResult PhieuNhap(int idTH=0, int error=0,string noidung=null)
         {
-            ViewBag.SanPham = db.SANPHAMs;
+            ViewBag.Error = error;
+            ViewBag.NoiDung = noidung;
+            if(idTH==0)
+            {
+                ViewBag.SanPham = db.SANPHAMs.Where(x=>x.TinhTrang==1 || x.TinhTrang==2);
+                ViewBag.ThuongHieu = null;
+            }    
+            else
+            {
+                THUONGHIEU th = db.THUONGHIEUx.Find(idTH);
+                if (th == null)
+                    return HttpNotFound();
+                ViewBag.ThuongHieu = th;
+                ViewBag.SanPham = db.SANPHAMs.Where(x => x.IdTH == th.IdTH && (x.TinhTrang == 1 || x.TinhTrang == 2));
+            }    
             return View();
         }
 
         [HttpPost]
         public ActionResult PhieuNhap(IEnumerable<NHAPHANG> Model, FormCollection f)
         {
+            string loi = "";
+            int error = 0;
             try
             {
                 DateTime dt = DateTime.Parse(f["NgayNhap"].ToString());
@@ -68,17 +59,21 @@ namespace DOAN.Controllers
                     nh.GiaNhap = item.GiaNhap;
                     if (db.NHAPHANGs.Where(x => x.NgayNhap == nh.NgayNhap && x.IdSP == nh.IdSP).Count() > 0)
                     {
-                        db.Entry(nh).State = EntityState.Modified;
-                        db.SaveChanges();
+                        error = 1;
+                        loi += db.SANPHAMs.Find(nh.IdSP).TenSP + ", ";
                     }
                     else
                     {
                         db.NHAPHANGs.Add(nh);
                         db.SaveChanges();
                     }
-
                 }
-                db.SaveChanges();
+                
+                if(error==1)
+                {
+                    string noidung="Sản phẩm "+loi.Substring(0, loi.Length - 2)+" đã được nhập hàng vào ngày hôm nay. Không thể cập nhật lại";
+                    return RedirectToAction("PhieuNhap", "NhapHang", new { error = error, noidung = noidung });
+                }
                 return RedirectToAction("Index");
             }
             catch (Exception)

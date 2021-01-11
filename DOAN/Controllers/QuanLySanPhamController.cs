@@ -19,6 +19,7 @@ namespace DOAN.Controllers
         {
             ViewBag.ThuongHieu = null;
             ViewBag.Error = error;
+
             var list = db.SANPHAMs.Where(x => (x.TinhTrang == 1 || x.TinhTrang == 2));
             var listTH = db.THUONGHIEUx.Where(x => x.TinhTrang == true);
             ViewBag.items = new SelectList(listTH, "IdTH", "TenTH");
@@ -32,10 +33,7 @@ namespace DOAN.Controllers
         public ActionResult Index(FormCollection f)
         {
             var kq = f["ddlThuongHieu"];
-
             var listTH = db.THUONGHIEUx.Where(x => x.TinhTrang == true);
-
-   
 
             if (kq != "")
             {

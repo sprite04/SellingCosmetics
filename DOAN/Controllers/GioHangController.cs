@@ -267,23 +267,41 @@ namespace DOAN.Controllers
             NGUOIDUNG user = Session["TaiKhoan"] as NGUOIDUNG;
             if (user == null)
                 return RedirectToAction("DangNhap", "Home", new { strURL = strURL });
-            int TienVanChuyen = db.DTGIAOHANGs.First().TienVanChuyen ?? 20000;
+            
+
             int TongTienSP = TinhTongThanhTien();
             int TienGiam = 0;
+            int TienVanChuyen = 20000;
             HOADON hd = new HOADON();
+            hd.DaThanhToan = false;
+            var dtgh = db.DTGIAOHANGs.SingleOrDefault(x => x.TinhTrang == true);
+            if (dtgh != null)
+            {
+                hd.IdDTGH = dtgh.IdDTGH;
+                TienVanChuyen = dtgh.TienVanChuyen ?? 20000;
+            }
+            
             hd.NgayDH = DateTime.Now;
             hd.IdKH = user.IdUser;
             hd.TinhTrang = 4;
             hd.SDT = user.SDT;
             hd.DiaChi = user.DiaChi;
-            hd.IdDTGH = db.DTGIAOHANGs.SingleOrDefault(x => x.TinhTrang == true).IdDTGH;
-            if (hd.KHUYENMAI != null && hd.KHUYENMAI.TinhTrang==true)
+            
+            
+            KHUYENMAI km = db.KHUYENMAIs.FirstOrDefault(x => x.MaKM == MaKM && x.TinhTrang == true && DateTime.Compare(DateTime.Now, x.NgayBD ?? DateTime.Now) >= 0 && DateTime.Compare(DateTime.Now, x.NgayKT ?? DateTime.Now) <= 0);
+            if (km != null)
             {
-                if (hd.KHUYENMAI.LoaiKM == 1)
+                if (km.LoaiKM == 1)
                 {
-                    TienGiam = (TongTienSP * (hd.KHUYENMAI.GiaTri ?? 0)) / 100;
+                    TienGiam = (TongTienSP * (km.GiaTri ?? 0)) / 100;
                 }
+                else if(km.LoaiKM==2)
+                {
+                    TienGiam = km.GiaTri ?? 0;
+                }
+                hd.IdKM = km.IdMa;
             }
+            hd.TienVanChuyen = TienVanChuyen;
             hd.TongTien = TongTienSP + TienVanChuyen - TienGiam;
             db.HOADONs.Add(hd);
             db.SaveChanges();
@@ -351,31 +369,30 @@ namespace DOAN.Controllers
             ViewBag.IsKM = 0;
             ViewBag.GiamGia = 0;
             List<GIOHANG> listGioHang = LayGioHang();
-            KHUYENMAI km= db.KHUYENMAIs.FirstOrDefault(x => x.MaKM == MaKM);
+            KHUYENMAI km= db.KHUYENMAIs.FirstOrDefault(x => x.MaKM == MaKM && x.TinhTrang==true);
             if(km==null)
             {
                 ViewBag.KhuyenMai = "";
                 ViewBag.IsKM = 1;
                 ViewBag.ThanhToan = TongTienSP + TienVanChuyen;
             }
-            else if(km.TinhTrang == false)
-            {
-                ViewBag.KhuyenMai = "";
-                ViewBag.IsKM = 2;
-                ViewBag.ThanhToan = TongTienSP + TienVanChuyen;
-            }
-            else
+            else if(DateTime.Compare(DateTime.Now, km.NgayBD ?? DateTime.Now) >= 0 && DateTime.Compare(DateTime.Now, km.NgayKT ?? DateTime.Now) <= 0)
             {
                 int TienGiam = 0;
                 ViewBag.KhuyenMai = MaKM;
                 ViewBag.IsKM = 3;
-                if(km.LoaiKM==1)
+                if (km.LoaiKM == 1)
                 {
-                    TienGiam = (TongTienSP * (km.GiaTri??0)) / 100;
-                    ViewBag.ThanhToan = TongTienSP + TienVanChuyen-TienGiam;
+                    TienGiam = (TongTienSP * (km.GiaTri ?? 0)) / 100;
+                    ViewBag.ThanhToan = TongTienSP + TienVanChuyen - TienGiam;
                     ViewBag.GiamGia = TienGiam;
-                }    
-                
+                }
+            }
+            else
+            {
+                ViewBag.KhuyenMai = "";
+                ViewBag.IsKM = 2;
+                ViewBag.ThanhToan = TongTienSP + TienVanChuyen;
             }    
             
             return View(listGioHang);

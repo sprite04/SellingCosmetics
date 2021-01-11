@@ -20,7 +20,7 @@ namespace DOAN.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            SANPHAM sp = db.SANPHAMs.SingleOrDefault(x => x.IdSP == id);
+            SANPHAM sp = db.SANPHAMs.SingleOrDefault(x => x.IdSP == id && x.TinhTrang==1);
             if(sp==null)
             {
                 return HttpNotFound();
@@ -40,18 +40,18 @@ namespace DOAN.Controllers
             IEnumerable<SANPHAM> listSP;
             if (idLoai == 0)
             {
-                listSP = db.SANPHAMs.Where(x => x.IdTH == idTH);
+                listSP = db.SANPHAMs.Where(x => x.IdTH == idTH && x.TinhTrang==1);
             }
             else
             {
-                listSP = db.SANPHAMs.Where(x => x.IdLoaiSP == idLoai && x.IdTH == idTH);
+                listSP = db.SANPHAMs.Where(x => x.IdLoaiSP == idLoai && x.IdTH == idTH && x.TinhTrang==1);
             }
             ViewBag.Loai = null;
             if(idLoai!=0)
             {
-                ViewBag.Loai= db.LOAISANPHAMs.SingleOrDefault(x => x.IdLoaiSP == idLoai);
+                ViewBag.Loai= db.LOAISANPHAMs.SingleOrDefault(x => x.IdLoaiSP == idLoai && x.TinhTrang==true);
             }    
-            ViewBag.TH = db.THUONGHIEUx.SingleOrDefault(x => x.IdTH == idTH);
+            ViewBag.TH = db.THUONGHIEUx.SingleOrDefault(x => x.IdTH == idTH && x.TinhTrang==true);
 
 
             //So san pham tren 1 trang
@@ -75,19 +75,19 @@ namespace DOAN.Controllers
             IEnumerable<SANPHAM> listSP;
             if (idTH==0)
             {
-                listSP = db.SANPHAMs.Where(x => x.IdLoaiSP == idLoai);
+                listSP = db.SANPHAMs.Where(x => x.IdLoaiSP == idLoai && x.TinhTrang==1);
             }
             else
             {
-                listSP = db.SANPHAMs.Where(x => x.IdLoaiSP == idLoai&& x.IdTH==idTH);
+                listSP = db.SANPHAMs.Where(x => x.IdLoaiSP == idLoai&& x.IdTH==idTH && x.TinhTrang==1);
             }
             ViewBag.TH = null;
             if(idTH!=0)
             {
-                ViewBag.TH = db.THUONGHIEUx.SingleOrDefault(x => x.IdTH == idTH);
+                ViewBag.TH = db.THUONGHIEUx.SingleOrDefault(x => x.IdTH == idTH && x.TinhTrang==true);
             }    
             
-            ViewBag.Loai = db.LOAISANPHAMs.SingleOrDefault(x => x.IdLoaiSP == idLoai);
+            ViewBag.Loai = db.LOAISANPHAMs.SingleOrDefault(x => x.IdLoaiSP == idLoai && x.TinhTrang==true);
             //So san pham tren 1 trang
             int PageSize = 8;
             //So trang hien tai
@@ -101,7 +101,7 @@ namespace DOAN.Controllers
         public ActionResult BrandsPartial(LOAISANPHAM loai)
         {
             ViewBag.Loai = loai;
-            var listTH = db.THUONGHIEUx;
+            var listTH = db.THUONGHIEUx.Where(x=>x.TinhTrang==true);
             return PartialView(listTH);
         }
 
@@ -109,7 +109,7 @@ namespace DOAN.Controllers
         public ActionResult TypePartial(THUONGHIEU thuonghieu)
         {
             ViewBag.TH = thuonghieu;
-            var listLoai = db.LOAISANPHAMs;
+            var listLoai = db.LOAISANPHAMs.Where(x=>x.TinhTrang==true);
             return PartialView(listLoai);
         }
 

@@ -11,11 +11,42 @@ namespace DOAN.Controllers
     {
         TMDTDbContext db = new TMDTDbContext();
         // GET: QLHoaDon
-        public ActionResult Index()
+        public ActionResult Index(int error=0)
         {
-            var list = db.HOADONs.Where(x => x.TinhTrang != 10);
+            var list = db.HOADONs.Where(x => x.TinhTrang >=4 && x.TinhTrang<=9);
+            var listTT = db.TINHTRANGs.Where(x => x.IdTT >= 4 && x.IdTT <= 9);
+            ViewBag.items = new SelectList(listTT, "IdTT", "TenTT");
+            ViewBag.GiaTri = 0;
+            ViewBag.DanhSach = list;
+
+            ViewBag.Error = error;
 
             return View(list);
+        }
+
+        [HttpPost]
+        public ActionResult Index(FormCollection f)
+        {
+            var kq = f["ddlTinhTrang"];
+            var listTT = db.TINHTRANGs.Where(x => x.IdTT >= 4 && x.IdTT <= 9);
+
+            if (kq != "")
+            {
+                int giatri = int.Parse(kq);
+                var list = db.HOADONs.Where(x => x.TinhTrang ==giatri);
+                ViewBag.DanhSach = list;
+                ViewBag.items = new SelectList(listTT, "IdTT", "TenTT",giatri);
+                ViewBag.GiaTri = giatri;
+                return View(list);
+            }
+            else
+            {
+                var list = db.HOADONs.Where(x => x.TinhTrang >= 4 && x.TinhTrang <= 9);
+                ViewBag.DanhSach = list;
+                ViewBag.items = new SelectList(listTT, "IdTT", "TenTT");
+                ViewBag.GiaTri = 0;
+                return View(list);
+            }
         }
 
         public ActionResult ChiTiet(int id)

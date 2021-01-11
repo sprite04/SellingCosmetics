@@ -26,11 +26,11 @@ namespace DOAN.Controllers
             List<LoaiKM> listLoai = new List<LoaiKM>();
             LoaiKM LOAI1 = new LoaiKM();
             LOAI1.IdLoai = 1;
-            LOAI1.TenLoai = "Percent";
+            LOAI1.TenLoai = "Giảm phần trăm";
             listLoai.Add(LOAI1);
             LoaiKM LOAI2 = new LoaiKM();
             LOAI2.IdLoai = 2;
-            LOAI2.TenLoai = "Money";
+            LOAI2.TenLoai = "Giảm trực tiếp";
             listLoai.Add(LOAI2);
 
             ViewBag.LoaiKM = new SelectList(listLoai, "IdLoai", "TenLoai");
@@ -54,21 +54,21 @@ namespace DOAN.Controllers
                 }
                 catch (Exception)
                 {
-                    ModelState.AddModelError("", "Promotion code creation failed");
+                    ModelState.AddModelError("", "Quá trình thực hiện thất bại.");
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Please check the information you entered.");
+                ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập.");
             }
             List<LoaiKM> listLoai = new List<LoaiKM>();
             LoaiKM LOAI1 = new LoaiKM();
             LOAI1.IdLoai = 1;
-            LOAI1.TenLoai = "Percent";
+            LOAI1.TenLoai = "Giảm phần trăm";
             listLoai.Add(LOAI1);
             LoaiKM LOAI2 = new LoaiKM();
-            LOAI1.IdLoai = 2;
-            LOAI1.TenLoai = "Money";
+            LOAI2.IdLoai = 2;
+            LOAI2.TenLoai = "Giảm trực tiếp";
             listLoai.Add(LOAI2);
 
             ViewBag.LoaiKM = new SelectList(listLoai, "IdLoai", "TenLoai",khuyenmai.LoaiKM);
@@ -118,11 +118,11 @@ namespace DOAN.Controllers
             List<LoaiKM> listLoai = new List<LoaiKM>();
             LoaiKM LOAI1 = new LoaiKM();
             LOAI1.IdLoai = 1;
-            LOAI1.TenLoai = "Percent";
+            LOAI1.TenLoai = "Giảm phần trăm";
             listLoai.Add(LOAI1);
             LoaiKM LOAI2 = new LoaiKM();
             LOAI2.IdLoai = 2;
-            LOAI2.TenLoai = "Money";
+            LOAI2.TenLoai = "Giảm trực tiếp";
             listLoai.Add(LOAI2);
 
             ViewBag.LoaiKM = new SelectList(listLoai, "IdLoai", "TenLoai",khuyenmai.LoaiKM);
@@ -144,22 +144,22 @@ namespace DOAN.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "Promotion code creation failed");
+                    ModelState.AddModelError("", "Quá trình thực hiện thất bại.");
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Please check the information you entered.");
+                ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập.");
             }
 
             List<LoaiKM> listLoai = new List<LoaiKM>();
             LoaiKM LOAI1 = new LoaiKM();
             LOAI1.IdLoai = 1;
-            LOAI1.TenLoai = "Percent";
+            LOAI1.TenLoai = "Giảm phần trăm";
             listLoai.Add(LOAI1);
             LoaiKM LOAI2 = new LoaiKM();
             LOAI2.IdLoai = 2;
-            LOAI2.TenLoai = "Money";
+            LOAI2.TenLoai = "Giảm trực tiếp";
             listLoai.Add(LOAI2);
 
             ViewBag.LoaiKM = new SelectList(listLoai, "IdLoai", "TenLoai",khuyenmai.LoaiKM);

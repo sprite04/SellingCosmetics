@@ -35,7 +35,7 @@
                 "responsive": true,
             });
         });
-        $(".DeleteId").prepend("<i class='far fa-trash-alt'></i>");
+        
 
     </script>
 }
@@ -85,10 +85,11 @@
                                     <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                                         <thead>
                                             <tr>
+                                                <th>@Html.DisplayNameFor(model => model.IdHD)</th>
                                                 <th>@Html.DisplayNameFor(model => model.NgayDH)</th>
                                                 <th>@Html.DisplayNameFor(model => model.TongTien)</th>
                                                 <th>@Html.DisplayNameFor(model => model.NGUOIDUNG.HoTen)</th>
-                                                <th>@Html.DisplayNameFor(model => model.TinhTrang)</th>
+                                                <th></th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -99,6 +100,9 @@
                                                 {
                                                     <tr id="row1_@item.IdHD">
                                                         <td>
+                                                            @Html.DisplayFor(modelItem => item.IdHD)
+                                                        </td>
+                                                        <td>
                                                             @Html.DisplayFor(modelItem => item.NgayDH)
                                                         </td>
                                                         <td>
@@ -108,15 +112,19 @@
                                                             @Html.DisplayFor(modelItem => item.NGUOIDUNG.HoTen)
                                                         </td>
                                                         <td>
-                                                            @Html.DisplayFor(modelItem => item.TinhTrang)
-                                                        </td>
-                                                        <td>
                                                             <div class="btn-group btn-group-sm">
                                                                 <a class="btn btn-info" href="@Url.Action("ChiTiet","QLHoaDon",new { id=item.IdHD})">
                                                                     <i class="fa fa-eye"></i>
                                                                 </a>
                                                             </div>
                                                         </td>
+                                                        <td>
+                                                            <div class="btn-group btn-group-sm">
+                                                                @Ajax.ActionLink("Xác nhận", "XacNhan", new { id = item.IdHD }, new AjaxOptions { Confirm = "Bạn có chắc chắn xác nhận đơn hàng này?", OnComplete = "$('#row1_" + @item.IdHD + "').remove()", HttpMethod = "Post" }, new { @class = "btn btn-success" })
+                                                                @Ajax.ActionLink("Huỷ bỏ", "HuyBo", new { id = item.IdHD }, new AjaxOptions { Confirm = "Bạn có chắc chắn huỷ bỏ đơn hàng này?", OnComplete = "$('#row1_" + @item.IdHD + "').remove()", HttpMethod = "Post" }, new { @class = "btn btn-danger" })
+                                                            </div>
+                                                        </td>
+                                                        
                                                     </tr>
                                                 }
                                             }
@@ -128,119 +136,7 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Bill</h3>
-                        <!-- Button trigger modal -->
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                                        <thead>
-                                            <tr>
-                                                <th>@Html.DisplayNameFor(model => model.NgayDH)</th>
-                                                <th>@Html.DisplayNameFor(model => model.TongTien)</th>
-                                                <th>@Html.DisplayNameFor(model => model.NGUOIDUNG.HoTen)</th>
-                                                <th>@Html.DisplayNameFor(model => model.TinhTrang)</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model)
-                                            {
-                                                if (item.TinhTrang > 4 && item.TinhTrang <= 8)
-                                                {
-                                                    <tr id="row1_@item.IdHD">
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.NgayDH)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.TongTien)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.NGUOIDUNG.HoTen)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.TinhTrang)
-                                                        </td>
-                                                        <td>
-                                                            <div class="btn-group btn-group-sm">
-                                                                <a class="btn btn-info" href="@Url.Action("ChiTiet","QLHoaDon",new { id=item.IdHD})">
-                                                                    <i class="fa fa-eye"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Bill</h3>
-                        <!-- Button trigger modal -->
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                                        <thead>
-                                            <tr>
-                                                <th>@Html.DisplayNameFor(model => model.NgayDH)</th>
-                                                <th>@Html.DisplayNameFor(model => model.TongTien)</th>
-                                                <th>@Html.DisplayNameFor(model => model.NGUOIDUNG.HoTen)</th>
-                                                <th>@Html.DisplayNameFor(model => model.TinhTrang)</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model)
-                                            {
-                                                if (item.TinhTrang == 9)
-                                                {
-                                                    <tr id="row1_@item.IdHD">
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.NgayDH)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.TongTien)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.NGUOIDUNG.HoTen)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.TinhTrang)
-                                                        </td>
-                                                        <td>
-                                                            <div class="btn-group btn-group-sm">
-                                                                <a class="btn btn-info" href="@Url.Action("ChiTiet","QLHoaDon",new { id=item.IdHD})">
-                                                                    <i class="fa fa-eye"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
+                
             </div>
             <!-- /.col -->
         </div>

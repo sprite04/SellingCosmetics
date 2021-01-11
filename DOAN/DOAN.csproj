@@ -2300,7 +2300,6 @@
     <Content Include="Views\QLKhuyenMai\Edit.cshtml" />
     <Content Include="Views\QLHoaDon\Index.cshtml" />
     <Content Include="Views\QLHoaDon\ChiTiet.cshtml" />
-    <Content Include="Views\QLHoaDon\Print.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

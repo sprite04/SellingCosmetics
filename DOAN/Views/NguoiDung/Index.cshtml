@@ -85,7 +85,9 @@
                                             {
                                             <tr id="row2_@item.IdUser">
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.HoTen)
+                                                    <a href="@Url.Action("ChiTietNguoiDung","NguoiDung",new {id=item.IdUser})">
+                                                        @Html.DisplayFor(modelItem => item.HoTen)
+                                                    </a>
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.NgaySinh, "ShortDateTime")

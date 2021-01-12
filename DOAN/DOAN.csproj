@@ -120,6 +120,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\admin\default\10.png" />
+    <Content Include="assets\admin\default\11.png" />
     <Content Include="assets\admin\dist\css\adminlte.css" />
     <Content Include="assets\admin\dist\css\adminlte.min.css" />
     <Content Include="assets\admin\dist\css\alt\adminlte.components.css" />
@@ -2231,6 +2233,7 @@
     <Compile Include="Models\LOAIUSER.cs" />
     <Compile Include="Models\Metadata\DANHMUC.cs" />
     <Compile Include="Models\Metadata\GIOHANG.cs" />
+    <Compile Include="Models\Metadata\KHUYENMAI.cs" />
     <Compile Include="Models\Metadata\LOAISANPHAM.cs" />
     <Compile Include="Models\Metadata\NGUOIDUNG.cs" />
     <Compile Include="Models\Metadata\NHAPHANG.cs" />
@@ -2300,6 +2303,7 @@
     <Content Include="Views\QLKhuyenMai\Edit.cshtml" />
     <Content Include="Views\QLHoaDon\Index.cshtml" />
     <Content Include="Views\QLHoaDon\ChiTiet.cshtml" />
+    <Content Include="Views\NguoiDung\ChiTietNguoiDung.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

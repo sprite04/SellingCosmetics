@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using DOAN.Models;
+@{
+    var user = Session["TaiKhoan"] as NGUOIDUNG;
+
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -62,16 +67,18 @@
                         <i class="fa fa-user" aria-hidden="true"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-                        <span class="dropdown-item dropdown-header">Setting</span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i>Change Password
-                            <span class="float-right text-muted text-sm">3 mins</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="@Url.Action("Logout","Login")">
-                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
-                        </a>
+                        @if (user != null)
+                        {
+                            <span class="dropdown-item dropdown-header">@user.HoTen</span>
+                            <div class="dropdown-divider"></div>
+                            <a href="@Url.Action("ChiTietNguoiDung","NguoiDung")" class="dropdown-item">
+                                <i class="fas fa-envelope mr-2"></i>Thông tin cá nhân
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("DangXuat","Home")">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Đăng xuất
+                            </a>
+                        }
                     </div>
                 </li>
             </ul>
@@ -86,8 +93,32 @@
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user (optional) -->
-                @Html.Partial("~/Views/NguoiDung/SidebarUser.cshtml")
+                @if (user != null)
+                {
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="image">
+                            @if (@user.Avatar == null)
+                            {
+                                if (@user.GioiTinh)
+                                {
+                                    <img src="~/assets/admin/default/11.png" class="img-circle elevation-2" style="width:50px;height:52px" alt="User Image">
+                                }
+                                else
+                                {
+                                    <img src="~/assets/admin/default/10.png" class="img-circle elevation-2" style="width:50px;height:52px" alt="User Image">
+                                }
+                            }
+                            else
+                            {
+                                <img src="@Url.Content("~/assets/admin/hinhnd/"+user.Avatar)" style="width:50px;height:52px" class="img-circle elevation-2" alt="User Image">
+                            }
 
+                        </div>
+                        <div class="info mt-2">
+                            <a href="@Url.Action("ChiTietNguoiDung","NguoiDung")" class="d-block">@user.HoTen</a>
+                        </div>
+                    </div>
+                }
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">

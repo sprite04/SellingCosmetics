@@ -184,13 +184,16 @@
                     <!-- this row will not appear when printing -->
                     <div class="row no-print">
                         <div class="col-12">
-                            <button class="btn btn-default print" ><i class="fas fa-print"></i> Print</button>
-                            <a type="button" class="btn btn-success float-right" onclick="return confirm('Bạn có chắc chắn xác nhận đơn hàng này?');">
-                                Xác nhận
-                            </a>
-                            <a type="button" class="btn btn-warning float-right" style="margin-right: 5px;" onclick="return confirm('Bạn có chắc chắn huỷ bỏ đơn hàng này?');">
-                                Huỷ bỏ
-                            </a>
+                            <button class="btn btn-default print"><i class="fas fa-print"></i> Print</button>
+                            @if (hoadon.TinhTrang == 4)
+                            {
+                                <a type="button" class="btn btn-success float-right" onclick="return confirm('Bạn có chắc chắn xác nhận đơn hàng này?');">
+                                    Xác nhận
+                                </a>
+                                <a type="button" class="btn btn-warning float-right" style="margin-right: 5px;" onclick="return confirm('Bạn có chắc chắn huỷ bỏ đơn hàng này?');">
+                                    Huỷ bỏ
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>

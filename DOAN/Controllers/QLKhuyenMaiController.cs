@@ -15,10 +15,59 @@ namespace DOAN.Controllers
     {
         // GET: QLKhuyenMai
         TMDTDbContext db = new TMDTDbContext();
-        public ActionResult Index()
+        public ActionResult Index(int error=0)
         {
-            var list = db.KHUYENMAIs.Where(x => x.TinhTrang == true);
+            var list = db.KHUYENMAIs.Where(x => x.TinhTrang == true).OrderByDescending(y=>y.NgayBD);
+            List<LoaiKM> listLoai = new List<LoaiKM>();
+            LoaiKM LOAI1 = new LoaiKM();
+            LOAI1.IdLoai = 1;
+            LOAI1.TenLoai = "Giảm phần trăm";
+            listLoai.Add(LOAI1);
+            LoaiKM LOAI2 = new LoaiKM();
+            LOAI2.IdLoai = 2;
+            LOAI2.TenLoai = "Giảm trực tiếp";
+            listLoai.Add(LOAI2);
+            ViewBag.items = new SelectList(listLoai, "IdLoai", "TenLoai");
+            ViewBag.GiaTri = 0;
+            ViewBag.DanhSach = list;
+
+            ViewBag.Error = error;
+
+            
             return View(list);
+        }
+
+        [HttpPost]
+        public ActionResult Index(FormCollection f)
+        {
+            var kq = f["ddlLoai"];
+            List<LoaiKM> listLoai = new List<LoaiKM>();
+            LoaiKM LOAI1 = new LoaiKM();
+            LOAI1.IdLoai = 1;
+            LOAI1.TenLoai = "Giảm phần trăm";
+            listLoai.Add(LOAI1);
+            LoaiKM LOAI2 = new LoaiKM();
+            LOAI2.IdLoai = 2;
+            LOAI2.TenLoai = "Giảm trực tiếp";
+            listLoai.Add(LOAI2);
+
+            if (kq != "")
+            {
+                int giatri = int.Parse(kq);
+                var list = db.KHUYENMAIs.Where(x => x.TinhTrang == true && x.LoaiKM==giatri).OrderByDescending(y => y.NgayBD);
+                ViewBag.DanhSach = list;
+                ViewBag.items = new SelectList(listLoai, "IdLoai", "TenLoai",giatri);
+                ViewBag.GiaTri = giatri;
+                return View(list);
+            }
+            else
+            {
+                var list = db.KHUYENMAIs.Where(x => x.TinhTrang == true).OrderByDescending(y => y.NgayBD);
+                ViewBag.DanhSach = list;
+                ViewBag.items = new SelectList(listLoai, "IdLoai", "TenLoai");
+                ViewBag.GiaTri = 0;
+                return View(list);
+            }
         }
 
         public ActionResult Create()
@@ -88,19 +137,26 @@ namespace DOAN.Controllers
                 Response.StatusCode = 404;
                 return null;
             }
-            try
+            if(DateTime.Compare(DateTime.Now, khuyenmai.NgayBD ?? DateTime.Now) < 0)
             {
-                khuyenmai.TinhTrang = false;
-                db.Entry(khuyenmai).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    khuyenmai.TinhTrang = false;
+                    db.Entry(khuyenmai).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
 
-            }
-            catch (Exception ex)
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                    return Content("<script> alert(\"Quá trình thực hiện thất bại.\")</script>");
+                }
+            }    
+            else
             {
-                string message = ex.Message;
-                return Content("<script> alert(\"Quá trình thực hiện thất bại.\")</script>");
-            }
+                return RedirectToAction("Index","QLKhuyenMai",new {error=2});
+            }    
         }
 
         public ActionResult Edit(int? id)
@@ -114,19 +170,25 @@ namespace DOAN.Controllers
             {
                 return HttpNotFound();
             }
+            if (DateTime.Compare(DateTime.Now, khuyenmai.NgayBD ?? DateTime.Now) < 0)
+            {
+                List<LoaiKM> listLoai = new List<LoaiKM>();
+                LoaiKM LOAI1 = new LoaiKM();
+                LOAI1.IdLoai = 1;
+                LOAI1.TenLoai = "Giảm phần trăm";
+                listLoai.Add(LOAI1);
+                LoaiKM LOAI2 = new LoaiKM();
+                LOAI2.IdLoai = 2;
+                LOAI2.TenLoai = "Giảm trực tiếp";
+                listLoai.Add(LOAI2);
 
-            List<LoaiKM> listLoai = new List<LoaiKM>();
-            LoaiKM LOAI1 = new LoaiKM();
-            LOAI1.IdLoai = 1;
-            LOAI1.TenLoai = "Giảm phần trăm";
-            listLoai.Add(LOAI1);
-            LoaiKM LOAI2 = new LoaiKM();
-            LOAI2.IdLoai = 2;
-            LOAI2.TenLoai = "Giảm trực tiếp";
-            listLoai.Add(LOAI2);
-
-            ViewBag.LoaiKM = new SelectList(listLoai, "IdLoai", "TenLoai",khuyenmai.LoaiKM);
-            return View(khuyenmai);
+                ViewBag.LoaiKM = new SelectList(listLoai, "IdLoai", "TenLoai", khuyenmai.LoaiKM);
+                return View(khuyenmai);
+            }    
+            else
+            {
+                return RedirectToAction("Index","QLKhuyenMai", new {error=2});
+            }    
         }
 
         [HttpPost]

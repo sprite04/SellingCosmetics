@@ -13,10 +13,10 @@ namespace DOAN.Controllers
         // GET: QLHoaDon
         public ActionResult Index(int error=0)
         {
-            var list = db.HOADONs.Where(x => x.TinhTrang >=4 && x.TinhTrang<=9).OrderByDescending(y=>y.NgayDH);
-            var listTT = db.TINHTRANGs.Where(x => x.IdTT >= 4 && x.IdTT <= 9);
-            ViewBag.items = new SelectList(listTT, "IdTT", "TenTT");
-            ViewBag.GiaTri = 0;
+            var list = db.HOADONs.Where(x => x.TinhTrang ==4).OrderByDescending(y=>y.NgayDH);
+            var listTT = db.TINHTRANGs.Where(x => (x.IdTT >= 4 && x.IdTT <= 9)||(x.IdTT==11));
+            ViewBag.items = new SelectList(listTT, "IdTT", "TenTT",4);
+            ViewBag.GiaTri = 4;
             ViewBag.DanhSach = list;
 
             ViewBag.Error = error;
@@ -28,7 +28,7 @@ namespace DOAN.Controllers
         public ActionResult Index(FormCollection f)
         {
             var kq = f["ddlTinhTrang"];
-            var listTT = db.TINHTRANGs.Where(x => x.IdTT >= 4 && x.IdTT <= 9);
+            var listTT = db.TINHTRANGs.Where(x => (x.IdTT >= 4 && x.IdTT <= 9) || (x.IdTT == 11));
 
             if (kq != "")
             {
@@ -41,7 +41,7 @@ namespace DOAN.Controllers
             }
             else
             {
-                var list = db.HOADONs.Where(x => x.TinhTrang >= 4 && x.TinhTrang <= 9).OrderByDescending(y => y.NgayDH);
+                var list = db.HOADONs.Where(x => (x.TinhTrang >= 4 && x.TinhTrang <= 9) || (x.TinhTrang == 11)).OrderByDescending(y => y.NgayDH);
                 ViewBag.DanhSach = list;
                 ViewBag.items = new SelectList(listTT, "IdTT", "TenTT");
                 ViewBag.GiaTri = 0;
@@ -62,6 +62,40 @@ namespace DOAN.Controllers
             return View();
         }
 
-        
+        public ActionResult XacNhan(int id)
+        {
+            var hoadon = db.HOADONs.Find(id);
+            if (hoadon == null)
+                return HttpNotFound();
+            try
+            {
+                hoadon.TinhTrang = 5;
+                db.Entry(hoadon).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", "QLHoaDon", new { error = -1 });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "QLHoaDon", new { error = 1 });
+            }
+        }
+
+        public ActionResult HuyBo(int id)
+        {
+            var hoadon = db.HOADONs.Find(id);
+            if (hoadon == null)
+                return HttpNotFound();
+            try
+            {
+                hoadon.TinhTrang = 6;
+                db.Entry(hoadon).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", "QLHoaDon", new { error = -1 });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "QLHoaDon", new { error = 1 });
+            }
+        }
     }
 }

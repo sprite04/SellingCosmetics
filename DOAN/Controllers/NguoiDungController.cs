@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using DOAN.Common;
 using DOAN.Models;
 
@@ -183,8 +184,6 @@ namespace DOAN.Controllers
                     }
                 }
             }
-
-            
             
             if (ModelState.IsValid)
             {
@@ -217,6 +216,126 @@ namespace DOAN.Controllers
                 ViewBag.IdLoaiUser = new SelectList(db.LOAIUSERs, "IdLoaiUser", "TenLoai", nd.IdLoaiUser);
             }
             return View(nd);
+        }
+
+        [HttpPost]
+        public ActionResult CapNhatThongTin(NGUOIDUNG nd, HttpPostedFileBase Avatar, string AnhCu)
+        {
+            var user = Session["TaiKhoan"] as NGUOIDUNG;
+            if (user == null)
+            {
+                RedirectToAction("DangNhap", "Home");
+            }
+            if (user.IdLoaiUser == 5 || (user.IdUser == nd.IdUser))
+            {
+                if (Avatar != null)
+                {
+                    if (Avatar.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(Avatar.FileName);
+                        var path = Path.Combine(Server.MapPath("~/assets/admin/hinhnd"), fileName);
+                        nd.Avatar = fileName;
+                        if (!System.IO.File.Exists(path))
+                        {
+                            Avatar.SaveAs(path);
+                        }
+                    }
+                }
+                else
+                    nd.Avatar = AnhCu;
+
+                int error = 0;
+                nd.SDT = nd.SDT.Trim();
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        db.Entry(nd).State = EntityState.Modified;
+                        try
+                        {
+                            db.SaveChanges();
+                            error = -1;
+                            return RedirectToAction("ChiTietNguoiDung", new { error = error });
+                        }
+                        catch (Exception)
+                        {
+                            error = 1;
+                            return RedirectToAction("ChiTietNguoiDung", new { error = error });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        string message = ex.Message;
+                        error = 1;
+                        return RedirectToAction("ChiTietNguoiDung", new { error = error });
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập.");
+                }
+                return View(nd);
+            }
+            else
+            {
+                return View("LoiPhanQuyen", "Dashboard");
+            }
+        }
+
+
+        public ActionResult ChiTietNguoiDung(int? id, int error = 0)
+        {
+            if (id == null)
+            {
+                var user = Session["TaiKhoan"] as NGUOIDUNG;
+                if (user == null)
+                    return HttpNotFound();
+                var nd = db.NGUOIDUNGs.Find(user.IdUser);
+                Session["TaiKhoan"] = nd;
+                ViewBag.AnhCu = nd.Avatar;
+                ViewBag.Error = error;
+                return View(nd);
+            }
+            else
+            {
+                var nd = db.NGUOIDUNGs.Find(id);
+                ViewBag.Error = error;
+                return View(nd);
+            }
+        }
+
+        //Thay doi mat khau tren trang admin
+        public ActionResult ThayDoiMatKhau(FormCollection f)
+        {
+            int error = 0;
+            var user = Session["TaiKhoan"] as NGUOIDUNG;
+            if (user == null)
+                return HttpNotFound();
+            var nd = db.NGUOIDUNGs.Find(user.IdUser);
+            string matkhaucu = f["matkhaucu"];
+            string matkhaumoi = f["matkhaumoi"];
+            string xacnhan = f["xacnhan"];
+            if (matkhaumoi != xacnhan)
+            {
+                error = 2;
+                return RedirectToAction("ChiTietNguoiDung", new { error = error });
+            }
+            if (Encryptor.MD5Hash(matkhaucu) != nd.Password)
+            {
+                error = 3;
+                return RedirectToAction("ChiTietNguoiDung", new { error = error });
+            }
+            else
+            {
+                nd.SDT = nd.SDT.Trim();
+                nd.Password = Encryptor.MD5Hash(matkhaumoi);
+                nd.Password1= Encryptor.MD5Hash(matkhaumoi);
+                db.Entry(nd).State = EntityState.Modified;
+                db.SaveChanges();
+                Session["TaiKhoan"] = null;
+                FormsAuthentication.SignOut();
+                return RedirectToAction("Index", "Dashboard");
+            }
         }
     }
 }

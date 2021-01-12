@@ -1973,6 +1973,9 @@
     <Content Include="assets\client\css\responsive.css" />
     <Content Include="assets\client\css\slicknav.min.css" />
     <Content Include="assets\client\css\themify-icons.css" />
+    <Content Include="assets\client\datatable\bootstrap.css" />
+    <Content Include="assets\client\datatable\dataTables.bootstrap4.min.css" />
+    <Content Include="assets\client\datatable\responsive.bootstrap4.min.css" />
     <Content Include="assets\client\fonts\fontawesome-webfont.svg" />
     <Content Include="assets\client\fonts\themify.svg" />
     <Content Include="assets\client\hinhsp\anessa\1.jpg" />
@@ -2304,6 +2307,10 @@
     <Content Include="Views\QLHoaDon\Index.cshtml" />
     <Content Include="Views\QLHoaDon\ChiTiet.cshtml" />
     <Content Include="Views\NguoiDung\ChiTietNguoiDung.cshtml" />
+    <Content Include="Views\GioHang\Checkout.cshtml" />
+    <Content Include="Views\Home\ThongTinCaNhan.cshtml" />
+    <Content Include="Views\Home\ThongTinDonHang.cshtml" />
+    <Content Include="Views\Home\ThayDoiMatKhau.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -172,5 +172,21 @@ namespace DOAN.Controllers
             FormsAuthentication.SignOut();
             return Redirect(strURL);
         }
+
+        public ActionResult ThongTinCaNhan()
+        {
+            return View();
+        }
+
+        public ActionResult ThongTinDonHang()
+        {
+            var list = db.HOADONs.Where(x => x.TinhTrang == 4).OrderByDescending(y => y.NgayDH);
+            return View(list);
+        }
+
+        public ActionResult ThayDoiMatKhau()
+        {
+            return View();
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace DOAN.Controllers
             }
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-            var listSP = db.SANPHAMs.Where(n => n.TenSP.Contains(sTuKhoa));
+            var listSP = db.SANPHAMs.Where(n => n.TenSP.Contains(sTuKhoa) && n.TinhTrang==1);
             ViewBag.TuKhoa = sTuKhoa;
             return View(listSP.OrderBy(n => n.TenSP).ToPagedList(pageNumber, pageSize));
         }

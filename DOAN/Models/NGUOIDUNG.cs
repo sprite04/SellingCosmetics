@@ -32,7 +32,7 @@ namespace DOAN.Models
 
         public bool GioiTinh { get; set; }
 
-        [StringLength(50)]
+        [StringLength(1000)]
         public string DiaChi { get; set; }
 
         [StringLength(12)]

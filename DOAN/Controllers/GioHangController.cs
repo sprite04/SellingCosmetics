@@ -260,8 +260,9 @@ namespace DOAN.Controllers
             return Redirect(strURL);
         }
 
-        public ActionResult DatHang(string strURL, string MaKM)
+        public ActionResult DatHang(string strURL, string MaKM, FormCollection f)
         {
+            var vanchuyen = f["vanchuyen"];
             if (Session["GioHang"] == null)
                 return RedirectToAction("Index", "Home");
             NGUOIDUNG user = Session["TaiKhoan"] as NGUOIDUNG;
@@ -403,6 +404,73 @@ namespace DOAN.Controllers
             ViewBag.TongSoLuong = TinhTongSoLuong();
             ViewBag.TongTien = TinhTongThanhTien();
             return PartialView();
+        }
+
+        public ActionResult Checkout(string strURL, string MaKM, int error=0)
+        {
+            if (Session["GioHang"] == null)
+                return RedirectToAction("Index", "Home");
+            NGUOIDUNG user = Session["TaiKhoan"] as NGUOIDUNG;
+            if (user == null)
+                return RedirectToAction("DangNhap", "Home", new { strURL = strURL });
+
+            int TienGiam = 0;
+            int TienVanChuyen = db.DTGIAOHANGs.SingleOrDefault(x => x.TinhTrang == true).TienVanChuyen ?? 20000;
+            int TongTienSP = TinhTongThanhTien();
+            int SoLuongSP = TinhTongSoLuong();
+
+            ViewBag.DiaChi = user.DiaChi;
+            ViewBag.SDT = user.SDT.Trim();
+
+            if (MaKM!=null&& MaKM!=null)
+            {
+                KHUYENMAI km = db.KHUYENMAIs.FirstOrDefault(x => x.MaKM == MaKM && x.TinhTrang == true && DateTime.Compare(DateTime.Now, x.NgayBD ?? DateTime.Now) >= 0 && DateTime.Compare(DateTime.Now, x.NgayKT ?? DateTime.Now) <= 0);
+                if (km != null)
+                {
+                    if (km.LoaiKM == 1)
+                    {
+                        TienGiam = (TongTienSP * (km.GiaTri ?? 0)) / 100;
+                    }
+                    else if (km.LoaiKM == 2)
+                    {
+                        TienGiam = km.GiaTri ?? 0;
+                    }
+                }
+            }
+
+            ViewBag.TienVanChuyen = TienVanChuyen;
+            ViewBag.TongSoLuong = SoLuongSP;
+            ViewBag.TongTien = TongTienSP;
+            ViewBag.MaKM = MaKM;
+            ViewBag.GiamGia = TienGiam;
+            ViewBag.ThanhToan = TongTienSP + TienVanChuyen-TienGiam;
+            ViewBag.Error = error;
+
+            return View(user);
+        }
+
+        public ActionResult ChinhSuaTTVanChuyen(string MaKM, string strURL, NGUOIDUNG nguoidung)
+        {
+            nguoidung.SDT=nguoidung.SDT.Trim();
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    db.Entry(nguoidung).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    NGUOIDUNG user = Session["TaiKhoan"] as NGUOIDUNG;
+                    NGUOIDUNG nd = db.NGUOIDUNGs.Find(user.IdUser);
+                    if (nd != null)
+                        Session["TaiKhoan"] = nd;
+                    return RedirectToAction("Checkout", "GioHang", new { strURL = strURL, MaKM = MaKM, error = -1 });
+                }
+                catch (Exception e)
+                {
+
+                    return RedirectToAction("Checkout", "GioHang", new { strURL = strURL, MaKM = MaKM, error = 1 });
+                }
+            }
+            return RedirectToAction("Checkout", "GioHang", new { strURL = strURL, MaKM = MaKM, error = 2 });
         }
     }
 }

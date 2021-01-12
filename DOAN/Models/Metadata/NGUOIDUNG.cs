@@ -43,8 +43,9 @@ namespace DOAN.Models
             [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
             public DateTime? NgaySinh { get; set; }
 
-            [StringLength(50)]
+            [StringLength(1000)]
             [DisplayName("Address")]
+            [Required(ErrorMessage = "{0} can not be empty")]
             public string DiaChi { get; set; }
 
 

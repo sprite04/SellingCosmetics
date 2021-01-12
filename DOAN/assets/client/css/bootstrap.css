@@ -4487,7 +4487,7 @@ tbody.collapse.show {
 .pagination {
     display: -ms-flexbox;
     display: flex;
-    padding-left: 0;
+    padding-top: 13px;
     list-style: none;
     border-radius: .25rem
 }

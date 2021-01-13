@@ -21,7 +21,9 @@ namespace DOAN.Models
 
         public int SoLuong { get; set; }
 
-        public int? GiaBan { get; set; }
+        public int? GiaGoc { get; set; }
+
+        public double? LoiNhuan { get; set; }
 
         public virtual HOADON HOADON { get; set; }
 

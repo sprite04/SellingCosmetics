@@ -313,7 +313,8 @@ namespace DOAN.Controllers
                 ct.IdHD = hd.IdHD;
                 ct.IdSP = item.SANPHAM.IdSP;
                 ct.SoLuong = item.SoLuong;
-                ct.GiaBan = (int)(item.SANPHAM.GiaGoc * item.SANPHAM.LoiNhuan);
+                ct.GiaGoc = item.SANPHAM.GiaGoc;
+                ct.LoiNhuan = item.SANPHAM.LoiNhuan;
                 db.CHITIETHDs.Add(ct);
             }
             db.SaveChanges();

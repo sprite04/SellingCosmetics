@@ -15,8 +15,6 @@ namespace DOAN.Models
             CHITIETHDs = new HashSet<CHITIETHD>();
             GIOHANGs = new HashSet<GIOHANG>();
             NHAPHANGs = new HashSet<NHAPHANG>();
-            SANPHAMLOIs = new HashSet<SANPHAMLOI>();
-            TRAHANGs = new HashSet<TRAHANG>();
         }
 
         [Key]
@@ -68,11 +66,5 @@ namespace DOAN.Models
         public virtual THUONGHIEU THUONGHIEU { get; set; }
 
         public virtual TINHTRANG TINHTRANG1 { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SANPHAMLOI> SANPHAMLOIs { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TRAHANG> TRAHANGs { get; set; }
     }
 }

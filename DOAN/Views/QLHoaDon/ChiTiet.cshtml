@@ -98,11 +98,11 @@
                                         <tr>
                                             <td>@item.SANPHAM.TenSP</td>
                                             <td>@item.SoLuong</td>
-                                            <td>@Url.Content((item.GiaBan).ToString())</td>
+                                            <td>@Url.Content(((Int32)(item.GiaGoc*item.LoiNhuan)).ToString())</td>
                                             @{
-                                                tongtiensp += (Int32)(item.GiaBan * item.SoLuong);
+                                                tongtiensp += (Int32)(item.GiaGoc * item.LoiNhuan * item.SoLuong);
                                             }
-                                            <td>@Url.Content((item.GiaBan * @item.SoLuong).ToString())</td>
+                                            <td>@Url.Content(((Int32)(item.GiaGoc * item.LoiNhuan * @item.SoLuong)).ToString())</td>
                                         </tr>
                                     }
 

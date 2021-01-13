@@ -2215,6 +2215,7 @@
     <Compile Include="Common\LoaiKM.cs" />
     <Compile Include="Common\Nam.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\GiaoHangController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NguoiDungController.cs" />
@@ -2247,12 +2248,10 @@
     <Compile Include="Models\NHAPHANG.cs" />
     <Compile Include="Models\PHANQUYEN.cs" />
     <Compile Include="Models\SANPHAM.cs" />
-    <Compile Include="Models\SANPHAMLOI.cs" />
     <Compile Include="Models\THONGKETHANG.cs" />
     <Compile Include="Models\THUONGHIEU.cs" />
     <Compile Include="Models\TINHTRANG.cs" />
     <Compile Include="Models\TMDTDbContext.cs" />
-    <Compile Include="Models\TRAHANG.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2314,6 +2313,8 @@
     <Content Include="Views\Home\ThongTinDonHang.cshtml" />
     <Content Include="Views\Home\ThayDoiMatKhau.cshtml" />
     <Content Include="Views\Home\ChiTietDonHang.cshtml" />
+    <Content Include="Views\GiaoHang\Index.cshtml" />
+    <Content Include="Views\GiaoHang\ThayDoiTinhTrang.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

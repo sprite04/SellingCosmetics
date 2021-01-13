@@ -8,7 +8,7 @@ namespace DOAN.Models
     public partial class TMDTDbContext : DbContext
     {
         public TMDTDbContext()
-            : base("name=TMDTM")
+            : base("name=TMDTDbContext")
         {
         }
 
@@ -23,11 +23,9 @@ namespace DOAN.Models
         public virtual DbSet<NHAPHANG> NHAPHANGs { get; set; }
         public virtual DbSet<PHANQUYEN> PHANQUYENs { get; set; }
         public virtual DbSet<SANPHAM> SANPHAMs { get; set; }
-        public virtual DbSet<SANPHAMLOI> SANPHAMLOIs { get; set; }
         public virtual DbSet<THONGKETHANG> THONGKETHANGs { get; set; }
         public virtual DbSet<THUONGHIEU> THUONGHIEUx { get; set; }
         public virtual DbSet<TINHTRANG> TINHTRANGs { get; set; }
-        public virtual DbSet<TRAHANG> TRAHANGs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -37,11 +35,6 @@ namespace DOAN.Models
 
             modelBuilder.Entity<HOADON>()
                 .HasMany(e => e.CHITIETHDs)
-                .WithRequired(e => e.HOADON)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<HOADON>()
-                .HasMany(e => e.TRAHANGs)
                 .WithRequired(e => e.HOADON)
                 .WillCascadeOnDelete(false);
 
@@ -114,16 +107,6 @@ namespace DOAN.Models
 
             modelBuilder.Entity<SANPHAM>()
                 .HasMany(e => e.NHAPHANGs)
-                .WithRequired(e => e.SANPHAM)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<SANPHAM>()
-                .HasMany(e => e.SANPHAMLOIs)
-                .WithRequired(e => e.SANPHAM)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<SANPHAM>()
-                .HasMany(e => e.TRAHANGs)
                 .WithRequired(e => e.SANPHAM)
                 .WillCascadeOnDelete(false);
 

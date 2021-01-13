@@ -13,7 +13,6 @@ namespace DOAN.Models
         public HOADON()
         {
             CHITIETHDs = new HashSet<CHITIETHD>();
-            TRAHANGs = new HashSet<TRAHANG>();
         }
 
         [Key]
@@ -55,8 +54,5 @@ namespace DOAN.Models
         public virtual KHUYENMAI KHUYENMAI { get; set; }
 
         public virtual TINHTRANG TINHTRANG1 { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TRAHANG> TRAHANGs { get; set; }
     }
 }

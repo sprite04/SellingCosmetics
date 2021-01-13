@@ -52,9 +52,10 @@
                 <div class="shop-sidebar">
                     <!-- Single Widget -->
                     <h3 style="display:block; border-bottom:3px solid #EB395F; width:42%;  margin-bottom:10px"><small>ACCOUNT</small></h3>
-                    <a href="#"><div class="bthuong"> Thông tin tài khoản</div></a>
-                    <a href="#"><div class="hdong"> Quản lý đơn hàng</div></a>
-                    <a href="#"><div class="bthuong"> Thay đổi mật khẩu</div></a>
+                    <a href="@Url.Action("ThongTinCaNhan","Home")"><div class="bthuong"> Thông tin tài khoản</div></a>
+                    <a href="@Url.Action("ThongTinDonHang","Home")"><div class="hdong"> Quản lý đơn hàng</div></a>
+                    <a href="@Url.Action("ThayDoiMatKhau","Home")"><div class="bthuong"> Thay đổi mật khẩu</div></a>
+                    <a href="@Url.Action("DangXuat","Home")"><div class="bthuong">Đăng xuất</div></a>
                     <!--/ End Single Widget -->
                 </div>
             </div>
@@ -63,49 +64,52 @@
                 <div class="row">
                     <h4 style="margin-bottom:20px; margin-top:5px; border-left:5px solid #EB395F; padding:0px 3px 0px 5px"><small>ĐƠN HÀNG CỦA TÔI</small></h4>
                     <div class="col-12">
+                        @if (ViewBag.SL == 0)
+                        {
+                            <div class="callout callout-info">
+                                <h5>Chưa có đơn hàng nào</h5>
 
-                        <table id="example1" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                            <thead>
-                                <tr>
-                                    <th>@Html.DisplayNameFor(model => model.IdHD)</th>
-                                    <th>@Html.DisplayNameFor(model => model.NgayDH)</th>
-                                    <th>@Html.DisplayNameFor(model => model.TongTien)</th>
-                                    <th>@Html.DisplayNameFor(model => model.NGUOIDUNG.HoTen)</th>
-                                    <th></th>
-                                    
+                            </div>
+                        }
+                        else
+                        {
+                            <table id="example1" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                                <thead>
+                                    <tr>
+                                        <th>@Html.DisplayNameFor(model => model.IdHD)</th>
+                                        <th>@Html.DisplayNameFor(model => model.NgayDH)</th>
+                                        <th>@Html.DisplayNameFor(model => model.TongTien)</th>
+                                        <th>@Html.DisplayNameFor(model => model.TINHTRANG1.TenTT)</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr id="row1_@item.IdHD">
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.IdHD)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NgayDH)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.TongTien)
-                                        </td>
-                                        <td>
-                                            <a href="@Url.Action("ChiTietNguoiDung","NguoiDung",new {id=item.IdKH})">
-                                                @Html.DisplayFor(modelItem => item.NGUOIDUNG.HoTen)
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm">
-                                                <a class="btn btn-info" href="@Url.Action("ChiTiet","QLHoaDon",new { id=item.IdHD})">
-                                                    <i class="fa fa-eye"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                        
+
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr id="row1_@item.IdHD">
+                                            <td>
+                                                <a href="@Url.Action("ChiTietDonHang","Home",new {id=item.IdHD})">
+                                                    @Html.DisplayFor(modelItem => item.IdHD)
+                                                </a>
+                                               
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NgayDH)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TongTien)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TINHTRANG1.TenTT)
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+
                     </div>
                 </div>
 

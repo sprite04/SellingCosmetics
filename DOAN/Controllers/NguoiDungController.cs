@@ -163,13 +163,14 @@ namespace DOAN.Controllers
             }
             nd.Mail = nd.Mail.Trim();
             nd.SDT = nd.SDT.Trim();
+            ViewBag.AnhCu = nd.Avatar;
             ViewBag.IdLoaiUser = new SelectList(db.LOAIUSERs, "IdLoaiUser", "TenLoai", nd.IdLoaiUser);
             return View(nd);
         }
 
         [HttpPost]
         [Route("Edit")]
-        public ActionResult Edit(NGUOIDUNG nd, HttpPostedFileBase Avatar)
+        public ActionResult Edit(NGUOIDUNG nd, HttpPostedFileBase Avatar, string AnhCu)
         {
             if(Avatar!=null)
             {
@@ -183,6 +184,12 @@ namespace DOAN.Controllers
                         Avatar.SaveAs(path);
                     }
                 }
+                else
+                    nd.Avatar = AnhCu;
+            }
+            else
+            {
+                nd.Avatar = AnhCu;
             }
             
             if (ModelState.IsValid)
@@ -240,6 +247,10 @@ namespace DOAN.Controllers
                             Avatar.SaveAs(path);
                         }
                     }
+                    else
+                    {
+                        nd.Avatar = AnhCu;
+                    }    
                 }
                 else
                     nd.Avatar = AnhCu;

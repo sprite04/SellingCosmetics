@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "DangNhap";
     Layout = "~/Views/Shared/DetailLayout.cshtml";
+    
 }
 
 <section class="blog-single section mb-50">
@@ -26,7 +27,7 @@
                                     }
                                     <h2 class="reply-title">LOGIN</h2>
                                     <!-- Comment Form -->
-                                    @using (Html.BeginForm())
+                                    @using (Html.BeginForm("DangNhap","Home",new {strURL=ViewBag.strURL}))
                                     {
                                         <div class="row">
 

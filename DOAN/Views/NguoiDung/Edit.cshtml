@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
+    string anhcu = ViewBag.AnhCu;
 }
 
 @section header{
@@ -46,7 +47,7 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    @using (Html.BeginForm("Edit", "NguoiDung", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("Edit", "NguoiDung",new {AnhCu=anhcu }, FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => model.IdUser)

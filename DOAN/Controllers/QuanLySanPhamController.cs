@@ -179,6 +179,7 @@ namespace DOAN.Controllers
             ViewBag.MaKM = new SelectList(db.KHUYENMAIs, "IdMa", "MaKM", sp.MaKM);
             ViewBag.IdTH = new SelectList(db.THUONGHIEUx, "IdTH", "TenTH", sp.IdTH);
             ViewBag.IdLoaiSP = new SelectList(db.LOAISANPHAMs, "IdLoaiSP", "TenLoai", sp.IdLoaiSP);
+            ViewBag.AnhCu = sp.AnhSP;
             return View(sp);
         }
 
@@ -186,7 +187,7 @@ namespace DOAN.Controllers
         [Route("Edit")]
         [ValidateInput(false)]
         [Authorize(Roles = "*")]
-        public ActionResult Edit(SANPHAM sp, HttpPostedFileBase[] AnhSP)
+        public ActionResult Edit(SANPHAM sp, HttpPostedFileBase[] AnhSP, string AnhCu)
         {
             for (int i = 0; i < AnhSP.Length; i++)
             {
@@ -202,6 +203,10 @@ namespace DOAN.Controllers
                     }
                 }
             }
+            if(sp.AnhSP==null||sp.AnhSP=="")
+            {
+                sp.AnhSP = AnhCu;
+            }    
 
             if (ModelState.IsValid)
             {

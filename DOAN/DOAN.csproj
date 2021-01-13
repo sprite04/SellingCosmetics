@@ -2311,6 +2311,7 @@
     <Content Include="Views\Home\ThongTinCaNhan.cshtml" />
     <Content Include="Views\Home\ThongTinDonHang.cshtml" />
     <Content Include="Views\Home\ThayDoiMatKhau.cshtml" />
+    <Content Include="Views\Home\ChiTietDonHang.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -24,7 +24,7 @@
             });
         });
     </script>
-    
+
 }
 
 
@@ -52,22 +52,22 @@
                 <div class="shop-sidebar">
                     <!-- Single Widget -->
                     <h3 style="display:block; border-bottom:3px solid #EB395F; width:42%;  margin-bottom:10px"><small>ACCOUNT</small></h3>
-                    <a href="@Url.Action("ThongTinCaNhan","Home")"><div class="bthuong"> Thông tin tài khoản</div></a>
-                    <a href="@Url.Action("ThongTinDonHang","Home")"><div class="hdong"> Quản lý đơn hàng</div></a>
-                    <a href="@Url.Action("ThayDoiMatKhau","Home")"><div class="bthuong"> Thay đổi mật khẩu</div></a>
-                    <a href="@Url.Action("DangXuat","Home")"><div class="bthuong">Đăng xuất</div></a>
+                    <a href="@Url.Action("ThongTinCaNhan","Home")"><div class="bthuong">Account information</div></a>
+                    <a href="@Url.Action("ThongTinDonHang","Home")"><div class="hdong"> Order management</div></a>
+                    <a href="@Url.Action("ThayDoiMatKhau","Home")"><div class="bthuong"> Change the password</div></a>
+                    <a href="@Url.Action("DangXuat","Home")"><div class="bthuong">Sign out</div></a>
                     <!--/ End Single Widget -->
                 </div>
             </div>
             <div class="col-lg-8 col-md-7 col-12 ml-5">
 
                 <div class="row">
-                    <h4 style="margin-bottom:20px; margin-top:5px; border-left:5px solid #EB395F; padding:0px 3px 0px 5px"><small>ĐƠN HÀNG CỦA TÔI</small></h4>
+                    <h4 style="margin-bottom:20px; margin-top:5px; border-left:5px solid #EB395F; padding:0px 3px 0px 5px"><small>MY ORDER</small></h4>
                     <div class="col-12">
                         @if (ViewBag.SL == 0)
                         {
                             <div class="callout callout-info">
-                                <h5>Chưa có đơn hàng nào</h5>
+                                <h5>No orders yet</h5>
 
                             </div>
                         }
@@ -76,12 +76,10 @@
                             <table id="example1" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                                 <thead>
                                     <tr>
-                                        <th>@Html.DisplayNameFor(model => model.IdHD)</th>
-                                        <th>@Html.DisplayNameFor(model => model.NgayDH)</th>
-                                        <th>@Html.DisplayNameFor(model => model.TongTien)</th>
-                                        <th>@Html.DisplayNameFor(model => model.TINHTRANG1.TenTT)</th>
-
-
+                                        <th>Order ID</th>
+                                        <th>Order Date</th>
+                                        <th>Total Cost</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,7 +90,7 @@
                                                 <a href="@Url.Action("ChiTietDonHang","Home",new {id=item.IdHD})" style="color:#0069D9">
                                                     @Html.DisplayFor(modelItem => item.IdHD)
                                                 </a>
-                                               
+
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.NgayDH)
@@ -101,7 +99,38 @@
                                                 @Html.DisplayFor(modelItem => item.TongTien)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.TINHTRANG1.TenTT)
+                                                @if (item.TinhTrang == 4)
+                                                {
+                                                    <span>Unconfimred</span>
+                                                }
+                                                else if (item.TinhTrang == 5)
+                                                {
+                                                    <span>Confimred</span>
+                                                }
+                                                else if (item.TinhTrang == 6)
+                                                {
+                                                    <span>Cancel</span>
+                                                }
+                                                else if (item.TinhTrang == 7)
+                                                {
+                                                    <span>
+                                                        Is picking up the goods
+                                                    </span>
+                                                }
+                                                else if (item.TinhTrang == 8)
+                                                {
+                                                    <span>
+                                                        Being deliveried
+                                                    </span>
+                                                }
+                                                else if (item.TinhTrang == 9)
+                                                {
+                                                    <span>Successful delivery</span>
+                                                }
+                                                else if (item.TinhTrang == 11)
+                                                {
+                                                    <span>Delivery failed</span>
+                                                }
                                             </td>
 
                                         </tr>

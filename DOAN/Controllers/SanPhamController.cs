@@ -14,6 +14,7 @@ namespace DOAN.Controllers
     {
         TMDTDbContext db = new TMDTDbContext();
         // GET: SanPham
+        //Trang chi tiết sản phẩm
         public ActionResult Index(int ?id)
         {
             if(id==null)

@@ -20,7 +20,7 @@ namespace DOAN.Models
         [Key]
         public int IdSP { get; set; }
 
-        [StringLength(50)]
+        [StringLength(500)]
         public string TenSP { get; set; }
 
         [StringLength(50)]

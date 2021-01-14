@@ -31,7 +31,7 @@ namespace DOAN.Models
         public string SDT { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(1000)]
         public string DiaChi { get; set; }
 
         public int? TinhTrang { get; set; }

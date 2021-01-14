@@ -29,10 +29,10 @@
                 <div class="shop-sidebar">
                     <!-- Single Widget -->
                     <h3 style="display:block; border-bottom:3px solid #EB395F; width:42%;  margin-bottom:10px"><small>ACCOUNT</small></h3>
-                    <a href="@Url.Action("ThongTinCaNhan","Home")"><div class="bthuong"> Thông tin tài khoản</div></a>
-                    <a href="@Url.Action("ThongTinDonHang","Home")"><div class="bthuong"> Quản lý đơn hàng</div></a>
-                    <a href="@Url.Action("ThayDoiMatKhau","Home")"><div class="hdong"> Thay đổi mật khẩu</div></a>
-                    <a href="@Url.Action("DangXuat","Home")"><div class="bthuong">Đăng xuất</div></a>
+                    <a href="@Url.Action("ThongTinCaNhan","Home")"><div class="bthuong">Account information</div></a>
+                    <a href="@Url.Action("ThongTinDonHang","Home")"><div class="bthuong"> Order management</div></a>
+                    <a href="@Url.Action("ThayDoiMatKhau","Home")"><div class="hdong"> Change the password</div></a>
+                    <a href="@Url.Action("DangXuat","Home")"><div class="bthuong">Sign out</div></a>
                     <!--/ End Single Widget -->
                 </div>
             </div>
@@ -74,33 +74,33 @@
                     </div>
                 }
                 <div class="row">
-                    <h4 style="margin-bottom:20px; margin-top:5px; border-left:5px solid #EB395F; padding:0px 3px 0px 5px"><small>THAY ĐỔI MẬT KHẨU</small></h4>
+                    <h4 style="margin-bottom:20px; margin-top:5px; border-left:5px solid #EB395F; padding:0px 3px 0px 5px"><small>CHANGE THE PASSWORD</small></h4>
                     <div class="col-12">
 
                         <!-- Comment Form -->
                         @using (Html.BeginForm("ThayDoiMatKhau", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Mật khẩu</label>
+                                <label class="col-sm-3 col-form-label">Current password</label>
                                 <div class="col-sm-9">
                                     <input name="matkhaucu" type="password" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Mật khẩu mới</label>
+                                <label class="col-sm-3 col-form-label">New password</label>
                                 <div class="col-sm-9">
                                     <input name="matkhaumoi" type="password" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Nhập lại mật khẩu</label>
+                                <label class="col-sm-3 col-form-label">Retype new password</label>
                                 <div class="col-sm-9">
                                     <input name="xacnhan" type="password" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="offset-sm-2 col-sm-10">
-                                    <button type="submit" class="btn float-right">Lưu</button>
+                                    <button type="submit" class="btn float-right">Save</button>
                                 </div>
                             </div>
                         }

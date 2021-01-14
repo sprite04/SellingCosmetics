@@ -42,7 +42,8 @@ namespace DOAN.Controllers
             return PartialView(listSP);
         }
 
-     
+
+        [ChildActionOnly]
         public ActionResult MenuPartial()
         {
             var listSP = db.SANPHAMs;
@@ -113,7 +114,7 @@ namespace DOAN.Controllers
                 string Quyen = "";
                 foreach (var item in lstQuyen)
                 {
-                    Quyen += item.TinhNang + ",";
+                    Quyen += item.TinhNang + ","; 
                 }
                 Quyen = Quyen.Substring(0, Quyen.Length - 1);
                 PhanQuyen(username, Quyen);

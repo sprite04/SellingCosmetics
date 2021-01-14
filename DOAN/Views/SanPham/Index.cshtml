@@ -14,20 +14,10 @@
             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                 <!-- Product Slider -->
                 <div class="product-gallery">
-                    <div class="quickview-slider-active">
-                        <div class="single-slider">
-                            <img src="@Url.Content("~/assets/client/hinhsp/"+Model.THUONGHIEU.TenTH.ToLower()+"/"+Model.AnhSP)" alt="#">
-                        </div>
-                        <div class="single-slider">
-                            <img src="https://via.placeholder.com/569x528" alt="#">
-                        </div>
-                        <div class="single-slider">
-                            <img src="https://via.placeholder.com/569x528" alt="#">
-                        </div>
-                        <div class="single-slider">
-                            <img src="https://via.placeholder.com/569x528" alt="#">
-                        </div>
+                    <div class="single-slider">
+                        <img src="@Url.Content("~/assets/client/hinhsp/"+Model.THUONGHIEU.TenTH.ToLower()+"/"+Model.AnhSP)" alt="#">
                     </div>
+                    
                 </div>
                 <!-- End Product slider -->
             </div>
@@ -56,7 +46,7 @@
 
                         </div>
                     </div>
-                    <h3>$29.00</h3>
+                    <h3>@Url.Content(((int)(Model.GiaGoc*Model.LoiNhuan)).ToString())<sup>đ</sup></h3>
                     <div class="quickview-peragraph">
                      @Html.Raw(Model.MoTa)
                     </div>

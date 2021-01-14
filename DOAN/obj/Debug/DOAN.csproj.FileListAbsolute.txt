@@ -175,3 +175,4 @@ C:\Users\Thuy Tien\Desktop\TMDT\DOAN\bin\PagedList.dll
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\bin\PagedList.Mvc.dll
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\bin\PagedList.xml
 C:\Users\Thuy Tien\Desktop\TMDT\DOAN\bin\PagedList.Mvc.xml
+C:\Users\Thuy Tien\Desktop\TMDT\DOAN\obj\Debug\DOAN.csprojAssemblyReference.cache

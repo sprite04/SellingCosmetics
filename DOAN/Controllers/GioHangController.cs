@@ -285,7 +285,7 @@ namespace DOAN.Controllers
             hd.NgayDH = DateTime.Now;
             hd.IdKH = user.IdUser;
             hd.TinhTrang = 4;
-            hd.SDT = user.SDT;
+            hd.SDT = user.SDT.Trim();
             hd.DiaChi = user.DiaChi;
             
             
@@ -304,25 +304,32 @@ namespace DOAN.Controllers
             }
             hd.TienVanChuyen = TienVanChuyen;
             hd.TongTien = TongTienSP + TienVanChuyen - TienGiam;
-            db.HOADONs.Add(hd);
-            db.SaveChanges();
-            List<GIOHANG> lstGH = LayGioHang();
-            foreach(var item in lstGH)
+            try
             {
-                CHITIETHD ct = new CHITIETHD();
-                ct.IdHD = hd.IdHD;
-                ct.IdSP = item.SANPHAM.IdSP;
-                ct.SoLuong = item.SoLuong;
-                ct.GiaGoc = item.SANPHAM.GiaGoc;
-                ct.LoiNhuan = item.SANPHAM.LoiNhuan;
-                db.CHITIETHDs.Add(ct);
+                db.HOADONs.Add(hd);
+                db.SaveChanges();
+                List<GIOHANG> lstGH = LayGioHang();
+                foreach (var item in lstGH)
+                {
+                    CHITIETHD ct = new CHITIETHD();
+                    ct.IdHD = hd.IdHD;
+                    ct.IdSP = item.SANPHAM.IdSP;
+                    ct.SoLuong = item.SoLuong;
+                    ct.GiaGoc = item.SANPHAM.GiaGoc;
+                    ct.LoiNhuan = item.SANPHAM.LoiNhuan;
+                    db.CHITIETHDs.Add(ct);
+                }
+                db.SaveChanges();
+                var dsGH = db.GIOHANGs.Where(x => x.IdKH == user.IdUser);
+                db.GIOHANGs.RemoveRange(dsGH);
+                db.SaveChanges();
+                Session["GioHang"] = null;
+                return RedirectToAction("XemGioHang");
             }
-            db.SaveChanges();
-            var dsGH=db.GIOHANGs.Where(x => x.IdKH == user.IdUser);
-            db.GIOHANGs.RemoveRange(dsGH);
-            db.SaveChanges();
-            Session["GioHang"] = null;
-            return RedirectToAction("XemGioHang");
+            catch (Exception)
+            {
+                return RedirectToAction("Checkout", "GioHang", new { strURL = strURL, MaKM = MaKM, error = 1 });
+            }
         }
 
         public int TinhTongSoLuong()

@@ -30,21 +30,63 @@
                                             }
                                         </div>
                                     </li>
+                                    
                                     <li class="single-menu">
                                         <a href="#" class="title-link">Featured Brands</a>
                                         <div class="image">
-                                            <img src="https://via.placeholder.com/225x155" alt="#">
+                                            @foreach (var item in listSP.GroupBy(x => x.THUONGHIEU).Take(1))
+                                            {
+                                                if (item.Key.AnhTH != null && item.Key.AnhTH!="")
+                                                {
+                                                    <a href="@Url.Action("SanPhamTheoThuongHieu","SanPham",new {idTH=item.Key.IdTH})"><img style="width:225px; height:155px" src="@Url.Content("~/assets/client/hinhsp/"+item.Key.TenTH.ToLower()+"/"+item.Key.AnhTH)" alt="#"></a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@Url.Action("SanPhamTheoThuongHieu","SanPham",new {idTH=item.Key.IdTH})"><img src="https://via.placeholder.com/225x155" alt="#"></a>
+                                                }
+                                            }
                                         </div>
                                         <div class="image mt-3">
-                                            <img src="https://via.placeholder.com/225x155" alt="#">
+                                            @foreach (var item in listSP.GroupBy(x => x.THUONGHIEU).Skip(1).Take(1))
+                                            {
+                                                if (item.Key.AnhTH != null && item.Key.AnhTH != "")
+                                                {
+                                                    <a href="@Url.Action("SanPhamTheoThuongHieu","SanPham",new {idTH=item.Key.IdTH})"><img style="width:225px; height:155px" src="@Url.Content("~/assets/client/hinhsp/"+item.Key.TenTH.ToLower()+"/"+item.Key.AnhTH)" alt="#"></a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@Url.Action("SanPhamTheoThuongHieu","SanPham",new {idTH=item.Key.IdTH})"><img src="https://via.placeholder.com/225x155" alt="#"></a>
+                                                }
+                                            }
                                         </div>
                                     </li>
                                     <li class="single-menu">
                                         <div class="image">
-                                            <img src="https://via.placeholder.com/225x155" alt="#">
+                                            @foreach (var item in listSP.GroupBy(x => x.THUONGHIEU).Skip(2).Take(1))
+                                            {
+                                                if (item.Key.AnhTH != null && item.Key.AnhTH != "")
+                                                {
+                                                    <a href="@Url.Action("SanPhamTheoThuongHieu","SanPham",new {idTH=item.Key.IdTH})"><img style="width:225px; height:155px" src="@Url.Content("~/assets/client/hinhsp/"+item.Key.TenTH.ToLower()+"/"+item.Key.AnhTH)" alt="#"></a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@Url.Action("SanPhamTheoThuongHieu","SanPham",new {idTH=item.Key.IdTH})"><img src="https://via.placeholder.com/225x155" alt="#"></a>
+                                                }
+                                            }
+                                            
                                         </div>
                                         <div class="image mt-3">
-                                            <img src="https://via.placeholder.com/225x155" alt="#">
+                                            @foreach (var item in listSP.GroupBy(x => x.THUONGHIEU).Skip(3).Take(1))
+                                            {
+                                                if (item.Key.AnhTH != null && item.Key.AnhTH != "")
+                                                {
+                                                    <a href="@Url.Action("SanPhamTheoThuongHieu","SanPham",new {idTH=item.Key.IdTH})"><img style="width:225px; height:155px" src="@Url.Content("~/assets/client/hinhsp/"+item.Key.TenTH.ToLower()+"/"+item.Key.AnhTH)" alt="#"></a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@Url.Action("SanPhamTheoThuongHieu","SanPham",new {idTH=item.Key.IdTH})"><img src="https://via.placeholder.com/225x155" alt="#"></a>
+                                                }
+                                            }
                                         </div>
                                     </li>
                                 </ul>

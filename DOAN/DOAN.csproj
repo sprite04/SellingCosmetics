@@ -1980,23 +1980,31 @@
     <Content Include="assets\client\fonts\themify.svg" />
     <Content Include="assets\client\hinhsp\anessa\1.jpg" />
     <Content Include="assets\client\hinhsp\anessa\2.jpg" />
+    <Content Include="assets\client\hinhsp\anessa\anessa.jpg" />
     <Content Include="assets\client\hinhsp\bioderma\1.jpg" />
     <Content Include="assets\client\hinhsp\bioderma\2.jpg" />
     <Content Include="assets\client\hinhsp\bioderma\3.jpg" />
     <Content Include="assets\client\hinhsp\bioderma\4.jpg" />
+    <Content Include="assets\client\hinhsp\bioderma\bioderma.png" />
     <Content Include="assets\client\hinhsp\biore\1.jpg" />
+    <Content Include="assets\client\hinhsp\biore\biore.jpg" />
     <Content Include="assets\client\hinhsp\cetaphil\1.jpg" />
+    <Content Include="assets\client\hinhsp\cetaphil\Cetaphil.png" />
     <Content Include="assets\client\hinhsp\clarins\1.jpg" />
+    <Content Include="assets\client\hinhsp\clarins\clarins.jpg" />
     <Content Include="assets\client\hinhsp\cosrx\1.jpg" />
     <Content Include="assets\client\hinhsp\cosrx\2.jpg" />
     <Content Include="assets\client\hinhsp\cosrx\3.jpg" />
+    <Content Include="assets\client\hinhsp\cosrx\cosrx.jpg" />
     <Content Include="assets\client\hinhsp\danhmuc\blank.jpg" />
     <Content Include="assets\client\hinhsp\danhmuc\home.jpg" />
     <Content Include="assets\client\hinhsp\danhmuc\text.jpg" />
     <Content Include="assets\client\hinhsp\dhc\1.jpg" />
+    <Content Include="assets\client\hinhsp\dhc\dhc.png" />
     <Content Include="assets\client\hinhsp\garnier\1.jpg" />
     <Content Include="assets\client\hinhsp\garnier\2.jpg" />
     <Content Include="assets\client\hinhsp\garnier\3.jpg" />
+    <Content Include="assets\client\hinhsp\garnier\garnier.png" />
     <Content Include="assets\client\hinhsp\slide\slide1.jpg" />
     <Content Include="assets\client\hinhsp\slide\slide2.jpg" />
     <Content Include="assets\client\hinhsp\slide\slide3.jpg" />
@@ -2214,6 +2222,7 @@
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\LoaiKM.cs" />
     <Compile Include="Common\Nam.cs" />
+    <Compile Include="Common\ThuongHieu.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
@@ -2315,6 +2324,7 @@
     <Content Include="Views\Home\ChiTietDonHang.cshtml" />
     <Content Include="Views\GiaoHang\Index.cshtml" />
     <Content Include="Views\GiaoHang\ThayDoiTinhTrang.cshtml" />
+    <Content Include="Views\SanPham\SanPhamTheoDanhMuc.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

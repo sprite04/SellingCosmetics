@@ -35,8 +35,9 @@
             <div class="col-12">
                 <div class="bread-inner">
                     <ul class="bread-list">
-                        <li><a href="index1.html">Home<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="blog-single.html">Shop Grid</a></li>
+                        <li><a href="@Url.Action("Index","Home")">Home<i class="ti-arrow-right"></i></a></li>
+                        <li class="active"><a href="@Url.Action("ThongTinCaNhan","Home")">Account<i class="ti-arrow-right"></i></a></li>
+                        <li class="active">Order management</li>
                     </ul>
                 </div>
             </div>
@@ -66,9 +67,8 @@
                     <div class="col-12">
                         @if (ViewBag.SL == 0)
                         {
-                            <div class="callout callout-info">
-                                <h5>No orders yet</h5>
-
+                            <div class="alert alert-warning">
+                                No orders yet.
                             </div>
                         }
                         else

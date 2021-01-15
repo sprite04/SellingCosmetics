@@ -56,7 +56,7 @@ namespace DOAN.Controllers
 
 
             //So san pham tren 1 trang
-            int PageSize = 8;
+            int PageSize = 9;
             //So trang hien tai
             int PageNumber = (page ?? 1);
             ViewBag.IdTH = idTH;
@@ -90,11 +90,45 @@ namespace DOAN.Controllers
             
             ViewBag.Loai = db.LOAISANPHAMs.SingleOrDefault(x => x.IdLoaiSP == idLoai && x.TinhTrang==true);
             //So san pham tren 1 trang
-            int PageSize = 8;
+            int PageSize = 9;
             //So trang hien tai
             int PageNumber = (page ?? 1);
             ViewBag.IdTH = idTH;
             ViewBag.IdLoai = idLoai;
+            return View(listSP.OrderBy(x => x.IdSP).ToPagedList(PageNumber, PageSize));
+        }
+
+
+        public ActionResult SanPhamTheoDanhMuc(int? page, int? idDM, int idTH = 0)
+        {
+            ViewBag.IdTH = idTH;
+            ViewBag.IdDM = idDM;
+            if (idDM == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            IEnumerable<SANPHAM> listSP;
+            if (idTH == 0)
+            {
+                listSP = db.SANPHAMs.Where(x => x.LOAISANPHAM.DanhMuc==idDM && x.TinhTrang == 1);
+            }
+            else
+            {
+                listSP = db.SANPHAMs.Where(x => x.LOAISANPHAM.DanhMuc == idDM && x.IdTH == idTH && x.TinhTrang == 1);
+            }
+            ViewBag.TH = null;
+            if (idTH != 0)
+            {
+                ViewBag.TH = db.THUONGHIEUx.SingleOrDefault(x => x.IdTH == idTH && x.TinhTrang == true);
+            }
+
+           
+            //So san pham tren 1 trang
+            int PageSize = 9;
+            //So trang hien tai
+            int PageNumber = (page ?? 1);
+            ViewBag.IdTH = idTH;
+            ViewBag.IdDM = idDM;
             return View(listSP.OrderBy(x => x.IdSP).ToPagedList(PageNumber, PageSize));
         }
 

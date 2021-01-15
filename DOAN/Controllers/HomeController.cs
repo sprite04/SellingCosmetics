@@ -20,7 +20,7 @@ namespace DOAN.Controllers
         {
             var listSP = db.SANPHAMs.Where(x => x.TinhTrang == 1);
             ViewBag.listTH = db.THUONGHIEUx;
-            
+              
 
             return View();
         }
@@ -30,6 +30,9 @@ namespace DOAN.Controllers
         {
             var listSP = db.SANPHAMs.Where(x => x.TinhTrang == 1);
             ViewBag.listTH = db.THUONGHIEUx;
+            ViewBag.HienThi = db.THUONGHIEUx.Count() > 5 ? 5 : db.THUONGHIEUx.Count();
+
+            
             return PartialView(listSP);
         }
 

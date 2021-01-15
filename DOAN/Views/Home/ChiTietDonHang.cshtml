@@ -40,8 +40,10 @@
             <div class="col-12">
                 <div class="bread-inner">
                     <ul class="bread-list">
-                        <li><a href="index1.html">Home<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="blog-single.html">Shop Grid</a></li>
+                        <li><a href="index1.html">Trang chủ<i class="ti-arrow-right"></i></a></li>
+                        <li class="active"><a href="@Url.Action("ThongTinCaNhan","Home")">Tài khoản<i class="ti-arrow-right"></i></a></li>
+                        <li class="active"><a href="@Url.Action("ThongTinHoaDon","Home")">Đơn hàng của tôi<i class="ti-arrow-right"></i></a></li>
+                        <li class="active">Chi tiết đơn hàng</li>
                     </ul>
                 </div>
             </div>
@@ -56,11 +58,11 @@
             <div class="col-lg-3 col-md-4 col-12">
                 <div class="shop-sidebar">
                     <!-- Single Widget -->
-                    <h3 style="display:block; border-bottom:3px solid #EB395F; width:42%;  margin-bottom:10px"><small>ACCOUNT</small></h3>
-                    <a href="@Url.Action("ThongTinCaNhan","Home")"><div class="bthuong">Account information</div></a>
-                    <a href="@Url.Action("ThongTinDonHang","Home")"><div class="hdong"> Order management</div></a>
-                    <a href="@Url.Action("ThayDoiMatKhau","Home")"><div class="bthuong"> Change the password</div></a>
-                    <a href="@Url.Action("DangXuat","Home")"><div class="bthuong">Sign out</div></a>
+                    <h3 style="display:block; border-bottom:3px solid #EB395F; width:47%;  margin-bottom:10px"><small>TÀI KHOẢN</small></h3>
+                    <a href="@Url.Action("ThongTinCaNhan","Home")"><div class="bthuong">Thông tin tài khoản</div></a>
+                    <a href="@Url.Action("ThongTinDonHang","Home")"><div class="hdong"> Quản lý đơn hàng</div></a>
+                    <a href="@Url.Action("ThayDoiMatKhau","Home")"><div class="bthuong"> Thay đổi mật khẩu</div></a>
+                    <a href="@Url.Action("DangXuat","Home")"><div class="bthuong">Đăng xuất</div></a>
                     <!--/ End Single Widget -->
                 </div>
             </div>
@@ -84,7 +86,7 @@
                     </div>
                 }
                 <div class="row">
-                    <h4 style="margin-bottom:20px; margin-top:5px; border-left:5px solid #EB395F; padding:0px 3px 0px 5px"><small>MY ORDER</small></h4>
+                    <h4 style="margin-bottom:20px; margin-top:5px; border-left:5px solid #EB395F; padding:0px 3px 0px 5px"><small>ĐƠN HÀNG CỦA TÔI</small></h4>
                     <div class="col-12">
                         <!-- Main content -->
                         <div class="invoice p-3 mb-3">
@@ -93,7 +95,7 @@
                                 <div class="col-12">
                                     <h6>
                                         Sociolla
-                                        <small class="float-right">Order date: @hoadon.NgayDH</small>
+                                        <small class="float-right">Ngày đặt hàng: @hoadon.NgayDH</small>
                                     </h6>
                                 </div>
                                 <!-- /.col -->
@@ -102,17 +104,17 @@
                             <div class="row invoice-info">
                                 <!-- /.col -->
                                 <div class="col-sm-8 invoice-col mt-3">
-                                    <h6><small>Receiver's information</small></h6>
+                                    <h6><small>Chi tiết hoá đơn</small></h6>
                                     <address>
                                         <strong>@hoadon.NGUOIDUNG.HoTen</strong><br>
                                         @hoadon.DiaChi<br>
-                                        Phone: @hoadon.SDT<br>
+                                        SĐT: @hoadon.SDT<br>
                                         Email: @hoadon.NGUOIDUNG.Mail
                                     </address>
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-sm-4 invoice-col mt-3">
-                                    <b>Order ID:</b> #@hoadon.IdHD<br>
+                                    <b>Mã hoá đơn:</b> #@hoadon.IdHD<br>
                                 </div>
                                 <!-- /.col -->
                             </div>
@@ -123,10 +125,10 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Product</th>
-                                                <th>Quantity</th>
-                                                <th>Price</th>
-                                                <th>Subtotal</th>
+                                                <th>Sản phẩm</th>
+                                                <th>Giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Tạm tính</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -134,8 +136,8 @@
                                             {
                                                 <tr>
                                                     <td>@item.SANPHAM.TenSP</td>
+                                                    <td>@Url.Content(((Int32)(item.GiaGoc * item.LoiNhuan)).ToString())</td>
                                                     <td>@item.SoLuong</td>
-                                                    <td>@Url.Content(((Int32)(item.GiaGoc*item.LoiNhuan)).ToString())</td>
                                                     @{
                                                         tongtiensp += (Int32)((item.GiaGoc * item.LoiNhuan) * item.SoLuong);
                                                     }
@@ -158,11 +160,11 @@
                                 <div class="col-6">
                                     @if (hoadon.DaThanhToan == true)
                                     {
-                                        <p class="lead">Paid</p>
+                                        <p style="font-size:15px; margin-top:5px">Đã thanh toán</p>
                                     }
                                     else
                                     {
-                                        <p class="lead">Unpaid</p>
+                                        <p style="font-size:15px; margin-top:5px">Chưa thanh toán</p>
                                     }
 
 
@@ -170,11 +172,11 @@
                                         <table class="table">
                                             <tbody>
                                                 <tr>
-                                                    <th style="width:50%">Subtotal:</th>
+                                                    <th style="width:50%">Tạm tính:</th>
                                                     <td>@tongtiensp</td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Discount:</th>
+                                                    <th>Giảm giá:</th>
                                                     @if (hoadon.IdKM != null && hoadon.KHUYENMAI.LoaiKM == 1)
                                                     {
                                                         <td>@Url.Content(hoadon.KHUYENMAI.GiaTri.ToString() + "%")</td>
@@ -189,7 +191,7 @@
                                                     }
                                                 </tr>
                                                 <tr>
-                                                    <th>Delivery fee:</th>
+                                                    <th>Phí vận chuyển:</th>
                                                     <td>@tienvanchuyen</td>
                                                 </tr>
                                                 @{
@@ -208,7 +210,7 @@
 
                                                 }
                                                 <tr>
-                                                    <th>Total:</th>
+                                                    <th>Tổng cộng:</th>
                                                     <td>@thanhtoan</td>
                                                 </tr>
                                             </tbody>

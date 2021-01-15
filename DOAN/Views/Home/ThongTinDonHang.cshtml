@@ -35,9 +35,9 @@
             <div class="col-12">
                 <div class="bread-inner">
                     <ul class="bread-list">
-                        <li><a href="@Url.Action("Index","Home")">Home<i class="ti-arrow-right"></i></a></li>
-                        <li class="active"><a href="@Url.Action("ThongTinCaNhan","Home")">Account<i class="ti-arrow-right"></i></a></li>
-                        <li class="active">Order management</li>
+                        <li><a href="@Url.Action("Index","Home")">Trang chủ<i class="ti-arrow-right"></i></a></li>
+                        <li class="active"><a href="@Url.Action("ThongTinCaNhan","Home")">Tài khoản<i class="ti-arrow-right"></i></a></li>
+                        <li class="active">Quản lý đơn hàng</li>
                     </ul>
                 </div>
             </div>
@@ -52,34 +52,34 @@
             <div class="col-lg-3 col-md-4 col-12">
                 <div class="shop-sidebar">
                     <!-- Single Widget -->
-                    <h3 style="display:block; border-bottom:3px solid #EB395F; width:42%;  margin-bottom:10px"><small>ACCOUNT</small></h3>
-                    <a href="@Url.Action("ThongTinCaNhan","Home")"><div class="bthuong">Account information</div></a>
-                    <a href="@Url.Action("ThongTinDonHang","Home")"><div class="hdong"> Order management</div></a>
-                    <a href="@Url.Action("ThayDoiMatKhau","Home")"><div class="bthuong"> Change the password</div></a>
-                    <a href="@Url.Action("DangXuat","Home")"><div class="bthuong">Sign out</div></a>
+                    <h3 style="display:block; border-bottom:3px solid #EB395F; width:47%;  margin-bottom:10px"><small>TÀI KHOẢN</small></h3>
+                    <a href="@Url.Action("ThongTinCaNhan","Home")"><div class="bthuong">Thông tin tài khoản</div></a>
+                    <a href="@Url.Action("ThongTinDonHang","Home")"><div class="hdong">Quản lý đơn hàng</div></a>
+                    <a href="@Url.Action("ThayDoiMatKhau","Home")"><div class="bthuong"> Thay đổi mật khẩu</div></a>
+                    <a href="@Url.Action("DangXuat","Home")"><div class="bthuong">Đăng xuất</div></a>
                     <!--/ End Single Widget -->
                 </div>
             </div>
             <div class="col-lg-8 col-md-7 col-12 ml-5">
 
                 <div class="row">
-                    <h4 style="margin-bottom:20px; margin-top:5px; border-left:5px solid #EB395F; padding:0px 3px 0px 5px"><small>MY ORDER</small></h4>
+                    <h4 style="margin-bottom:20px; margin-top:5px; border-left:5px solid #EB395F; padding:0px 3px 0px 5px"><small>ĐƠN HÀNG CỦA TÔI</small></h4>
                     <div class="col-12">
                         @if (ViewBag.SL == 0)
                         {
-                            <div class="alert alert-warning">
-                                No orders yet.
-                            </div>
+                        <div class="alert alert-warning">
+                            Chưa có đơn hàng nào
+                        </div>
                         }
                         else
                         {
-                            <table id="example1" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                            <table id="example1" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example1_info" style="font-family: 'Poppins', sans-serif;">
                                 <thead>
                                     <tr>
-                                        <th>Order ID</th>
-                                        <th>Order Date</th>
-                                        <th>Total Cost</th>
-                                        <th>Status</th>
+                                        <th>Mã hoá đơn</th>
+                                        <th>Ngày mua</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái đơn hàng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -99,38 +99,7 @@
                                                 @Html.DisplayFor(modelItem => item.TongTien)
                                             </td>
                                             <td>
-                                                @if (item.TinhTrang == 4)
-                                                {
-                                                    <span>Unconfimred</span>
-                                                }
-                                                else if (item.TinhTrang == 5)
-                                                {
-                                                    <span>Confimred</span>
-                                                }
-                                                else if (item.TinhTrang == 6)
-                                                {
-                                                    <span>Cancel</span>
-                                                }
-                                                else if (item.TinhTrang == 7)
-                                                {
-                                                    <span>
-                                                        Is picking up the goods
-                                                    </span>
-                                                }
-                                                else if (item.TinhTrang == 8)
-                                                {
-                                                    <span>
-                                                        Being deliveried
-                                                    </span>
-                                                }
-                                                else if (item.TinhTrang == 9)
-                                                {
-                                                    <span>Successful delivery</span>
-                                                }
-                                                else if (item.TinhTrang == 11)
-                                                {
-                                                    <span>Delivery failed</span>
-                                                }
+                                                @Html.DisplayFor(modelItem => item.TINHTRANG1.TenTT)
                                             </td>
 
                                         </tr>

@@ -21,11 +21,11 @@
                                         if (ViewBag.ThongBao == 1)
                                         {
                                             <div class="alert alert-warning">
-                                                <strong>Warning!</strong> Username and password do not match or you do not have an account yet.
+                                                <strong>Cảnh báo!</strong> Tên đăng nhập, mật khẩu không đúng hoặc bạn chưa có tài khoản
                                             </div>
                                         }
                                     }
-                                    <h2 class="reply-title">LOGIN</h2>
+                                    <h2 class="reply-title">ĐĂNG NHẬP</h2>
                                     <!-- Comment Form -->
                                     @using (Html.BeginForm("DangNhap","Home",new {strURL=ViewBag.strURL}))
                                     {
@@ -34,7 +34,7 @@
 
                                             <div class="col-lg-12 col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <label>Username<span>*</span></label>
+                                                    <label>Email<span>*</span></label>
                                                     <input type="email" name="username" placeholder="" required="required">
                                                 </div>
                                             </div>
@@ -42,20 +42,20 @@
 
                                             <div class="col-lg-12 col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <label>Password<span>*</span></label>
+                                                    <label>Mật khẩu<span>*</span></label>
                                                     <input type="password" name="password" placeholder="" required="required">
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-group button">
-                                                    <button type="submit" class="btn">LOGIN</button>
+                                                    <button type="submit" class="btn">Đăng nhập</button>
                                                 </div>
                                             </div>
                                         </div>
                                     }
                                     <!-- End Comment Form -->
                                     <div class="blog-meta mt-3 text-right mr-3">
-                                        <span class="author "><h3><a href="@Url.Action("DangKy","Home")">Don't have an account?</a></h3></span>
+                                        <span class="author "><h3><a href="@Url.Action("DangKy","Home")">Bạn chưa có tài khoản?</a></h3></span>
                                     </div>
 
                                 </div>

@@ -5,12 +5,12 @@
     var TH = (THUONGHIEU)ViewBag.TH;
 
     List<String> listDM = new List<string>();
-    listDM.AddRange(new string[] { "SKINCARE", "MAKEUP", "HAIR CARE", "BATH & BODY", "ACCESSORIES", "FRAGRANCE" });
+    listDM.AddRange(new string[] { "CHĂM SÓC DA", "TRANG ĐIỂM", "CHĂM SÓC TÓC", "CHĂM SÓC CƠ THỂ", "PHỤ KIỆN LÀM ĐẸP", "NƯỚC HOA" });
 }
 
 <!--Single Widget -->
 <div class="single-widget category">
-    <h3 class="title">Categories</h3>
+    <h3 class="title">DANH MỤC</h3>
     <ul class="categor-list" id="myUL">
 
         @foreach (var item in Model.GroupBy(x => x.DanhMuc))

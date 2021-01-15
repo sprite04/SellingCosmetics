@@ -37,11 +37,11 @@
                         <div class="quickview-stock">
                             @if (Model.SoLuong <= 0)
                             {
-                                <span><i class="fa fa-times-circle-o" aria-hidden="true" style="color: #d41023"></i>sold out</span>
+                                <span><i class="fa fa-times-circle-o" aria-hidden="true" style="color: #d41023"></i>hết hàng</span>
                             }
                             else
                             {
-                                <span><i class="fa fa-check-circle-o"></i> in stock</span>
+                                <span><i class="fa fa-check-circle-o"></i> còn hàng</span>
                             }
 
                         </div>
@@ -52,9 +52,9 @@
                     </div>
 
                     
-                    <div class="add-to-cart">
+                    <div class="add-to-cart mt-3">
                         
-                        @Ajax.ActionLink("Add to cart", "ThemGioHangAjax", "GioHang", new { MaSP = Model.IdSP, strURL = Request.Url.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "iconGioHang", InsertionMode = InsertionMode.Replace }, new { @class="btn"})
+                        @Ajax.ActionLink("THÊM VÀO GIỎ HÀNG", "ThemGioHangAjax", "GioHang", new { MaSP = Model.IdSP, strURL = Request.Url.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "iconGioHang", InsertionMode = InsertionMode.Replace }, new { @class="btn"})
                     </div>
                     <div class="default-social">
                         

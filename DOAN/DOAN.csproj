@@ -1997,6 +1997,10 @@
     <Content Include="assets\client\hinhsp\cosrx\3.jpg" />
     <Content Include="assets\client\hinhsp\cosrx\cosrx.jpg" />
     <Content Include="assets\client\hinhsp\danhmuc\blank.jpg" />
+    <Content Include="assets\client\hinhsp\danhmuc\fame3.jpg" />
+    <Content Include="assets\client\hinhsp\danhmuc\frame1.jpg" />
+    <Content Include="assets\client\hinhsp\danhmuc\frame2.jpg" />
+    <Content Include="assets\client\hinhsp\danhmuc\frame4.jpg" />
     <Content Include="assets\client\hinhsp\danhmuc\home.jpg" />
     <Content Include="assets\client\hinhsp\danhmuc\text.jpg" />
     <Content Include="assets\client\hinhsp\dhc\1.jpg" />

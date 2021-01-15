@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="section-title">
-                    <h2>Hot Items</h2>
+                    <h2>Sản phẩm bán chạy</h2>
                 </div>
             </div>
         </div>
@@ -34,11 +34,11 @@
                                     <img style="width:550; height:750" class="hover-img" src="@Url.Content("~/assets/client/hinhsp/"+item.THUONGHIEU.TenTH.ToLower()+"/"+item.AnhSP)" alt="#">
                                     @if (item.NgayTao.Value.Month == DateTime.Now.Month)
                                     {
-                                        <span class="new">New</span>
+                                        <span class="new">Mới</span>
                                     }
                                     else
                                     {
-                                        <span class="out-of-stock">Hot</span>
+                                        <span class="out-of-stock">Bán chạy</span>
                                     }
                                 </a>
                                 <div class="button-head">
@@ -46,7 +46,7 @@
                                        
                                     </div>
                                     <div class="product-action-2 pl-1">
-                                        @Ajax.ActionLink("Add to cart", "ThemGioHangAjax", "GioHang", new { MaSP = item.IdSP, strURL = Request.Url.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "iconGioHang", InsertionMode = InsertionMode.Replace })
+                                        @Ajax.ActionLink("Thêm vào giỏ hàng", "ThemGioHangAjax", "GioHang", new { MaSP = item.IdSP, strURL = Request.Url.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "iconGioHang", InsertionMode = InsertionMode.Replace })
                                     </div>
                                 </div>
                             </div>

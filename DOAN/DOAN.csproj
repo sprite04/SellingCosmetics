@@ -2224,9 +2224,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Common\Encryptor.cs" />
+    <Compile Include="Common\Gmail.cs" />
     <Compile Include="Common\LoaiKM.cs" />
     <Compile Include="Common\Nam.cs" />
-    <Compile Include="Common\ThuongHieu.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\GiaoHangController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
@@ -2329,6 +2329,7 @@
     <Content Include="Views\GiaoHang\Index.cshtml" />
     <Content Include="Views\GiaoHang\ThayDoiTinhTrang.cshtml" />
     <Content Include="Views\SanPham\SanPhamTheoDanhMuc.cshtml" />
+    <Content Include="Views\Home\QuenMatKhau.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

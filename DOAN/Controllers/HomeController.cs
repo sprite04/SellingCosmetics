@@ -9,6 +9,9 @@ using CaptchaMvc;
 using DOAN.Common;
 using System.Web.Security;
 using System.Data.Entity;
+using System.Text.RegularExpressions;
+using System.Net.Mail;
+using System.Net;
 
 namespace DOAN.Controllers
 {
@@ -69,14 +72,21 @@ namespace DOAN.Controllers
             ViewBag.ThongBao = 0;
             if (this.IsCaptchaValid("Captcha is not valid"))
             {
-                user.Password = Encryptor.MD5Hash(user.Password);
-                user.Password1 = Encryptor.MD5Hash(user.Password1);
+                
                 user.NgayTao = DateTime.Now;
                 user.TT_User = true;
                 user.IdLoaiUser = 1;
+                if(user.Password!=user.Password1)
+                {
+                    ModelState.AddModelError("", "Mật khẩu xác nhận không khớp");
+                    ViewBag.ThongBao = 4;
+                    return View();
+                }    
                 if (ModelState.IsValid)
                 {
-                    if (db.NGUOIDUNGs.Where(x => x.Username == user.Mail.Trim()).Count()==0)
+                        user.Password = Encryptor.MD5Hash(user.Password);
+                        user.Password1 = Encryptor.MD5Hash(user.Password1);
+                        if (db.NGUOIDUNGs.Where(x => x.Username == user.Mail.Trim()).Count()==0)
                     {
                         user.Username = user.Mail.Trim();
                         db.NGUOIDUNGs.Add(user);
@@ -110,7 +120,7 @@ namespace DOAN.Controllers
             ViewBag.ThongBao = 0;
             string username = f["username"].ToString();
             string password = Encryptor.MD5Hash(f["password"].ToString());
-            var user = db.NGUOIDUNGs.SingleOrDefault(x => x.Username == username && x.Password == password && x.TT_User==true);
+            var user = db.NGUOIDUNGs.SingleOrDefault(x => x.Username == username && (x.Password == password|| x.Password1==password) && x.TT_User==true);
             if(user!=null)
             {
                 IEnumerable<PHANQUYEN> lstQuyen = db.PHANQUYENs.Where(x => x.IdLoaiUser == user.IdLoaiUser);
@@ -147,6 +157,8 @@ namespace DOAN.Controllers
                     var listGH = db.GIOHANGs.Where(x => x.IdKH == user.IdUser).ToList();
                     Session["GioHang"] = listGH;
                 }
+                if (user.Password != user.Password1)
+                    return RedirectToAction("ThayDoiMatKhau","Home");
                 if (strURL != null && strURL != "")
                     return Redirect(strURL);
                 else
@@ -156,6 +168,59 @@ namespace DOAN.Controllers
             return View();
         }
 
+        public ActionResult QuenMatKhau()
+        {
+            ViewBag.ThongBao = "";
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult QuenMatKhau(FormCollection f)
+        {
+            string email = f["email"];
+            var nguoidung = db.NGUOIDUNGs.SingleOrDefault(x => x.Mail.ToLower().Trim() == email.ToLower().Trim());
+            if (nguoidung == null)
+            {
+                ViewBag.ThongBao = "Email không tồn tại. Vui lòng nhập lại";
+                return View();
+            }
+            string password = Membership.GeneratePassword(6, 0);
+            password = Regex.Replace(password, @"[^a-zA-Z0-9]", m => "9");
+            Gmail gmail = new Gmail();
+            gmail.To = email.Trim();
+            gmail.From = "testgoog96@gmail.com";
+            gmail.Subject = "Cấp lại mật khẩu đăng nhập";
+            gmail.Body = "<p>Mật khẩu đăng nhập tạm thời của bạn l&agrave; <span style=\"color: #3598db;\">" + password + "</span>. Vui l&ograve;ng thay đổi lại mật khẩu khi đăng nhập th&agrave;nh c&ocirc;ng.</p>";
+
+
+            try
+            {
+                MailMessage mail = new MailMessage(gmail.From, gmail.To);
+                mail.Subject = gmail.Subject;
+                mail.Body = gmail.Body;
+                mail.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                NetworkCredential nc = new NetworkCredential("testgoog96@gmail.com", "thuytien1234567890");
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = nc;
+                smtp.Send(mail);
+
+                nguoidung.SDT= nguoidung.SDT.Trim();
+                nguoidung.Password1 = Encryptor.MD5Hash(password);
+                db.Entry(nguoidung).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                ViewBag.ThongBao = "Email đã được gửi, vui lòng kiểm tra hộp thư để cập nhật thông tin.";
+                return View();
+            }
+            catch (Exception)
+            {
+                ViewBag.ThongBao = "Quá trình thực hiện thất bại";
+                return View();
+            }
+        }
         public void PhanQuyen(string username, string quyen)
         {
             FormsAuthentication.Initialize();
@@ -278,7 +343,7 @@ namespace DOAN.Controllers
                 error = 2;
                 return RedirectToAction("ThayDoiMatKhau", new { error = error });
             }
-            if (Encryptor.MD5Hash(matkhaucu) != nd.Password)
+            if (Encryptor.MD5Hash(matkhaucu) != nd.Password && Encryptor.MD5Hash(matkhaucu) != nd.Password1)
             {
                 error = 3;
                 return RedirectToAction("ThayDoiMatKhau", new { error = error });

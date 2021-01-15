@@ -31,7 +31,7 @@ namespace DOAN.Models
             public string Mail { get; set; }
 
             [StringLength(50)]
-            [Compare("Password", ErrorMessage = "Password miss match.")]
+            //[Compare("Password", ErrorMessage = "Password miss match.")]
             public string Password1 { get; set; }
 
             [DisplayName("Female")]

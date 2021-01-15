@@ -1,7 +1,8 @@
-﻿
+﻿@using DOAN.Models;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
+    var user = Session["TaiKhoan"] as NGUOIDUNG;
 }
 
 @section style{
@@ -53,7 +54,14 @@
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="@Url.Action("Index","NguoiDung")" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                    @if (user != null && user.IdLoaiUser == 3)
+                    {
+                        <a href="@Url.Action("Index","NguoiDung")" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+                    }
+                    else
+                    {
+                        <div style="height:30px"></div>
+                    }
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -97,27 +105,13 @@
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                     </button>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                            <i class="fas fa-wrench"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right" role="menu">
-                            <a href="#" class="dropdown-item">Action</a>
-                            <a href="#" class="dropdown-item">Another action</a>
-                            <a href="#" class="dropdown-item">Something else here</a>
-                            <a class="dropdown-divider"></a>
-                            <a href="#" class="dropdown-item">Separated link</a>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
-                    </button>
+
                 </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
 
                         @using (Html.BeginForm("Index", "Dashboard", FormMethod.Post))
                         {
@@ -147,9 +141,9 @@
                         }
 
                     </div>
-                    
+
                     <!-- /.col -->
-                    <div class="col-md-4">
+                    <!--<div class="col-md-4">
                         <p class="text-center">
                             <strong>Mục tiêu tháng</strong>
                         </p>
@@ -160,40 +154,37 @@
                             <div class="progress progress-sm">
                                 <div class="progress-bar bg-primary" style="width: 80%"></div>
                             </div>
+                        </div>-->
+                    <!-- /.progress-group -->
+                    <!--<div class="progress-group">
+                        Hoàn thành đơn hàng
+                        <span class="float-right"><b>310</b>/400</span>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar bg-danger" style="width: 75%"></div>
                         </div>
-                        <!-- /.progress-group -->
-
-                        <div class="progress-group">
-                            Hoàn thành đơn hàng
-                            <span class="float-right"><b>310</b>/400</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-danger" style="width: 75%"></div>
-                            </div>
+                    </div>-->
+                    <!-- /.progress-group -->
+                    <!--<div class="progress-group">
+                        <span class="progress-text">Khách hàng đăng ký mới</span>
+                        <span class="float-right"><b>480</b>/800</span>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar bg-success" style="width: 60%"></div>
                         </div>
-
-                        <!-- /.progress-group -->
-                        <div class="progress-group">
-                            <span class="progress-text">Khách hàng đăng ký mới</span>
-                            <span class="float-right"><b>480</b>/800</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-success" style="width: 60%"></div>
-                            </div>
-                        </div>
-
-                        <!-- /.progress-group -->
-                    </div>
+                    </div>-->
+                    <!-- /.progress-group -->
+                    <!--</div>-->
                     <!-- /.col -->
                 </div>
                 <!-- /.row -->
             </div>
             <!-- ./card-body -->
             <div class="card-footer">
-                
+
                 <!-- /.row -->
             </div>
             <!-- /.card-footer -->
         </div>
-       
+
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->

@@ -7,6 +7,7 @@ using DOAN.Models;
 
 namespace DOAN.Controllers
 {
+    [Authorize(Roles = "*,duyetdon")]
     public class QLHoaDonController : Controller
     {
         TMDTDbContext db = new TMDTDbContext();
@@ -64,11 +65,16 @@ namespace DOAN.Controllers
 
         public ActionResult XacNhan(int id)
         {
+            var user = Session["TaiKhoan"] as NGUOIDUNG;
+            if (user == null)
+                return RedirectToAction("DangNhap", "Home");
+
             var hoadon = db.HOADONs.Find(id);
             if (hoadon == null)
                 return HttpNotFound();
             try
             {
+                hoadon.IdNV = user.IdUser;
                 hoadon.TinhTrang = 5;
                 db.Entry(hoadon).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
@@ -82,11 +88,16 @@ namespace DOAN.Controllers
 
         public ActionResult HuyBo(int id)
         {
+            var user = Session["TaiKhoan"] as NGUOIDUNG;
+            if (user == null)
+                return RedirectToAction("DangNhap", "Home");
+
             var hoadon = db.HOADONs.Find(id);
             if (hoadon == null)
                 return HttpNotFound();
             try
             {
+                hoadon.IdNV = user.IdUser;
                 hoadon.TinhTrang = 6;
                 db.Entry(hoadon).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();

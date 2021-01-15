@@ -10,6 +10,7 @@ using DOAN.Models;
 
 namespace DOAN.Controllers
 {
+    [Authorize(Roles = "*")]
     public class NhapHangController : Controller
     {
         TMDTDbContext db = new TMDTDbContext();

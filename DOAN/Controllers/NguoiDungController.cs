@@ -4,6 +4,8 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -12,12 +14,13 @@ using DOAN.Models;
 
 namespace DOAN.Controllers
 {
-    //[Authorize(Roles = "*")]
+    [Authorize(Roles = "*,xemthongtin")]
     public class NguoiDungController : Controller
     {
 
         TMDTDbContext db = new TMDTDbContext();
         // GET: NguoiDung
+        [Authorize(Roles = "*")]
         public ActionResult Index()
         {
             var list = db.NGUOIDUNGs.Where(x => x.TT_User == true);
@@ -30,6 +33,7 @@ namespace DOAN.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "*")]
         public ActionResult Index(FormCollection f)
         {
             var kq = f["ddlNguoiDung"];
@@ -54,6 +58,7 @@ namespace DOAN.Controllers
             }
         }
 
+        [Authorize(Roles = "*")]
         public ActionResult Create()
         {
             ViewBag.IdLoaiUser = new SelectList(db.LOAIUSERs, "IdLoaiUser", "TenLoai");
@@ -64,6 +69,7 @@ namespace DOAN.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Create")]
+        [Authorize(Roles = "*")]
         public ActionResult Create(NGUOIDUNG nd, HttpPostedFileBase Avatar)
         {
             if(Avatar!=null)
@@ -78,10 +84,43 @@ namespace DOAN.Controllers
                         Avatar.SaveAs(path);
                     }
                 }
-            }    
-            
-            nd.Password = Encryptor.MD5Hash(nd.Password);
-            nd.Password1 = Encryptor.MD5Hash(nd.Password1);
+            }
+
+            string email = nd.Mail;
+            string password = Membership.GeneratePassword(6, 0);
+            password = Regex.Replace(password, @"[^a-zA-Z0-9]", m => "9");
+            Gmail gmail = new Gmail();
+            gmail.To = email.Trim();
+            gmail.From = "testgoog96@gmail.com";
+            gmail.Subject = "Cấp mật khẩu đăng nhập";
+            gmail.Body = "<p>Mật khẩu đăng nhập tạm thời của bạn l&agrave; <span style=\"color: #3598db;\">" + password + "</span>. Vui l&ograve;ng thay đổi lại mật khẩu khi đăng nhập th&agrave;nh c&ocirc;ng.</p>";
+
+
+            try
+            {
+                MailMessage mail = new MailMessage(gmail.From, gmail.To);
+                mail.Subject = gmail.Subject;
+                mail.Body = gmail.Body;
+                mail.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                NetworkCredential nc = new NetworkCredential("testgoog96@gmail.com", "thuytien1234567890");
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = nc;
+                smtp.Send(mail);
+
+                nd.Password= Encryptor.MD5Hash(password);
+                nd.Password1 = Encryptor.MD5Hash(password);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Quá trình thực hiện thất bại.");
+                return View(nd);
+            }
+
+            nd.SDT = nd.SDT.Trim();
             nd.NgayTao = DateTime.Now;
             nd.TT_User = true;
             
@@ -119,6 +158,7 @@ namespace DOAN.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "*")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -148,7 +188,7 @@ namespace DOAN.Controllers
             }
         }
 
-
+        [Authorize(Roles = "*")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -170,6 +210,7 @@ namespace DOAN.Controllers
 
         [HttpPost]
         [Route("Edit")]
+        [Authorize(Roles = "*")]
         public ActionResult Edit(NGUOIDUNG nd, HttpPostedFileBase Avatar, string AnhCu)
         {
             if(Avatar!=null)
@@ -285,7 +326,7 @@ namespace DOAN.Controllers
                 {
                     ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập.");
                 }
-                return View(nd);
+                return RedirectToAction("ChiTietNguoiDung","NguoiDung",new {id=nd.IdUser,error=4});
             }
             else
             {

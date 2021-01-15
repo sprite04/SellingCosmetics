@@ -92,6 +92,11 @@ namespace DOAN.Models
                 .WithOptional(e => e.NGUOIDUNG)
                 .HasForeignKey(e => e.IdKH);
 
+            modelBuilder.Entity<NGUOIDUNG>()
+                .HasMany(e => e.HOADONs1)
+                .WithOptional(e => e.NGUOIDUNG1)
+                .HasForeignKey(e => e.IdNV);
+
             modelBuilder.Entity<PHANQUYEN>()
                 .Property(e => e.TinhNang)
                 .IsUnicode(false);

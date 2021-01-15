@@ -8,12 +8,18 @@ using DOAN.Models;
 
 namespace DOAN.Controllers
 {
+    [Authorize(Roles = "*,thongke")]
     public class DashboardController : Controller
     {
         TMDTDbContext db = new TMDTDbContext();
         // GET: Dashboard
         public ActionResult Index()
         {
+            var user = Session["TaiKhoan"] as NGUOIDUNG;
+            if(user==null)
+            {
+                return RedirectToAction("DangNhap", "Home");
+            }    
             ViewBag.CanXacNhan=db.HOADONs.Where(x => x.TinhTrang == 4).Count();
             ViewBag.DangKyMoi = db.NGUOIDUNGs.Where(x => x.NgayTao.Value.Month == DateTime.Now.Month && x.NgayTao.Value.Year == DateTime.Now.Year && x.IdLoaiUser == 1).Count();
             ViewBag.BiHuy = db.HOADONs.Where(x => x.NgayDH.Value.Month == DateTime.Now.Month && x.NgayDH.Value.Year == DateTime.Now.Year && x.TinhTrang == 6).Count();

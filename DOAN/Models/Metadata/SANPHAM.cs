@@ -11,10 +11,10 @@ namespace DOAN.Models
     {
         internal sealed class SanPhamMetadata
         {
-            [Required(ErrorMessage = "Can not be empty")]
+            [Required(ErrorMessage = "{0} không thể để trống")]
             public float? LoiNhuan { get; set; }
 
-            [Required(ErrorMessage = "Can not be empty")]
+            [Required(ErrorMessage = "{0} không thể để trống")]
             public int GiaGoc { get; set; }
         }
     }

@@ -19,10 +19,10 @@ namespace DOAN.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Thang { get; set; }
 
-        public int? TongNhap { get; set; }
+        public long? TongNhap { get; set; }
 
-        public int? TongGiaHang { get; set; }
+        public long? TongGiaHang { get; set; }
 
-        public int? TongDoanhThu { get; set; }
+        public long? TongDoanhThu { get; set; }
     }
 }

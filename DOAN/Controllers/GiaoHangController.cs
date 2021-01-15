@@ -7,6 +7,7 @@ using DOAN.Models;
 
 namespace DOAN.Controllers
 {
+    [Authorize(Roles = "vanchuyen")]
     public class GiaoHangController : Controller
     {
         TMDTDbContext db = new TMDTDbContext();
@@ -81,13 +82,18 @@ namespace DOAN.Controllers
             {
                 int giatri = int.Parse(kq);
                 hoadon.TinhTrang = giatri;
+                if(hoadon.TinhTrang==9)
+                {
+                    hoadon.DaThanhToan = true;
+                    hoadon.NgayGH = DateTime.Now;
+                }    
                 try
                 {
                     db.Entry(hoadon).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index", "GiaoHang", new { error=-1 });
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
 
                 }
@@ -101,6 +107,7 @@ namespace DOAN.Controllers
                 list = db.TINHTRANGs.Where(x => x.IdTT == 11).ToList();
             else if (hoadon.TinhTrang == 7 || hoadon.TinhTrang == 8)
                 list = db.TINHTRANGs.Where(x => x.IdTT >= hoadon.TinhTrang).ToList();
+
 
             ViewBag.TinhTrang = new SelectList(list, "IdTT", "TenTT", hoadon.TinhTrang);
             ViewBag.HoaDon = hoadon;

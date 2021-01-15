@@ -44,11 +44,7 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                        <i class="fas fa-th-large"></i>
-                    </a>
-                </li>
+               
                 <li class="nav-item dropdown show">
                     <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">
                         <i class="fa fa-user" aria-hidden="true"></i>
@@ -110,91 +106,99 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-                        <li class="nav-item">
+                        @if (user != null && (user.IdLoaiUser == 3 || user.IdLoaiUser == 2))
+                        {
+                            <li class="nav-item">
 
-                            <a href="@Url.Action("Index","Dashboard")" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Trang chủ
-                                </p>
-                            </a>
-                        </li>
+                                <a href="@Url.Action("Index","Dashboard")" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Trang chủ
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        @if (user != null && user.IdLoaiUser == 3)
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index","NguoiDung")" class="nav-link">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Người dùng
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+
+                                <a href="@Url.Action("Index","QuanLyThuongHieu")" class="nav-link">
+                                    <i class="nav-icon fa fa-trademark"></i>
+                                    <p>
+                                        Thương hiệu
+                                    </p>
+                                </a>
+                            </li>
+                        }
 
 
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index","NguoiDung")" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Người dùng
-                                </p>
-                            </a>
-                        </li>
+                        @if (user != null && (user.IdLoaiUser == 3 || user.IdLoaiUser == 2))
+                        {
+                            <li class="nav-item">
 
-                        <li class="nav-item">
+                                <a href="@Url.Action("Index","QuanLySanPham")" class="nav-link">
+                                    <i class="nav-icon fa fa-gift"></i>
+                                    <p>
+                                        Sản phẩm
+                                    </p>
+                                </a>
+                            </li>
 
-                            <a href="@Url.Action("Index","QuanLyThuongHieu")" class="nav-link">
-                                <i class="nav-icon fa fa-trademark"></i>
-                                <p>
-                                    Thương hiệu
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index","QLHoaDon")" class="nav-link">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Hoá đơn
+                                    </p>
+                                </a>
+                            </li>
+                        }
 
-                            <a href="@Url.Action("Index","QuanLySanPham")" class="nav-link">
-                                <i class="nav-icon fa fa-gift"></i>
-                                <p>
-                                    Sản phẩm
-                                </p>
-                            </a>
-                        </li>
+                        @if (user != null && user.IdLoaiUser == 4)
+                        {
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index","GiaoHang")" class="nav-link">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Giao hàng
+                                    </p>
+                                </a>
+                            </li>
+                        }
 
-                        <li class="nav-item">
 
-                            <a href="@Url.Action("Index","NhapHang")" class="nav-link">
-                                <i class="nav-icon fa fa-archive"></i>
-                                <p>
-                                    Nhập hàng
-                                </p>
-                            </a>
-                        </li>
 
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index","QLHoaDon")" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Hoá đơn
-                                </p>
-                            </a>
-                        </li>
+                        @if (user != null && user.IdLoaiUser == 3)
+                        {
+                            <li class="nav-header">CẤU HÌNH</li>
+                            <li class="nav-item">
 
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index","QLKhuyenMai")" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Khuyến mãi
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index","GiaoHang")" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Giao hàng
-                                </p>
-                            </a>
-                        </li>
+                                <a href="@Url.Action("Index","NhapHang")" class="nav-link">
+                                    <i class="nav-icon fa fa-archive"></i>
+                                    <p>
+                                        Nhập hàng
+                                    </p>
+                                </a>
+                            </li>
 
-                        <li class="nav-header">EXAMPLES</li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-calendar-alt"></i>
-                                <p>
-                                    Calendar
-                                    <span class="badge badge-info right">2</span>
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index","QLKhuyenMai")" class="nav-link">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Khuyến mãi
+                                    </p>
+                                </a>
+                            </li>
+                        }
 
                     </ul>
                 </nav>

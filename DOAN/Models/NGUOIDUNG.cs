@@ -14,6 +14,7 @@ namespace DOAN.Models
         {
             GIOHANGs = new HashSet<GIOHANG>();
             HOADONs = new HashSet<HOADON>();
+            HOADONs1 = new HashSet<HOADON>();
         }
 
         [Key]
@@ -41,10 +42,11 @@ namespace DOAN.Models
         [StringLength(50)]
         public string Mail { get; set; }
 
+  
         [StringLength(50)]
         public string Username { get; set; }
 
-        [Required]
+        
         [StringLength(50)]
         public string Password { get; set; }
 
@@ -60,6 +62,9 @@ namespace DOAN.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HOADON> HOADONs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HOADON> HOADONs1 { get; set; }
 
         public virtual LOAIUSER LOAIUSER { get; set; }
     }

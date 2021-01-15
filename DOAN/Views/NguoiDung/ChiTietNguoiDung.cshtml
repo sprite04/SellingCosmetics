@@ -9,14 +9,20 @@
 
 
 
+
 @section script{
     <script type="text/javascript">
         function fileCheck(obj) {
             var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
             if ($.inArray($(obj).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-                alert("Only '.jpeg','.jpg', '.png', '.gif', '.bmp' formats are allowed.");
+                alert("Chỉ hình ảnh định dạng '.jpeg','.jpg', '.png', '.gif', '.bmp' mới được phép");
             }
         }
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
     </script>
 
 }
@@ -74,6 +80,15 @@
                 </button>
             </div>
         }
+        else if (ViewBag.Error == 4)
+        {
+            <div class="alert alert-warning ">
+                Vui lòng kiểm tra lại thông tin đã nhập
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
     </div>
 </section>
 
@@ -105,9 +120,9 @@
 
                         <h3 class="profile-username text-center">@Url.Content(Model.HoTen)</h3>
 
-                        <p class="text-muted text-center">@Model.LOAIUSER.TenLoai</p><br />
+                        <p class="text-muted text-center">@Url.Content(Model.LOAIUSER.IdLoaiUser == 1 ? "Khách hàng" : "Nhân viên")</p><br />
                         <ul class="list-group list-group-unbordered mb-3">
-                            
+
                             <li class="list-group-item">
                                 <b>Ngày sinh</b> <a class="float-right">@DateTime.Parse(Model.NgaySinh == null ? DateTime.Now.ToString() : Model.NgaySinh.ToString()).ToString("dd/MM/yyyy")</a>
                             </li>
@@ -184,10 +199,10 @@
                                         @Html.HiddenFor(model => model.IdLoaiUser)
                                         @Html.HiddenFor(model => model.HoTen)
                                         @Html.HiddenFor(model => model.TT_User)
-                                        
+
                                         @Html.HiddenFor(model => model.Password)
                                         @Html.HiddenFor(model => model.Password1)
-                                        
+
                                         @Html.HiddenFor(model => model.Username)
                                         @Html.HiddenFor(model => model.NgayTao)
                                         @Html.HiddenFor(model => model.Mail)
@@ -217,7 +232,7 @@
                                         <div class="form-group row">
                                             <label for="inputEmail" class="col-sm-2 col-form-label">Điện thoại</label>
                                             <div class="col-sm-10">
-                                                @Html.TextBoxFor(model => model.SDT, new { @type = "text", @class = "form-control", @id = "inputPhone"})
+                                                @Html.TextBoxFor(model => model.SDT, new { @type = "text", @class = "form-control", @id = "inputPhone" })
                                                 @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -225,7 +240,7 @@
                                         <div class="form-group row">
                                             <label for="inputEmail" class="col-sm-2 col-form-label">Địa chỉ</label>
                                             <div class="col-sm-10">
-                                                @Html.TextBoxFor(model => model.DiaChi, new { @type = "text", @class = "form-control", @id = "inputPhone"})
+                                                @Html.TextBoxFor(model => model.DiaChi, new { @type = "text", @class = "form-control", @id = "inputPhone" })
                                                 @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
                                             </div>
                                         </div>

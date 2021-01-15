@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace DOAN.Controllers
 {
-    //[Authorize(Roles = "*")]
+    [Authorize(Roles = "*")]
     public class QLKhuyenMaiController : Controller
     {
         // GET: QLKhuyenMai

@@ -5,6 +5,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
     var ThuongHieu = ViewBag.ThuongHieu as THUONGHIEU;
+    var user = Session["TaiKhoan"] as NGUOIDUNG;
 }
 
 @section header{
@@ -79,9 +80,12 @@
                         <!-- Button trigger modal -->
                         @if (ThuongHieu != null)
                         {
-                            <a class="btn btn-success float-right" href="@Url.Action("Create","QuanLySanPham",new {idTH=ThuongHieu.IdTH})">
-                                Thêm
-                            </a>
+                            if (user != null && user.IdLoaiUser == 3)
+                            {
+                                <a class="btn btn-success float-right" href="@Url.Action("Create","QuanLySanPham",new {idTH=ThuongHieu.IdTH})">
+                                    Thêm
+                                </a>
+                            }
                             <a class="btn btn-info float-right mr-2" href="@Url.Action("PhieuNhap","NhapHang",new {idTH=ThuongHieu.IdTH})">
                                 Nhập hàng
                             </a>
@@ -105,48 +109,69 @@
                                         <thead>
                                             <tr>
                                                 <th>@Html.DisplayNameFor(model => model.TenSP)</th>
-                                                <th>@Html.DisplayNameFor(model => model.GiaGoc)</th>
-                                                <th>@Html.DisplayNameFor(model => model.LoiNhuan)</th>
+                                                @if (user != null && user.IdLoaiUser == 3)
+                                                {
+                                                    <th>@Html.DisplayNameFor(model => model.GiaGoc)</th>
+                                                    <th>@Html.DisplayNameFor(model => model.LoiNhuan)</th>
+                                                }
+                                                else
+                                                {
+                                                    <th>Giá bán</th>
+                                                }
                                                 <th>@Html.DisplayNameFor(model => model.DonVi)</th>
                                                 <th>@Html.DisplayNameFor(model => model.SoLuong)</th>
                                                 <th>@Html.DisplayNameFor(model => model.LOAISANPHAM.TenLoai)</th>
                                                 <th>@Html.DisplayNameFor(model => model.TINHTRANG1.TenTT)</th>
                                                 <th></th>
-                                                <th></th>
+                                                @if (user != null && user.IdLoaiUser == 3)
+                                                {
+                                                    <th></th>
+                                                }
+
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (var item in Model)
                                             {
-                                                <tr id="row1_@item.IdSP">
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.TenSP)
-                                                    </td>
+                                            <tr id="row1_@item.IdSP">
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TenSP)
+                                                </td>
+                                                @if (user != null && user.IdLoaiUser == 3)
+                                                {
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.GiaGoc)
                                                     </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.LoiNhuan)
                                                     </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.DonVi)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.SoLuong)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.LOAISANPHAM.TenLoai)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.TINHTRANG1.TenTT)
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <a class="btn btn-success" href="@Url.Action("NhapHang","QuanLySanPham",new { id=item.IdSP})">
-                                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Url.Content(((Int32)(item.GiaGoc*item.LoiNhuan)).ToString())</td>
+                                                }
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DonVi)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SoLuong)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.LOAISANPHAM.TenLoai)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TINHTRANG1.TenTT)
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <a class="btn btn-success" href="@Url.Action("NhapHang","QuanLySanPham",new { id=item.IdSP})">
+                                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                @if (user != null && user.IdLoaiUser == 3)
+                                                {
                                                     <td>
                                                         <div class="btn-group btn-group-sm">
                                                             <a class="btn btn-info" href="@Url.Action("Edit","QuanLySanPham",new { id=item.IdSP})">
@@ -157,7 +182,8 @@
                                                         </div>
 
                                                     </td>
-                                                </tr>
+                                                }
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>

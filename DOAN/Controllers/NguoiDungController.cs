@@ -88,7 +88,7 @@ namespace DOAN.Controllers
 
             string email = nd.Mail;
             string password = Membership.GeneratePassword(6, 0);
-            password = Regex.Replace(password, @"[^a-zA-Z0-9]", m => "9");
+            password = Regex.Replace(password, @"[^a-zA-Z0-9]", m => "9");//tạo mật khẩu tự động
             Gmail gmail = new Gmail();
             gmail.To = email.Trim();
             gmail.From = "testgoog96@gmail.com";

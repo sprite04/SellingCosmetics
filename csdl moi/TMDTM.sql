@@ -1,0 +1,452 @@
+﻿CREATE DATABASE TMDTM
+GO
+
+USE TMDTM
+GO
+
+CREATE TABLE LOAIUSER
+(
+	IdLoaiUser INT IDENTITY(1,1),
+	TenLoai NVARCHAR(30),
+	CONSTRAINT PK_LU PRIMARY KEY(IdLoaiUser),
+)
+GO
+
+CREATE TABLE NGUOIDUNG
+(
+	IdUser INT IDENTITY(1,1),
+	IdLoaiUser INT DEFAULT(1),
+	HoTen NVARCHAR(50),
+	Avatar VARCHAR(255),
+	NgaySinh DATE DEFAULT(GETDATE()),
+	GioiTinh BIT DEFAULT(1),
+	DiaChi NVARCHAR(50),
+	SDT CHAR(12),
+	Mail VARCHAR(50),
+	Username VARCHAR(50) NOT NULL UNIQUE,
+	Password VARCHAR(50) NOT NULL,
+	Password1 VARCHAR(50),
+	TT_User BIT DEFAULT(1),
+	NgayTao DATETIME DEFAULT(GETDATE()),
+	CONSTRAINT PK_U PRIMARY KEY(IdUser),
+	CONSTRAINT FK_U_LU FOREIGN KEY (IdLoaiUser) REFERENCES dbo.LOAIUSER(IdLoaiUser),
+	CONSTRAINT U_ND UNIQUE(Mail)
+)
+GO
+
+ALTER TABLE dbo.NGUOIDUNG ALTER COLUMN DiaChi NVARCHAR(1000)
+
+
+DROP TABLE 
+
+--Suy nghi lai neu qua rac roi
+CREATE TABLE PHANQUYEN
+(
+	IdLoaiUser INT,
+	TinhNang VARCHAR(30),
+	CONSTRAINT PK_PQ PRIMARY KEY(IdLoaiUser,TinhNang),
+	CONSTRAINT PK_PQ_LU FOREIGN KEY(IdLoaiUser) REFERENCES dbo.LOAIUSER(IdLoaiUser)
+)
+GO
+
+
+CREATE TABLE DTGIAOHANG
+(
+	IdDTGH INT IDENTITY(1,1),
+	TenDTGH NVARCHAR(50),
+	TinhTrang BIT DEFAULT(1),--1: còn hợp tác
+	TienVanChuyen INT DEFAULT(0),
+	CONSTRAINT PK_GiaoH PRIMARY KEY(IdDTGH)
+)
+GO
+
+
+CREATE TABLE KHUYENMAI
+(
+	IdMa INT IDENTITY(1,1),
+	MaKM VARCHAR(30) NOT NULL UNIQUE,
+	LoaiKM INT DEFAULT(1),
+	NgayBD DATETIME DEFAULT(GETDATE()),
+	NgayKT DATETIME DEFAULT(GETDATE()),
+	GiaTri INT DEFAULT(0),
+	ChiTiet NVARCHAR(200),
+	TinhTrang BIT DEFAULT(1),--còn tồn tại là 1, xoá 0
+	CONSTRAINT PK_KM PRIMARY KEY(IdMa),
+)
+GO
+
+CREATE TABLE THUONGHIEU
+(
+	IdTH INT IDENTITY(1,1),
+	TenTH NVARCHAR(50),
+	AnhTH VARCHAR(50),
+	SDT VARCHAR(15),
+	DiaChi NVARCHAR(50),
+	ChiTiet NTEXT,
+	TinhTrang BIT DEFAULT(1), --còn bán các sản phẩm của thương hiệu này nữa hay không
+	CONSTRAINT PK_THieu PRIMARY KEY(IdTH)
+)
+GO
+
+
+CREATE TABLE LOAISANPHAM
+(
+	IdLoaiSP INT IDENTITY(1,1),
+	TenLoai NVARCHAR(50),
+	DanhMuc INT,
+	TinhTrang BIT DEFAULT(1)
+	CONSTRAINT PK_LSP PRIMARY KEY(IdLoaiSP)
+)
+GO
+
+
+
+--có các tình trạng: còn hàng, hết hàng, không còn bán cua SP,chưa xác nhận, xác nhận, huỷ của HD,đang chuẩn bị hàng, đang vận chuyển, giao hàng thành công của TT ĐƠN HÀNG
+CREATE TABLE TINHTRANG
+(
+	IdTT INT IDENTITY(1,1),
+	TenTT NVARCHAR(50),
+	CONSTRAINT PK_TTSP PRIMARY KEY(IdTT)
+)
+GO
+
+
+--Thuộc tính tình trạng tham chiếu đến bảng tình trạng sản phẩm
+CREATE TABLE SANPHAM
+(
+	IdSP INT IDENTITY(1,1),
+	TenSP NVARCHAR(50),
+	AnhSP VARCHAR(50),
+	NgayTao DATETIME DEFAULT(GETDATE()),
+	MoTa NTEXT,
+	TinhTrang INT,
+	GiaGoc INT DEFAULT(0),
+	LoiNhuan FLOAT(2) DEFAULT(0),
+	DonVi NVARCHAR(20),
+	SoLuong INT DEFAULT(0),
+	SoLanMua INT DEFAULT(0),
+	MaKM INT,
+	IdTH INT,
+	IdLoaiSP INT,
+	CONSTRAINT PK_SP PRIMARY KEY(IdSP),
+	CONSTRAINT FK_SP_KM FOREIGN KEY(MaKM) REFERENCES dbo.KHUYENMAI(IdMa),
+	CONSTRAINT FK_SP_TH FOREIGN KEY(IdTH) REFERENCES dbo.THUONGHIEU(IdTH),
+	CONSTRAINT FK_SP_LSP FOREIGN KEY(IdLoaiSP) REFERENCES dbo.LOAISANPHAM(IdLoaiSP),
+	CONSTRAINT FK_SP_TTSP FOREIGN KEY(TinhTrang) REFERENCES dbo.TINHTRANG(IdTT)
+)
+GO
+ALTER TABLE dbo.SANPHAM ALTER COLUMN TenSP NVARCHAR(500)
+
+--Co nen them thang nam de xac dinh moi thang co bn san pham loi
+CREATE TABLE SANPHAMLOI
+(
+	Thang INT,
+	Nam INT,
+	IdSP INT,
+	SoLuong INT DEFAULT(0),
+	CONSTRAINT PK_SPL PRIMARY KEY(Thang,Nam,IdSP),
+	CONSTRAINT FK_SPL_SP FOREIGN KEY(IdSP) REFERENCES dbo.SANPHAM(IdSP)
+)
+GO
+DROP TABLE dbo.SANPHAMLOI
+
+CREATE TABLE HOADON
+(
+	IdHD INT IDENTITY,
+	NgayDH DATETIME DEFAULT(GETDATE()),
+	TongTien INT DEFAULT(0),
+	IdKH INT,
+	IdKM INT,
+	SDT VARCHAR(12) NOT NULL,
+	DiaChi NVARCHAR(50) NOT NULL,
+	TinhTrang INT, --chưa xác nhận, xác nhận, huỷ
+	IdDTGH INT,
+	NgayGH DATETIME,
+	DaThanhToan BIT DEFAULT(0),
+	TienVanChuyen INT,
+	CONSTRAINT PK_HD PRIMARY KEY(IdHD),
+	CONSTRAINT FK_HD_KH FOREIGN KEY(IdKH) REFERENCES dbo.NGUOIDUNG(IdUser),
+	CONSTRAINT FK_HD_KM FOREIGN KEY(IdKM) REFERENCES dbo.KHUYENMAI(IdMa),
+	CONSTRAINT FK_HD_TT FOREIGN KEY(TinhTrang) REFERENCES dbo.TINHTRANG(IdTT),
+	CONSTRAINT FK_HD_DTGH FOREIGN KEY(IdDTGH) REFERENCES dbo.DTGIAOHANG(IdDTGH),
+)
+GO
+ALTER TABLE dbo.HOADON ALTER COLUMN DiaChi NVARCHAR(1000)
+ALTER TABLE dbo.HOADON ADD IdNV INT
+ALTER TABLE dbo.HOADON ADD CONSTRAINT FK_HD_NV FOREIGN KEY(IdNV) REFERENCES dbo.NGUOIDUNG(IdUser)
+
+CREATE TABLE CHITIETHD
+(
+	IdHD INT,
+	IdSP INT,
+	SoLuong INT NOT NULL DEFAULT(0),
+	GiaBan INT,
+	CONSTRAINT PK_CT PRIMARY KEY(IdHD,IdSP),
+	CONSTRAINT FK_CT_HD FOREIGN KEY(IdHD) REFERENCES dbo.HOADON(IdHD),
+	CONSTRAINT FK_CT_SP FOREIGN KEY(IdSP) REFERENCES dbo.SANPHAM(IdSP)
+)
+GO
+ ALTER TABLE dbo.CHITIETHD DROP COLUMN GiaBan
+
+ ALTER TABLE dbo.CHITIETHD ADD GiaGoc INT
+ ALTER TABLE dbo.CHITIETHD ADD LoiNhuan FLOAT
+
+--Su dung khoa la (NgayNhap va IdSP) thay vi dung IdNhap duoc hay khong?
+CREATE TABLE NHAPHANG
+(
+	NgayNhap DATE,
+	IdSP INT,
+	SoLuong INT NOT NULL DEFAULT(0),
+	GiaNhap INT NOT NULL DEFAULT(0),
+	CONSTRAINT PK_NH PRIMARY KEY(NgayNhap,IdSP),
+	CONSTRAINT FK_NH_SP FOREIGN KEY(IdSP) REFERENCES dbo.SANPHAM(IdSP)
+)
+GO
+
+
+
+CREATE TABLE TRAHANG
+(
+	IdHD INT,
+	IdSP INT,
+	NgayTra DATETIME DEFAULT(GETDATE()),
+	TinhTrang BIT DEFAULT(0), --tinh trang hu hong:1 hu, 0 khong hu
+	SoLuong INT NOT NULL DEFAULT(0),
+	LyDo NTEXT,
+	CONSTRAINT PK_THang PRIMARY KEY(IdHD,IdSP),
+	CONSTRAINT FK_THang_HD FOREIGN KEY(IdHD) REFERENCES dbo.HOADON(IdHD),
+	CONSTRAINT FK_THang_SP FOREIGN KEY(IdSP) REFERENCES dbo.SANPHAM(IdSP)
+)
+GO
+
+DROP TABLE dbo.TRAHANG
+
+--Moi khach hang co 1 gio hang, 1 giỏ hàng la cua 1 nguoi
+--Nen them thuoc tinh TinhTrang de xac dinh san pham trong gio hang con hay khong?
+
+
+CREATE TABLE GIOHANG
+(
+	IdGH INT IDENTITY(1,1),
+	IdKH INT,
+	IdSP INT,
+	SoLuong INT NOT NULL DEFAULT(0),
+	TinhTrang BIT,
+	CONSTRAINT PK_GioH PRIMARY KEY(IdGH),
+	CONSTRAINT FK_GioH_KH FOREIGN KEY(IdKH) REFERENCES dbo.NGUOIDUNG(IdUser),
+	CONSTRAINT FK_GioH_SP FOREIGN KEY(IdSP) REFERENCES dbo.SANPHAM(IdSP)
+)
+GO
+
+
+CREATE TABLE THONGKETHANG
+(
+	Nam INT,
+	Thang INT,
+	TongNhap BIGINT DEFAULT(0),
+	TongGiaHang BIGINT DEFAULT(0),
+	TongDoanhThu BIGINT DEFAULT(0),
+	CONSTRAINT PK_TKe PRIMARY KEY(Nam,Thang)
+)
+GO
+
+
+
+CREATE TRIGGER tg_NhapHang ON dbo.NHAPHANG
+FOR INSERT
+AS
+DECLARE @Gia INT
+DECLARE @SL INT
+DECLARE @GiaNhap INT
+DECLARE @SLNhap INT
+SELECT @Gia=SP.GiaGoc, @GiaNhap=I.GiaNhap, @SL=SP.SoLuong, @SLNhap=I.SoLuong FROM dbo.SANPHAM SP,Inserted I WHERE SP.IdSP=I.IdSP
+IF(@Gia=0)
+BEGIN
+	UPDATE dbo.SANPHAM SET GiaGoc=@GiaNhap, SoLuong=@SLNhap
+	FROM Inserted, dbo.SANPHAM
+	WHERE dbo.SANPHAM.IdSP=Inserted.IdSP
+END
+ELSE
+BEGIN
+	UPDATE dbo.SANPHAM SET GiaGoc=(@Gia*@SL+@GiaNhap*@SLNhap)/(@SL+@SLNhap),SoLuong=@SL+@SLNhap
+	FROM Inserted, dbo.SANPHAM
+	WHERE dbo.SANPHAM.IdSP=Inserted.IdSP
+END
+GO
+
+
+
+
+CREATE TRIGGER tg_XoaNhapHang ON dbo.NHAPHANG
+FOR DELETE
+AS
+DECLARE @Gia INT
+DECLARE @SL INT
+DECLARE @GiaNhap INT
+DECLARE @SLNhap INT
+SELECT @Gia=SP.GiaGoc, @GiaNhap=D.GiaNhap, @SL=SP.SoLuong, @SLNhap=D.SoLuong FROM dbo.SANPHAM SP,Deleted D WHERE SP.IdSP=D.IdSP
+IF((@SL>@SLNhap)AND(@Gia*@SL- @GiaNhap*@SLNhap>0))
+BEGIN
+	UPDATE dbo.SANPHAM SET GiaGoc=(@Gia*@SL- @GiaNhap*@SLNhap)/(@SL-@SLNhap), SoLuong=@SL-@SLNhap
+	FROM Deleted, dbo.SANPHAM
+	WHERE dbo.SANPHAM.IdSP=Deleted.IdSP
+END
+GO
+
+DROP TRIGGER tg_XoaNhapHang
+GO
+
+CREATE TRIGGER tg_SanPham_hethang ON dbo.SANPHAM
+FOR INSERT,UPDATE
+AS
+DECLARE @SL INT
+SELECT @SL=Inserted.SoLuong FROM Inserted WHERE Inserted.TinhTrang=1
+IF(@SL<=0)
+BEGIN
+	UPDATE dbo.SANPHAM SET TinhTrang=2 
+	FROM Inserted
+	WHERE dbo.SANPHAM.IdSP=Inserted.IdSP
+END
+GO
+
+
+CREATE TRIGGER tg_SanPham_conhang ON dbo.SANPHAM
+FOR INSERT,UPDATE
+AS
+DECLARE @SL INT
+SELECT @SL=Inserted.SoLuong FROM Inserted WHERE Inserted.TinhTrang=2
+IF(@SL>0)
+BEGIN
+	UPDATE dbo.SANPHAM SET TinhTrang=1
+	FROM Inserted
+	WHERE dbo.SANPHAM.IdSP=Inserted.IdSP
+END
+GO
+
+DROP TRIGGER tg_TruSanPham
+GO
+
+CREATE TRIGGER tg_TruSanPham ON dbo.CHITIETHD
+FOR INSERT
+AS
+DECLARE @IdSP INT
+DECLARE @SL INT
+SELECT @IdSP=Inserted.IdSP, @SL=Inserted.SoLuong FROM Inserted
+UPDATE dbo.SANPHAM SET SoLuong=SoLuong-@SL, SoLanMua=SoLanMua+@SL
+WHERE dbo.SANPHAM.IdSP=@IdSP
+GO
+
+DROP TRIGGER tg_CongSanPham
+GO
+
+CREATE TRIGGER tg_CongSanPham ON dbo.HOADON
+FOR UPDATE
+AS
+DECLARE @IdHD INT
+SELECT @IdHD=Inserted.IdHD FROM Inserted
+WHERE Inserted.TinhTrang=6 OR Inserted.TinhTrang=11
+UPDATE dbo.SANPHAM SET SoLuong=SP.SoLuong+CT.SoLuong, SoLanMua=SP.SoLanMua-CT.SoLuong
+FROM dbo.CHITIETHD CT, dbo.SANPHAM SP
+WHERE CT.IdHD=@IdHD AND SP.IdSP=CT.IdSP
+GO
+
+CREATE FUNCTION fn_TongTien(@Thang INT,@Nam INT)
+RETURNS INT
+BEGIN
+	DECLARE @TongTien INT
+	SELECT @TongTien=SUM(TongTien) FROM dbo.HOADON
+	WHERE TinhTrang=9 AND MONTH(NgayDH)=@Thang AND YEAR(NgayDH)=@Nam
+	IF @TongTien IS NULL
+	SET @TongTien=0
+	RETURN @TongTien
+END
+GO
+
+CREATE FUNCTION fn_TongGiaSPHD(@IdHD INT)
+RETURNS INT
+BEGIN
+	DECLARE @TongGia INT
+	SELECT @TongGia=SUM(CT.GiaGoc*CT.SoLuong) FROM dbo.CHITIETHD CT
+	WHERE CT.IdHD=@IdHD
+	IF @TongGia IS NULL
+		SET @TongGia=0
+	RETURN @TongGia
+END
+GO
+
+
+CREATE FUNCTION fn_TongGiaSP(@Thang INT,@Nam INT)
+RETURNS INT
+BEGIN
+	DECLARE @TongGia INT
+	SELECT @TongGia=SUM(dbo.fn_TongGiaSPHD(HD.IdHD)) FROM dbo.HOADON HD
+	WHERE MONTH(HD.NgayDH)=@Thang AND YEAR(HD.NgayDH)=@Nam AND HD.TinhTrang=9
+	IF @TongGia IS NULL
+		SET @TongGia=0
+	RETURN @TongGia
+END
+GO
+
+
+CREATE FUNCTION fn_TongNhap(@Thang INT,@Nam INT)
+RETURNS INT
+BEGIN
+	DECLARE @TongNhap INT
+	SELECT @TongNhap=SUM(NH.SoLuong*NH.GiaNhap) FROM dbo.NHAPHANG NH
+	WHERE MONTH(NH.NgayNhap)=@Thang AND YEAR(NH.NgayNhap)=@Nam
+	IF @TongNhap IS NULL
+		SET @TongNhap=0
+	RETURN @TongNhap
+END
+GO
+
+DROP TRIGGER tg_ThongKe
+CREATE TRIGGER tg_ThongKe ON dbo.HOADON
+FOR UPDATE
+AS
+
+DECLARE @Thang INT
+DECLARE @Nam INT
+SELECT @Thang=MONTH(Inserted.NgayDH),@Nam=YEAR(Inserted.NgayDH) FROM Inserted
+
+DECLARE @TonTai INT
+SELECT @TonTai=COUNT(*) FROM Inserted
+WHERE Inserted.TinhTrang=9
+IF @TonTai IS NULL
+	SET @TonTai=0
+
+IF @TonTai>0 --Kiem tra xem don hang nay da hoan thanh chua. neu hoan thanh thi thuc hien
+BEGIN
+	DECLARE @SL INT
+	SELECT @SL=COUNT(*) FROM dbo.THONGKETHANG
+	WHERE Thang=@Thang AND Nam=@Nam
+
+	IF @SL IS NULL
+		SET @SL=0
+
+	IF @SL>0
+	BEGIN
+		UPDATE dbo.THONGKETHANG SET TongNhap=dbo.fn_TongNhap(@Thang,@Nam),TongGiaHang=dbo.fn_TongGiaSP(@Thang,@Nam),TongDoanhThu=dbo.fn_TongTien(@Thang,@Nam)
+		WHERE Thang=@Thang AND Nam=@Nam
+	END
+	ELSE
+	BEGIN
+		INSERT dbo.THONGKETHANG
+		        ( Nam ,
+		          Thang ,
+		          TongNhap ,
+		          TongGiaHang ,
+		          TongDoanhThu
+		        )
+		VALUES  ( @Nam , -- Nam - int
+		          @Thang , -- Thang - int
+		          dbo.fn_TongNhap(@Thang,@Nam), -- TongNhap - int
+		          dbo.fn_TongGiaSP(@Thang,@Nam) , -- TongGiaHang - int
+		          dbo.fn_TongTien(@Thang,@Nam)  -- TongDoanhThu - int
+		        )
+	END
+END
+GO
+
+
+

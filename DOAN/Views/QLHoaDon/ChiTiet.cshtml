@@ -184,7 +184,7 @@
                     <!-- this row will not appear when printing -->
                     <div class="row no-print">
                         <div class="col-12">
-                            <button class="btn btn-default print"><i class="fas fa-print"></i> Print</button>
+                            <button class="btn btn-default print"><i class="fas fa-print"></i> In hoá đơn</button>
                             @if (hoadon.TinhTrang == 4)
                             {
                                 <a href="@Url.Action("XacNhan","QLHoaDon",new { id = hoadon.IdHD })" type="button" class="btn btn-success float-right" onclick="return confirm('Bạn có chắc chắn xác nhận đơn hàng này?');" >

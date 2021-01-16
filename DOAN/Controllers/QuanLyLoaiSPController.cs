@@ -18,12 +18,12 @@ namespace DOAN.Controllers
         {
             var model = db.LOAISANPHAMs.Where(x => x.TinhTrang == true);
             List<DANHMUC> danhmuc = new List<DANHMUC>();
-            danhmuc.Add(new DANHMUC(1, "Skincare"));
-            danhmuc.Add(new DANHMUC(2, "Makeup"));
-            danhmuc.Add(new DANHMUC(3, "Hair Care"));
-            danhmuc.Add(new DANHMUC(4, "Bath & Body"));
-            danhmuc.Add(new DANHMUC(5, "Accessories"));
-            danhmuc.Add(new DANHMUC(6, "Fragrance"));
+            danhmuc.Add(new DANHMUC(1, "Chăm sóc da"));
+            danhmuc.Add(new DANHMUC(2, "Trang điểm"));
+            danhmuc.Add(new DANHMUC(3, "Chăm sóc tóc"));
+            danhmuc.Add(new DANHMUC(4, "Chăm sóc cơ thể"));
+            danhmuc.Add(new DANHMUC(5, "Phụ kiện làm đẹp"));
+            danhmuc.Add(new DANHMUC(6, "Nước hoa"));
             ViewBag.DanhMuc = danhmuc;
             return View(model);
         }
@@ -31,12 +31,12 @@ namespace DOAN.Controllers
         public ActionResult Create()
         {
             List<DANHMUC> danhmuc = new List<DANHMUC>();
-            danhmuc.Add(new DANHMUC(1, "Skincare"));
-            danhmuc.Add(new DANHMUC(2, "Makeup"));
-            danhmuc.Add(new DANHMUC(3, "Hair Care"));
-            danhmuc.Add(new DANHMUC(4, "Bath & Body"));
-            danhmuc.Add(new DANHMUC(5, "Accessories"));
-            danhmuc.Add(new DANHMUC(6, "Fragrance"));
+            danhmuc.Add(new DANHMUC(1, "Chăm sóc da"));
+            danhmuc.Add(new DANHMUC(2, "Trang điểm"));
+            danhmuc.Add(new DANHMUC(3, "Chăm sóc tóc"));
+            danhmuc.Add(new DANHMUC(4, "Chăm sóc cơ thể"));
+            danhmuc.Add(new DANHMUC(5, "Phụ kiện làm đẹp"));
+            danhmuc.Add(new DANHMUC(6, "Nước hoa"));
             ViewBag.DanhMuc = new SelectList(danhmuc, "IdDM", "TenDM");
             return View();
         }
@@ -60,20 +60,20 @@ namespace DOAN.Controllers
                 }
                 catch (Exception)
                 {
-                    ModelState.AddModelError("", "Product type is not created");
+                    ModelState.AddModelError("", "Loại sản phẩm không thể tạo");
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Please check the information you entered.");
+                ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập");
             }
             List<DANHMUC> danhmuc = new List<DANHMUC>();
-            danhmuc.Add(new DANHMUC(1, "Skincare"));
-            danhmuc.Add(new DANHMUC(2, "Makeup"));
-            danhmuc.Add(new DANHMUC(3, "Hair Care"));
-            danhmuc.Add(new DANHMUC(4, "Bath & Body"));
-            danhmuc.Add(new DANHMUC(5, "Accessories"));
-            danhmuc.Add(new DANHMUC(6, "Fragrance"));
+            danhmuc.Add(new DANHMUC(1, "Chăm sóc da"));
+            danhmuc.Add(new DANHMUC(2, "Trang điểm"));
+            danhmuc.Add(new DANHMUC(3, "Chăm sóc tóc"));
+            danhmuc.Add(new DANHMUC(4, "Chăm sóc cơ thể"));
+            danhmuc.Add(new DANHMUC(5, "Phụ kiện làm đẹp"));
+            danhmuc.Add(new DANHMUC(6, "Nước hoa"));
             ViewBag.DanhMuc = new SelectList(danhmuc, "IdDM", "TenDM",loaiSP.DanhMuc);
             return View(loaiSP);
         }
@@ -102,7 +102,7 @@ namespace DOAN.Controllers
             catch (Exception ex)
             {
                 string message = ex.Message;
-                return Content("<script> alert(\"The implementation failed.\")</script>");
+                return Content("<script> alert(\"Quá trình thực hiện thất bại\")</script>");
             }
         }
 
@@ -118,12 +118,12 @@ namespace DOAN.Controllers
                 return HttpNotFound();
             }
             List<DANHMUC> danhmuc = new List<DANHMUC>();
-            danhmuc.Add(new DANHMUC(1, "Skincare"));
-            danhmuc.Add(new DANHMUC(2, "Makeup"));
-            danhmuc.Add(new DANHMUC(3, "Hair Care"));
-            danhmuc.Add(new DANHMUC(4, "Bath & Body"));
-            danhmuc.Add(new DANHMUC(5, "Accessories"));
-            danhmuc.Add(new DANHMUC(6, "Fragrance"));
+            danhmuc.Add(new DANHMUC(1, "Chăm sóc da"));
+            danhmuc.Add(new DANHMUC(2, "Trang điểm"));
+            danhmuc.Add(new DANHMUC(3, "Chăm sóc tóc"));
+            danhmuc.Add(new DANHMUC(4, "Chăm sóc cơ thể"));
+            danhmuc.Add(new DANHMUC(5, "Phụ kiện làm đẹp"));
+            danhmuc.Add(new DANHMUC(6, "Nước hoa"));
             ViewBag.DanhMuc = new SelectList(danhmuc, "IdDM", "TenDM", loaiSP.DanhMuc);
             return View(loaiSP);
         }
@@ -144,20 +144,20 @@ namespace DOAN.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "Product type is not created");
+                    ModelState.AddModelError("", "Loại sản phẩm không thể tạo");
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Please check the information you entered.");
+                ModelState.AddModelError("", "Vui lòng kiểm tra lại thông tin đã nhập");
             }
             List<DANHMUC> danhmuc = new List<DANHMUC>();
-            danhmuc.Add(new DANHMUC(1, "Skincare"));
-            danhmuc.Add(new DANHMUC(2, "Makeup"));
-            danhmuc.Add(new DANHMUC(3, "Hair Care"));
-            danhmuc.Add(new DANHMUC(4, "Bath & Body"));
-            danhmuc.Add(new DANHMUC(5, "Accessories"));
-            danhmuc.Add(new DANHMUC(6, "Fragrance"));
+            danhmuc.Add(new DANHMUC(1, "Chăm sóc da"));
+            danhmuc.Add(new DANHMUC(2, "Trang điểm"));
+            danhmuc.Add(new DANHMUC(3, "Chăm sóc tóc"));
+            danhmuc.Add(new DANHMUC(4, "Chăm sóc cơ thể"));
+            danhmuc.Add(new DANHMUC(5, "Phụ kiện làm đẹp"));
+            danhmuc.Add(new DANHMUC(6, "Nước hoa"));
             ViewBag.DanhMuc = new SelectList(danhmuc, "IdDM", "TenDM", loaiSP.DanhMuc);
             return View(loaiSP);
         }

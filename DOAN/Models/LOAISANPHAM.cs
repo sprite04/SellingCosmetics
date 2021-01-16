@@ -23,6 +23,7 @@
         [DisplayName("Loại sản phẩm")]
         public string TenLoai { get; set; }
 
+        [DisplayName("Danh mục")]
         public int DanhMuc { get; set; }
 
         public bool? TinhTrang { get; set; }

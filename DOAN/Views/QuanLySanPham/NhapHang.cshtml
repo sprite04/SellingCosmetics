@@ -49,7 +49,7 @@
                             @Html.HiddenFor(model => model.IdSP)
                             <div class="form-group">
 
-                                @Html.Label("TenSP", htmlAttributes: new { @for = "inputName" })
+                                @Html.Label("Tên sản phẩm", htmlAttributes: new { @for = "inputName" })
                                 <input type = "text" class = "form-control" id = "inputName" placeholder = "Name" autofocus = "autofocus" readonly value="@ViewBag.TenSP" />
                                 
                             </div>
@@ -64,13 +64,13 @@
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.SoLuong, htmlAttributes: new { @for = "inputAddress" })
-                                @Html.TextBoxFor(model => model.SoLuong, new { @type = "text", @class = "form-control", @id = "inputAddress", @placeholder = "Address" })
+                                @Html.TextBoxFor(model => model.SoLuong, new { @type = "text", @class = "form-control", @id = "inputAddress" })
                                 @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.GiaNhap, htmlAttributes: new { @for = "inputAddress" })
-                                @Html.TextBoxFor(model => model.GiaNhap, new { @type = "text", @class = "form-control", @id = "inputAddress", @placeholder = "Address" })
+                                @Html.TextBoxFor(model => model.GiaNhap, new { @type = "text", @class = "form-control", @id = "inputAddress"})
                                 @Html.ValidationMessageFor(model => model.GiaNhap, "", new { @class = "text-danger" })
                             </div>
 

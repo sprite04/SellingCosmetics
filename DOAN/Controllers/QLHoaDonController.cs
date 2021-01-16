@@ -12,12 +12,23 @@ namespace DOAN.Controllers
     {
         TMDTDbContext db = new TMDTDbContext();
         // GET: QLHoaDon
-        public ActionResult Index(int error=0)
+        public ActionResult Index(int? giatri,int error=0)
         {
-            var list = db.HOADONs.Where(x => x.TinhTrang ==4).OrderByDescending(y=>y.NgayDH);
-            var listTT = db.TINHTRANGs.Where(x => (x.IdTT >= 4 && x.IdTT <= 9)||(x.IdTT==11));
-            ViewBag.items = new SelectList(listTT, "IdTT", "TenTT",4);
-            ViewBag.GiaTri = 4;
+            IEnumerable<HOADON> list = new List<HOADON>();
+            if(giatri==null)
+            {
+                list = db.HOADONs.Where(x => x.TinhTrang == 4).OrderByDescending(y => y.NgayDH);
+                var listTT = db.TINHTRANGs.Where(x => (x.IdTT >= 4 && x.IdTT <= 9) || (x.IdTT == 11));
+                ViewBag.items = new SelectList(listTT, "IdTT", "TenTT", 4);
+                ViewBag.GiaTri = 4;
+            }    
+            else
+            {
+                list = db.HOADONs.Where(x => x.TinhTrang == giatri).OrderByDescending(y => y.NgayDH);
+                var listTT = db.TINHTRANGs.Where(x => (x.IdTT >= 4 && x.IdTT <= 9) || (x.IdTT == 11));
+                ViewBag.items = new SelectList(listTT, "IdTT", "TenTT", giatri);
+                ViewBag.GiaTri = giatri;
+            }    
             ViewBag.DanhSach = list;
 
             ViewBag.Error = error;

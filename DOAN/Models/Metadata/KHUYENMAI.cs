@@ -33,6 +33,9 @@ namespace DOAN.Models
             [DisplayName("Giá trị")]
             [Required(ErrorMessage = "{0} không được để trống")]
             public int? GiaTri { get; set; }
+
+            [DisplayName("Chi tiết")]
+            public string ChiTiet { get; set; }
         }
     }
 }

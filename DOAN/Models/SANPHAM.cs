@@ -57,6 +57,7 @@
    
         public int? MaKM { get; set; }
 
+        [DisplayName("Thương hiệu")]
         public int? IdTH { get; set; }
 
         [DisplayName("Loại sản phẩm")]
